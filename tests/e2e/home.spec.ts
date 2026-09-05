@@ -54,10 +54,9 @@ test("@a11y the home page has no serious automated violations", async ({
 test("reduced motion removes interface transitions", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
-  const filterButton = page.locator(".filter-form--mobile > summary");
-  const target = (await filterButton.isVisible())
-    ? filterButton
-    : page.getByRole("button", { name: "Appliquer", exact: true });
+  const target = page.locator(
+    '.filter-form--mobile > summary:visible, .filter-form--desktop button[type="submit"]:visible',
+  );
 
   await expect(target).toBeVisible();
   await expect
