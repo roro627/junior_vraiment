@@ -3,8 +3,10 @@ import {
   getCachedPublicTaxonomies,
 } from "@/application/queries/cached-public-data";
 import type { OffersQuery } from "@/application/queries/contracts";
+import { buildAnalyticsContext } from "@/lib/analytics/context";
 import { formatInteger } from "@/lib/format";
 
+import { PageViewAnalytics } from "./analytics/page-view-analytics";
 import { ExplorerFilters } from "./explorer-filters";
 import { OfferResults } from "./offer-results";
 
@@ -32,9 +34,11 @@ export async function ExplorerDashboard({
   }
 
   const corrected = filtersWereCorrected || cursorWasCorrected;
+  const analyticsContext = buildAnalyticsContext(offers.response.meta);
 
   return (
     <main className="explorer" id="contenu">
+      <PageViewAnalytics route_name="explorer" context={analyticsContext} />
       <header className="explorer__introduction">
         <div>
           <p className="eyebrow">Observations vérifiables</p>
@@ -57,8 +61,16 @@ export async function ExplorerDashboard({
         </p>
       ) : null}
 
-      <ExplorerFilters query={safeQuery} taxonomies={taxonomies.data} />
-      <OfferResults response={offers.response} query={safeQuery} />
+      <ExplorerFilters
+        query={safeQuery}
+        taxonomies={taxonomies.data}
+        analyticsContext={analyticsContext}
+      />
+      <OfferResults
+        response={offers.response}
+        query={safeQuery}
+        analyticsContext={analyticsContext}
+      />
     </main>
   );
 }

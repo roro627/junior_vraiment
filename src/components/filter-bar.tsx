@@ -5,13 +5,27 @@ import type {
   OverviewQuery,
   TaxonomiesResponse,
 } from "@/application/queries/contracts";
+import type { AnalyticsContext } from "@/lib/analytics/client";
 
+import { TrackedFilterForm } from "./analytics/tracked-filter-form";
 import { Button } from "./ui/button";
 
 type FilterBarProps = {
   scope: OverviewQuery;
   taxonomies: TaxonomiesResponse["data"];
+  analyticsContext: AnalyticsContext;
 };
+
+function initialFilterValues(scope: OverviewQuery): Record<string, string> {
+  return {
+    job: scope.job ?? "",
+    tech: scope.technologies[0] ?? "",
+    area: scope.area,
+    contract: scope.contracts[0] ?? "",
+    remote: scope.remote ?? "",
+    period: scope.period,
+  };
+}
 
 function activeFilterCount(scope: OverviewQuery): number {
   return (
@@ -24,7 +38,10 @@ function activeFilterCount(scope: OverviewQuery): number {
   );
 }
 
-function FilterFields({ scope, taxonomies }: FilterBarProps) {
+function FilterFields({
+  scope,
+  taxonomies,
+}: Pick<FilterBarProps, "scope" | "taxonomies">) {
   return (
     <div className="filter-fields">
       <label>
@@ -110,8 +127,13 @@ function FilterActions() {
   );
 }
 
-export function FilterBar({ scope, taxonomies }: FilterBarProps) {
+export function FilterBar({
+  scope,
+  taxonomies,
+  analyticsContext,
+}: FilterBarProps) {
   const count = activeFilterCount(scope);
+  const initialValues = initialFilterValues(scope);
 
   return (
     <section className="filter-bar" aria-labelledby="filter-title">
@@ -124,22 +146,30 @@ export function FilterBar({ scope, taxonomies }: FilterBarProps) {
           {count} actif{count > 1 ? "s" : ""}
         </span>
       </div>
-      <form
+      <TrackedFilterForm
         action="/"
         method="get"
         className="filter-form filter-form--desktop"
+        analyticsContext={analyticsContext}
+        initialValues={initialValues}
       >
         <FilterFields scope={scope} taxonomies={taxonomies} />
         <FilterActions />
-      </form>
+      </TrackedFilterForm>
       <details className="filter-form--mobile">
         <summary>
           <Filter aria-hidden="true" /> Filtres · {count}
         </summary>
-        <form action="/" method="get" className="filter-form">
+        <TrackedFilterForm
+          action="/"
+          method="get"
+          className="filter-form"
+          analyticsContext={analyticsContext}
+          initialValues={initialValues}
+        >
           <FilterFields scope={scope} taxonomies={taxonomies} />
           <FilterActions />
-        </form>
+        </TrackedFilterForm>
       </details>
     </section>
   );

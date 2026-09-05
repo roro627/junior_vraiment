@@ -6,7 +6,9 @@ import {
   getCachedPublicTaxonomies,
 } from "@/application/queries/cached-public-data";
 import { offersSearchParamsSchema } from "@/application/queries/contracts";
+import { PageViewAnalytics } from "@/components/analytics/page-view-analytics";
 import { TrustPage } from "@/components/trust-page";
+import { buildAnalyticsContext } from "@/lib/analytics/context";
 import { formatInteger, formatLongDate } from "@/lib/format";
 import { buildStaticPageMetadata } from "@/lib/seo/static-metadata";
 
@@ -49,6 +51,7 @@ export default async function MethodologyPage() {
   const activeFamilies = taxonomies.data.jobs.filter(
     ({ availableCount }) => availableCount > 0,
   );
+  const analyticsContext = buildAnalyticsContext(status.meta);
 
   return (
     <TrustPage
@@ -57,6 +60,7 @@ export default async function MethodologyPage() {
       lead="Chaque chiffre part d’offres officielles, passe par des règles déterministes et reste relié aux preuves qui l’ont produit."
       navigation={navigation}
     >
+      <PageViewAnalytics route_name="methodology" context={analyticsContext} />
       <section id="source">
         <p className="section-label">01 · Source et périmètre</p>
         <h2>Une source officielle, un périmètre versionné</h2>

@@ -2,10 +2,8 @@
 
 import { useEffect } from "react";
 
-import {
-  captureAnalyticsEvent,
-  type AnalyticsContext,
-} from "@/lib/analytics/client";
+import { useAnalyticsCapture } from "@/components/providers/analytics-provider";
+import type { AnalyticsContext } from "@/lib/analytics/client";
 
 export function InsightPageAnalytics({
   slug,
@@ -14,15 +12,17 @@ export function InsightPageAnalytics({
   slug: string;
   context: AnalyticsContext;
 }) {
+  const capture = useAnalyticsCapture();
+
   useEffect(() => {
-    captureAnalyticsEvent(
+    capture(
       {
         name: "page_view",
         properties: { route_name: "insight", insight_slug: slug },
       },
       context,
     );
-  }, [context, slug]);
+  }, [capture, context, slug]);
 
   return null;
 }

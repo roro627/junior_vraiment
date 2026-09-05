@@ -23,6 +23,12 @@ const meta = {
       period: "30d",
     },
     taxonomies,
+    analyticsContext: {
+      appVersion: "0.1.0",
+      datasetId: "dataset-fixture",
+      classifierVersion: "classifier-1.2.0",
+      methodologyVersion: "methodology-1.0.0",
+    },
   },
   parameters: { layout: "padded" },
   tags: ["autodocs"],

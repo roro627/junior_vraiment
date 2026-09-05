@@ -7,8 +7,10 @@ import type {
   OverviewQuery,
   TrendsQuery,
 } from "@/application/queries/contracts";
+import { buildAnalyticsContext } from "@/lib/analytics/context";
 import { formatInteger } from "@/lib/format";
 
+import { PageViewAnalytics } from "./analytics/page-view-analytics";
 import { DistributionCard } from "./distribution-card";
 import { FilterBar } from "./filter-bar";
 import { KpiHero } from "./kpi-hero";
@@ -56,6 +58,7 @@ export async function HomeDashboard({ query }: HomeDashboardProps) {
     getCachedPublicTaxonomies(),
   ]);
   const sampleSize = overview.meta.sampleSize;
+  const analyticsContext = buildAnalyticsContext(overview.meta);
   const experience = overview.data.experienceBuckets.map((bucket) => ({
     key: bucket.key,
     label: experienceLabels[bucket.key],
@@ -65,6 +68,7 @@ export async function HomeDashboard({ query }: HomeDashboardProps) {
 
   return (
     <>
+      <PageViewAnalytics route_name="home" context={analyticsContext} />
       {overview.meta.quality === "partial" ? (
         <aside className="data-warning" role="status">
           Une partie de la collecte est incomplète. Les résultats concernés sont
@@ -72,7 +76,11 @@ export async function HomeDashboard({ query }: HomeDashboardProps) {
         </aside>
       ) : null}
 
-      <FilterBar scope={overview.data.scope} taxonomies={taxonomies.data} />
+      <FilterBar
+        scope={overview.data.scope}
+        taxonomies={taxonomies.data}
+        analyticsContext={analyticsContext}
+      />
       <KpiHero
         metric={overview.data.headline}
         period={overview.data.scope.period}

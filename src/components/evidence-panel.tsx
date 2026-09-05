@@ -5,11 +5,21 @@ import { useRef } from "react";
 import { Dialog } from "radix-ui";
 
 import type { PublicOffer } from "@/application/queries/contracts";
+import type { AnalyticsContext } from "@/lib/analytics/client";
+import {
+  analyticsClassificationLabel,
+  analyticsRankBucket,
+  primaryAnalyticsEvidenceKind,
+} from "@/lib/analytics/offer-events";
 
+import { TrackedSourceOfferLink } from "./analytics/tracked-source-offer-link";
+import { useAnalyticsCapture } from "./providers/analytics-provider";
 import { Button } from "./ui/button";
 
 type EvidencePanelProps = {
   offer: PublicOffer;
+  rank: number;
+  analyticsContext: AnalyticsContext;
 };
 
 const evidenceLabels: Record<PublicOffer["evidence"][number]["kind"], string> =
@@ -71,8 +81,14 @@ function EvidenceGroup({
   );
 }
 
-export function EvidencePanel({ offer }: EvidencePanelProps) {
+export function EvidencePanel({
+  offer,
+  rank,
+  analyticsContext,
+}: EvidencePanelProps) {
   const titleRef = useRef<HTMLHeadingElement>(null);
+  const capture = useAnalyticsCapture();
+  const analyticsClassification = analyticsClassificationLabel(offer);
   const juniorEvidence = offer.evidence.filter((item) =>
     ["junior_claim", "conflict", "ambiguity"].includes(item.kind),
   );
@@ -84,8 +100,37 @@ export function EvidencePanel({ offer }: EvidencePanelProps) {
       !juniorEvidence.includes(item) && !experienceEvidence.includes(item),
   );
 
+  function trackOpening(open: boolean) {
+    if (!open) return;
+    capture(
+      {
+        name: "offer_opened",
+        properties: {
+          classification: analyticsClassification,
+          entry_point: "offer_table",
+          rank_bucket: analyticsRankBucket(rank),
+        },
+      },
+      analyticsContext,
+    );
+
+    const evidenceKind = primaryAnalyticsEvidenceKind(offer);
+    if (evidenceKind) {
+      capture(
+        {
+          name: "evidence_expanded",
+          properties: {
+            classification: analyticsClassification,
+            evidence_kind: evidenceKind,
+          },
+        },
+        analyticsContext,
+      );
+    }
+  }
+
   return (
-    <Dialog.Root>
+    <Dialog.Root onOpenChange={trackOpening}>
       <Dialog.Trigger asChild>
         <Button variant="outline" size="sm">
           <FileSearch data-icon="inline-start" /> Voir la preuve
@@ -175,15 +220,17 @@ export function EvidencePanel({ offer }: EvidencePanelProps) {
             <span>Classificateur {offer.classification.classifierVersion}</span>
             {offer.source.offerUrl ? (
               <Button asChild>
-                <a
+                <TrackedSourceOfferLink
                   href={offer.source.offerUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  analyticsContext={analyticsContext}
+                  classification={analyticsClassification}
                 >
                   Voir l’offre originale
                   <span className="sr-only"> (nouvel onglet)</span>
                   <ExternalLink data-icon="inline-end" />
-                </a>
+                </TrackedSourceOfferLink>
               </Button>
             ) : (
               <span>Lien vers l’offre indisponible</span>

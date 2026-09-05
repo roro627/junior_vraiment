@@ -11,6 +11,8 @@ const httpUrl = z
     },
   );
 
+const posthogEuHost = z.literal("https://eu.i.posthog.com");
+
 const baseServerEnvironmentSchema = z.object({
   APP_ENV: z
     .enum(["development", "test", "preview", "production"])
@@ -62,7 +64,7 @@ const databaseEnvironmentSchema = z
 const publicEnvironmentSchema = z.object({
   NEXT_PUBLIC_SITE_URL: httpUrl.optional(),
   NEXT_PUBLIC_POSTHOG_KEY: z.string().min(1).optional(),
-  NEXT_PUBLIC_POSTHOG_HOST: httpUrl.optional(),
+  NEXT_PUBLIC_POSTHOG_HOST: posthogEuHost.optional(),
 });
 
 const siteEnvironmentSchema = z.object({
@@ -81,7 +83,7 @@ const analyticsEnvironmentSchema = z.object({
     .default("false")
     .transform((value) => value === "true"),
   NEXT_PUBLIC_POSTHOG_KEY: z.string().min(1).optional(),
-  NEXT_PUBLIC_POSTHOG_HOST: httpUrl.optional(),
+  NEXT_PUBLIC_POSTHOG_HOST: posthogEuHost.optional(),
 });
 
 const revalidationEnvironmentSchema = z.object({

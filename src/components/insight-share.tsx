@@ -3,10 +3,8 @@
 import { Check, Copy, ExternalLink, Share2 } from "lucide-react";
 import { useMemo, useState } from "react";
 
-import {
-  captureAnalyticsEvent,
-  type AnalyticsContext,
-} from "@/lib/analytics/client";
+import { useAnalyticsCapture } from "@/components/providers/analytics-provider";
+import type { AnalyticsContext } from "@/lib/analytics/client";
 
 import { Button } from "./ui/button";
 
@@ -32,6 +30,7 @@ export function InsightShare({
   );
   const [shareText, setShareText] = useState(suggestedText);
   const [status, setStatus] = useState("");
+  const capture = useAnalyticsCapture();
 
   async function copy(value: string): Promise<boolean> {
     if (!navigator.clipboard) {
@@ -53,7 +52,7 @@ export function InsightShare({
   async function copyLink() {
     if (!(await copy(canonicalUrl))) return;
     setStatus("Lien copié.");
-    captureAnalyticsEvent(
+    capture(
       {
         name: "insight_shared",
         properties: { insight_slug: slug, share_method: "copy_link" },
@@ -71,7 +70,7 @@ export function InsightShare({
     try {
       await navigator.share({ title, text: shareText, url: canonicalUrl });
       setStatus("Partage ouvert.");
-      captureAnalyticsEvent(
+      capture(
         {
           name: "insight_shared",
           properties: { insight_slug: slug, share_method: "native_share" },
@@ -95,7 +94,7 @@ export function InsightShare({
 
     window.open(shareUrl, "_blank", "noopener,noreferrer");
     setStatus("Fenêtre LinkedIn ouverte.");
-    captureAnalyticsEvent(
+    capture(
       {
         name: "insight_shared",
         properties: { insight_slug: slug, share_method: "linkedin" },

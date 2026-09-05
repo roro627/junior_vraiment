@@ -11,7 +11,7 @@ import { InsightShare } from "@/components/insight-share";
 import { SiteFooter } from "@/components/site-footer";
 import type { PublicInsight } from "@/db/queries/public-insights";
 import { insightExplorerHref } from "@/domain/insights/editorial";
-import { METHODOLOGY_VERSION } from "@/domain/metrics/rate";
+import { buildAnalyticsContext } from "@/lib/analytics/context";
 import { isPublicIndexingEnabled } from "@/lib/env";
 import { formatInteger, formatLongDate, formatRate } from "@/lib/format";
 import {
@@ -23,8 +23,6 @@ import { resolveSiteUrl } from "@/lib/site-url";
 type InsightPageProps = {
   params: Promise<{ slug: string }>;
 };
-
-const APP_VERSION = "0.1.0";
 
 // Production builds prerender the real published slugs so an unknown slug can
 // return its HTTP 404 before streaming begins. Source-only CI uses one explicit
@@ -105,12 +103,7 @@ export default async function InsightPage({ params }: InsightPageProps) {
 
   const siteUrl = resolveSiteUrl();
   const canonicalUrl = new URL(`/insights/${insight.slug}`, siteUrl).toString();
-  const analyticsContext = {
-    appVersion: APP_VERSION,
-    datasetId: insight.datasetVersion,
-    classifierVersion: insight.classifierVersion,
-    methodologyVersion: METHODOLOGY_VERSION,
-  };
+  const analyticsContext = buildAnalyticsContext(insight);
   const structuredData = JSON.stringify({
     "@context": "https://schema.org",
     "@type": "Article",

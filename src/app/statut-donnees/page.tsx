@@ -2,8 +2,10 @@ import { AlertTriangle, CheckCircle2 } from "lucide-react";
 import type { Metadata } from "next";
 
 import { getCachedDataStatus } from "@/application/queries/cached-public-data";
+import { PageViewAnalytics } from "@/components/analytics/page-view-analytics";
 import { DataFreshnessBadge } from "@/components/data-freshness-badge";
 import { TrustPage } from "@/components/trust-page";
+import { buildAnalyticsContext } from "@/lib/analytics/context";
 import { formatInteger, formatRate } from "@/lib/format";
 import { buildStaticPageMetadata } from "@/lib/seo/static-metadata";
 
@@ -46,6 +48,7 @@ export default async function DataStatusPage() {
       : status.data.freshness;
   const validationRate =
     run && run.received > 0 ? run.valid / run.received : null;
+  const analyticsContext = buildAnalyticsContext(status.meta);
 
   return (
     <TrustPage
@@ -59,6 +62,7 @@ export default async function DataStatusPage() {
         { href: "#incidents", label: "Incidents" },
       ]}
     >
+      <PageViewAnalytics route_name="data_status" context={analyticsContext} />
       <section id="synthese">
         <div className="status-banner" data-status={status.data.status}>
           {operational ? (

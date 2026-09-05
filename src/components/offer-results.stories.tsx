@@ -6,15 +6,19 @@ import {
   offersResponseSchema,
   offersSearchParamsSchema,
 } from "@/application/queries/contracts";
+import { buildAnalyticsContext } from "@/lib/analytics/context";
 
 import { OfferResults } from "./offer-results";
+
+const response = offersResponseSchema.parse(examples.offers);
 
 const meta = {
   title: "Produit/Explorer/Résultats",
   component: OfferResults,
   args: {
-    response: offersResponseSchema.parse(examples.offers),
+    response,
     query: offersSearchParamsSchema.parse({}),
+    analyticsContext: buildAnalyticsContext(response.meta),
   },
   parameters: { layout: "padded" },
   tags: ["autodocs"],

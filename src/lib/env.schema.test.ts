@@ -177,6 +177,13 @@ describe("environment validation", () => {
       key: "public-key",
       host: "https://eu.i.posthog.com",
     });
+    expect(() =>
+      readAnalyticsEnvironment({
+        ANALYTICS_ENABLED: "true",
+        NEXT_PUBLIC_POSTHOG_KEY: "public-key",
+        NEXT_PUBLIC_POSTHOG_HOST: "https://us.i.posthog.com",
+      }),
+    ).toThrow();
   });
 
   it("requires a sufficiently long revalidation secret", () => {

@@ -68,6 +68,18 @@ Le signalement privé de vulnérabilité GitHub a été activé puis relu via l�
 L’attribution MIT a été finalisée au nom de Romain Lambert et reportée sur la page À propos ; les
 exclusions relatives aux données et à la maquette restent explicites.
 
+## Analytics préparé localement
+
+Le contrat client couvre les événements définis dans `docs/reference/events.json`. Les vues
+principales, changements de filtres, ouvertures de preuve, sorties vers l’offre source et partages
+d’insight utilisent une capture manuelle avec propriétés agrégées ou identifiants de taxonomie.
+L’initialisation est non bloquante, l’autocapture et le replay sont désactivés, les propriétés sont
+filtrées par allowlist et l’hôte accepté est limité à PostHog EU.
+
+Cette préparation ne vaut pas activation fournisseur : aucune collecte PostHog n’a été annoncée
+comme opérationnelle. L’activation reste conditionnée à une configuration réelle et à la revue des
+paramètres fournisseur de consentement, traitement de l’IP et conservation.
+
 ## Points non soldés
 
 - la rotation des identifiants Neon est différée à la demande du propriétaire ; elle ne doit pas

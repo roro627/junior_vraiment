@@ -4,13 +4,28 @@ import type {
   OffersQuery,
   TaxonomiesResponse,
 } from "@/application/queries/contracts";
+import type { AnalyticsContext } from "@/lib/analytics/client";
 
+import { TrackedFilterForm } from "./analytics/tracked-filter-form";
 import { Button } from "./ui/button";
 
 type ExplorerFiltersProps = {
   query: OffersQuery;
   taxonomies: TaxonomiesResponse["data"];
+  analyticsContext: AnalyticsContext;
 };
+
+function initialFilterValues(query: OffersQuery): Record<string, string> {
+  return {
+    job: query.scope.job ?? "",
+    tech: query.scope.technologies[0] ?? "",
+    area: query.scope.area,
+    contract: query.scope.contracts[0] ?? "",
+    classification: query.classification ?? "",
+    remote: query.scope.remote ?? "",
+    period: query.scope.period,
+  };
+}
 
 const classificationOptions = [
   ["contradictory", "Junior contradictoire"],
@@ -164,7 +179,13 @@ function FilterFields({ query, taxonomies }: ExplorerFiltersProps) {
 
 function FilterForm(props: ExplorerFiltersProps) {
   return (
-    <form action="/explorer" method="get" className="explorer-filter-form">
+    <TrackedFilterForm
+      action="/explorer"
+      method="get"
+      className="explorer-filter-form"
+      analyticsContext={props.analyticsContext}
+      initialValues={initialFilterValues(props.query)}
+    >
       <FilterFields {...props} />
       <div className="filter-actions">
         <Button asChild variant="ghost">
@@ -176,7 +197,7 @@ function FilterForm(props: ExplorerFiltersProps) {
           <Search data-icon="inline-start" /> Afficher les résultats
         </Button>
       </div>
-    </form>
+    </TrackedFilterForm>
   );
 }
 

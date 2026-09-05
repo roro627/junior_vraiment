@@ -5,8 +5,11 @@ import type {
   OffersResponse,
   PublicOffer,
 } from "@/application/queries/contracts";
+import type { AnalyticsContext } from "@/lib/analytics/client";
+import { analyticsClassificationLabel } from "@/lib/analytics/offer-events";
 import { formatInteger, formatLongDate } from "@/lib/format";
 
+import { TrackedSourceOfferLink } from "./analytics/tracked-source-offer-link";
 import { EvidencePanel } from "./evidence-panel";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
@@ -14,6 +17,7 @@ import { Button } from "./ui/button";
 type OfferResultsProps = {
   response: OffersResponse;
   query: OffersQuery;
+  analyticsContext: AnalyticsContext;
 };
 
 function classificationPresentation(offer: PublicOffer): {
@@ -71,21 +75,37 @@ function offerQueryString(query: OffersQuery, cursor: string | null): string {
   return serialized ? `?${serialized}` : "";
 }
 
-function OfferActions({ offer }: { offer: PublicOffer }) {
+function OfferActions({
+  offer,
+  rank,
+  analyticsContext,
+}: {
+  offer: PublicOffer;
+  rank: number;
+  analyticsContext: AnalyticsContext;
+}) {
+  const classification = analyticsClassificationLabel(offer);
+
   return (
     <div className="offer-actions">
-      <EvidencePanel offer={offer} />
+      <EvidencePanel
+        offer={offer}
+        rank={rank}
+        analyticsContext={analyticsContext}
+      />
       {offer.source.offerUrl ? (
         <Button asChild variant="ghost" size="sm">
-          <a
+          <TrackedSourceOfferLink
             href={offer.source.offerUrl}
             target="_blank"
             rel="noopener noreferrer"
+            analyticsContext={analyticsContext}
+            classification={classification}
           >
             Offre
             <span className="sr-only"> originale (nouvel onglet)</span>
             <ExternalLink data-icon="inline-end" />
-          </a>
+          </TrackedSourceOfferLink>
         </Button>
       ) : null}
     </div>
@@ -103,7 +123,11 @@ function Availability({ offer }: { offer: PublicOffer }) {
   );
 }
 
-export function OfferResults({ response, query }: OfferResultsProps) {
+export function OfferResults({
+  response,
+  query,
+  analyticsContext,
+}: OfferResultsProps) {
   const items = response.data.items;
 
   if (items.length === 0) {
@@ -142,7 +166,7 @@ export function OfferResults({ response, query }: OfferResultsProps) {
             </tr>
           </thead>
           <tbody>
-            {items.map((offer) => {
+            {items.map((offer, index) => {
               const classification = classificationPresentation(offer);
               return (
                 <tr key={offer.id}>
@@ -192,7 +216,11 @@ export function OfferResults({ response, query }: OfferResultsProps) {
                   </td>
                   <td>{salaryLabel(offer)}</td>
                   <td>
-                    <OfferActions offer={offer} />
+                    <OfferActions
+                      offer={offer}
+                      rank={index + 1}
+                      analyticsContext={analyticsContext}
+                    />
                   </td>
                 </tr>
               );
@@ -202,7 +230,7 @@ export function OfferResults({ response, query }: OfferResultsProps) {
       </div>
 
       <div className="offer-card-list">
-        {items.map((offer) => {
+        {items.map((offer, index) => {
           const classification = classificationPresentation(offer);
           return (
             <article className="offer-card" key={offer.id}>
@@ -242,7 +270,11 @@ export function OfferResults({ response, query }: OfferResultsProps) {
                 ))}
               </div>
               <Availability offer={offer} />
-              <OfferActions offer={offer} />
+              <OfferActions
+                offer={offer}
+                rank={index + 1}
+                analyticsContext={analyticsContext}
+              />
             </article>
           );
         })}
