@@ -40,6 +40,23 @@ test("the data status exposes verified run facts without infrastructure details"
   );
 });
 
+test("license attribution and the private security channel are published", async ({
+  page,
+}) => {
+  await page.goto("/a-propos");
+  await expect(page.getByText(/© 2026 Romain Lambert/u)).toBeVisible();
+
+  await page.goto("/signaler");
+  await expect(
+    page.getByRole("link", {
+      name: /Signaler une vulnérabilité en privé/u,
+    }),
+  ).toHaveAttribute(
+    "href",
+    "https://github.com/roro627/junior_vraiment/security/advisories/new",
+  );
+});
+
 test("@a11y methodology and data status have no serious automated violations", async ({
   page,
 }) => {

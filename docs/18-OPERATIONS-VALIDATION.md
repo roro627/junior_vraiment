@@ -63,6 +63,11 @@ production puis les neuf mesures Lighthouse soumises aux budgets. Les workflows 
 `Security` du même commit sont également passés. Le dépôt GitHub est relié au projet Vercel pour
 les déploiements suivants.
 
+Le signalement privé de vulnérabilité GitHub a été activé puis relu via l’API du dépôt le
+5 septembre 2026. La page publique `/signaler` pointe vers ce canal distinct des issues de données.
+L’attribution MIT a été finalisée au nom de Romain Lambert et reportée sur la page À propos ; les
+exclusions relatives aux données et à la maquette restent explicites.
+
 ## Points non soldés
 
 - la rotation des identifiants Neon est différée à la demande du propriétaire ; elle ne doit pas

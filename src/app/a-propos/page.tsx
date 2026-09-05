@@ -68,10 +68,10 @@ export default function AboutPage() {
         <div className="license-notice">
           <strong>Licence</strong>
           <p>
-            La licence MIT est prévue pour le code, mais son attribution
-            juridique n’est pas encore finalisée. Les données France Travail, la
-            marque du fournisseur et la maquette ne sont pas couvertes par cette
-            licence.
+            Le code et la documentation produits pour le projet sont publiés
+            sous licence MIT, © 2026 Romain Lambert. Les données France Travail,
+            la marque du fournisseur et la maquette ne sont pas couvertes par
+            cette licence.
           </p>
         </div>
       </section>

@@ -66,9 +66,20 @@ export default function ReportPage() {
         <h2>Ne publiez pas une vulnérabilité dans une issue</h2>
         <p>
           Une fuite de secret, un accès non autorisé ou une injection nécessite
-          un canal privé. Le canal exact de signalement de sécurité doit encore
-          être activé avant l’ouverture publique du service.
+          un canal privé. GitHub transmet ce signalement uniquement au
+          mainteneur du dépôt afin de permettre une analyse avant toute
+          divulgation publique.
         </p>
+        <a
+          className="report-link"
+          href="https://github.com/roro627/junior_vraiment/security/advisories/new"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Signaler une vulnérabilité en privé
+          <span className="sr-only"> (nouvel onglet)</span>
+          <ExternalLink aria-hidden="true" />
+        </a>
       </section>
     </TrustPage>
   );
