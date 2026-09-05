@@ -57,12 +57,19 @@ moins 0,92, accessibilité 1, LCP sous 2,5 s, CLS sous 0,1 et transfert JavaScri
 La CI utilise la même version de Lighthouse via un override pnpm explicite ; les contrôles Axe de
 Playwright restent le filet accessibilité fonctionnel.
 
+Le workflow GitHub Actions `End-to-end` a ensuite été déclenché manuellement le 5 septembre 2026
+sur le commit `6ebd71e`. Il a exécuté avec succès les 72 scénarios Playwright contre l’URL de
+production puis les neuf mesures Lighthouse soumises aux budgets. Les workflows `Quality` et
+`Security` du même commit sont également passés. Le dépôt GitHub est relié au projet Vercel pour
+les déploiements suivants.
+
 ## Points non soldés
 
 - la rotation des identifiants Neon est différée à la demande du propriétaire ; elle ne doit pas
   être considérée comme effectuée ;
 - les preuves de sept ingestions quotidiennes consécutives nécessitent sept exécutions planifiées ;
 - Sentry et PostHog restent désactivés tant que leurs vraies variables sécurisées ne sont pas
-  configurées et vérifiées ;
-- le titulaire de licence, les mentions légales et les paramètres réels de conservation restent
-  à valider par le propriétaire.
+  configurées et vérifiées ; leur absence a été contrôlée dans l’environnement local, Vercel et
+  Trigger.dev le 5 septembre 2026 ;
+- les mentions légales et les paramètres réels de conservation restent à valider par le
+  propriétaire.
