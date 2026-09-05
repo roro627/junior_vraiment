@@ -135,3 +135,24 @@ afin de ne pas rendre les transactions serveur invalides.
 Les options de tree shaking du plugin Sentry sont limitées à Webpack dans la version installée.
 Le dépôt conserve Turbopack ; son entrée asynchrone restreinte évite l’import de toutes les
 fonctionnalités du SDK. Aucun budget n’a été relevé.
+
+La réception et la redaction ont été vérifiées à nouveau avec ce client minimal : événement
+`ad1a8fa82af94cecb7fd51d4faa54512` pour la release `e215245`, puis
+`31072946adff48669b9b31168fce4b1c` pour `3f6e402`, tous deux en production. Le diagnostic
+Sentry de l’événement `ad1a8fa82af94cecb7fd51d4faa54512` confirme également le fichier source
+et la source map associés au debug ID de la frame compilée.
+
+Le panneau de preuve est ensuite chargé à la demande. Son échec de chargement et le réessai
+sont couverts sur les quatre navigateurs/profils Playwright, avec conservation du focus clavier.
+Les classes de son bouton sont calculées côté serveur depuis les variantes existantes ; le
+navigateur ne charge plus le moteur de fusion des classes pour cette interaction.
+
+Le commit applicatif `d164f76` a été déployé en production puis validé par le workflow
+`End-to-end` `33993045248` : 80 parcours Playwright et les neuf mesures Lighthouse ont passé
+les seuils inchangés. Les workflows `Quality` `33992980271` et `Security` `33992980282` sont
+également verts, y compris lint, format, typecheck, tests, contrats, build web et Storybook.
+
+Le prochain raccordement exige une session PostHog EU : le 5 septembre 2026, aucun identifiant
+PostHog n’est configuré dans l’environnement local ni dans Vercel Production, aucun connecteur
+dédié n’est disponible et le navigateur affiche le formulaire de connexion EU. La collecte
+analytics reste désactivée ; le compte et ses paramètres réels ne sont pas supposés existants.
