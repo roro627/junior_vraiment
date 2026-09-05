@@ -29,7 +29,7 @@ describe("EvidencePanel", () => {
     const trigger = screen.getByRole("button", { name: "Voir la preuve" });
 
     await user.click(trigger);
-    const dialog = screen.getByRole("dialog", { name: offer.title });
+    const dialog = await screen.findByRole("dialog", { name: offer.title });
     const title = screen.getByRole("heading", { name: offer.title });
 
     expect(dialog).toBeInTheDocument();

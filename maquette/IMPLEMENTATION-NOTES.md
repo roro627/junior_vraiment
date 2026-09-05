@@ -65,6 +65,10 @@
 
 ## Validation à faire
 
+- le code du panneau de preuve est chargé au clic, sans modifier son rendu ; le bouton donne
+  immédiatement l’état « Ouverture… », puis rétablit son libellé. Un échec de chargement affiche
+  un statut réessayable. Le focus initial et son retour restent explicites et testés.
+
 - les couleurs sont centralisées en OKLCH dans `src/styles/tokens.css`; le contrôle Axe automatisé
   ne relève aucune violation sérieuse ou critique sur l'accueil ;
 - l'accueil a été comparé à la référence principale en 1440 × 900 et 375 × 812 ; les trois autres

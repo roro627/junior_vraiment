@@ -68,6 +68,7 @@ test("@a11y the explorer and evidence panel have no serious automated violations
 }) => {
   await page.goto("/explorer");
   await page.getByRole("button", { name: "Voir la preuve" }).first().click();
+  await expect(page.getByRole("dialog")).toBeVisible();
 
   const results = await new AxeBuilder({ page }).analyze();
   const blockingViolations = results.violations.filter(
@@ -75,4 +76,23 @@ test("@a11y the explorer and evidence panel have no serious automated violations
   );
 
   expect(blockingViolations).toEqual([]);
+});
+
+test("the lazy evidence panel reports a chunk failure and can retry", async ({
+  page,
+}) => {
+  await page.goto("/explorer", { waitUntil: "networkidle" });
+  await page.route("**/*.js", (route) => route.abort());
+  const trigger = page.getByRole("button", { name: "Voir la preuve" }).first();
+
+  await trigger.click();
+  await expect(
+    page
+      .getByRole("status")
+      .filter({ hasText: "Impossible d’ouvrir les preuves" }),
+  ).toBeVisible();
+  await expect(trigger).toBeEnabled();
+  await page.unroute("**/*.js");
+  await trigger.click();
+  await expect(page.getByRole("dialog")).toBeVisible();
 });
