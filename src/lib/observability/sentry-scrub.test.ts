@@ -3,6 +3,42 @@ import { describe, expect, it } from "vitest";
 import { redactTelemetryText, scrubSentryEvent } from "./sentry-scrub";
 
 describe("Sentry redaction", () => {
+  it("removes invalid URLs, span payloads and local exception variables", () => {
+    const event = scrubSentryEvent({
+      request: { url: "not-a-url?secret=fixture" },
+      spans: [
+        {
+          span_id: "1234567890abcdef",
+          trace_id: "1234567890abcdef1234567890abcdef",
+          start_timestamp: 1,
+          timestamp: 2,
+          op: "db.query",
+          description: "select 'source content'",
+          data: { "db.statement": "private source content" },
+        },
+      ],
+      exception: {
+        values: [
+          {
+            stacktrace: {
+              frames: [
+                { vars: { secret: "fixture" }, filename: "app.js", lineno: 3 },
+              ],
+            },
+          },
+        ],
+      },
+    });
+
+    expect(event.request).toEqual({});
+    expect(event.spans?.[0]).not.toHaveProperty("description");
+    expect(event.spans?.[0]?.data).toEqual({});
+    expect(event.exception?.values?.[0]?.stacktrace?.frames?.[0]).toEqual({
+      filename: "app.js",
+      lineno: 3,
+    });
+  });
+
   it("redacts credentials and contact details before transmission", () => {
     const redacted = redactTelemetryText(
       "postgresql://user:secret@db.example/app Bearer abc.def contact@example.com 06 12 34 56 78",

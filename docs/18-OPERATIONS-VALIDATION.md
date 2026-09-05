@@ -85,8 +85,25 @@ paramètres fournisseur de consentement, traitement de l’IP et conservation.
 - la rotation des identifiants Neon est différée à la demande du propriétaire ; elle ne doit pas
   être considérée comme effectuée ;
 - les preuves de sept ingestions quotidiennes consécutives nécessitent sept exécutions planifiées ;
-- Sentry et PostHog restent désactivés tant que leurs vraies variables sécurisées ne sont pas
-  configurées et vérifiées ; leur absence a été contrôlée dans l’environnement local, Vercel et
-  Trigger.dev le 5 septembre 2026 ;
+- PostHog reste désactivé tant que ses vraies variables et sa configuration de confidentialité
+  ne sont pas vérifiées ;
+- la vérification Sentry de production et des source maps reste à terminer ;
 - les mentions légales et les paramètres réels de conservation restent à valider par le
   propriétaire.
+
+## Raccordement Sentry
+
+Le 5 septembre 2026, l’authentification réelle a permis de créer le projet `junior-vraiment`
+dans l’organisation `roro000`, région Allemagne. La suppression des IP et les filtres de données
+du fournisseur ont été activés puis relus. Le CLI 2.58.6 ne décode pas la liste des organisations
+(champ `requireEmailVerification` absent de la réponse) ; l’API officielle a servi au diagnostic
+et à la configuration.
+
+Une erreur synthétique a été envoyée avec la configuration SDK serveur du dépôt et l’environnement
+`development`. L’événement `f2237beeb14d436390d24a8c9faf9c6b` a été relu via l’API : les valeurs
+de test d’e-mail, de token, d’IP et de corps d’offre étaient absentes. Ce test valide la réception
+et le filtrage serveur, pas encore la chaîne de déploiement ni une notification e-mail reçue.
+
+Le filtrage local supprime également les variables des frames, les données et descriptions de
+spans SQL/HTTP ainsi que les URL invalides. Les régressions correspondantes sont couvertes par
+les tests unitaires.

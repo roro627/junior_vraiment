@@ -18,6 +18,9 @@ function sanitizeUrl(value: string | undefined): string | undefined {
   if (!value) return undefined;
   try {
     const parsed = new URL(value);
+    if (parsed.protocol !== "https:" && parsed.protocol !== "http:") {
+      return undefined;
+    }
     return `${parsed.origin}${parsed.pathname}`;
   } catch {
     return undefined;
@@ -35,6 +38,16 @@ export function scrubSentryEvent<T extends Event>(event: T): T {
     if (exception.value) {
       exception.value = redactTelemetryText(exception.value);
     }
+    for (const frame of exception.stacktrace?.frames ?? []) {
+      delete frame.vars;
+    }
+  }
+
+  // SQL and HTTP spans can contain credentials or source content even when
+  // the top-level request and exception have already been scrubbed.
+  for (const span of event.spans ?? []) {
+    delete span.description;
+    span.data = {};
   }
 
   if (event.request) {
@@ -47,6 +60,7 @@ export function scrubSentryEvent<T extends Event>(event: T): T {
     delete event.request.query_string;
     if (method) event.request.method = method;
     if (url) event.request.url = url;
+    else delete event.request.url;
   }
 
   return event;
