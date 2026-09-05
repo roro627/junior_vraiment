@@ -6,6 +6,7 @@ import { AppHeader } from "@/components/app-header";
 import { ExplorerDashboard } from "@/components/explorer-dashboard";
 import { ExplorerSkeleton } from "@/components/explorer-skeleton";
 import { SiteFooter } from "@/components/site-footer";
+import { isExternalDataBuildSkipped } from "@/lib/env";
 import { buildStaticPageMetadata } from "@/lib/seo/static-metadata";
 
 export const metadata: Metadata = buildStaticPageMetadata({
@@ -55,15 +56,20 @@ export default function ExplorerPage({
 }: {
   searchParams: Promise<RawSearchParams>;
 }) {
+  const skipExternalData = isExternalDataBuildSkipped();
   return (
     <div className="site-shell">
       <a className="skip-link" href="#contenu">
         Aller au contenu
       </a>
       <AppHeader />
-      <Suspense fallback={<ExplorerSkeleton />}>
-        <ExplorerContent searchParams={searchParams} />
-      </Suspense>
+      {skipExternalData ? (
+        <ExplorerSkeleton />
+      ) : (
+        <Suspense fallback={<ExplorerSkeleton />}>
+          <ExplorerContent searchParams={searchParams} />
+        </Suspense>
+      )}
       <SiteFooter />
     </div>
   );

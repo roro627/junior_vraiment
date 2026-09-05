@@ -31,4 +31,6 @@ jobs:
       - run: pnpm query-set:report:check
       - run: pnpm test:schemas
       - run: pnpm build
+        env:
+          SKIP_EXTERNAL_DATA_DURING_BUILD: "true"
       - run: pnpm storybook:build

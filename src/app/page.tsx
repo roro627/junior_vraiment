@@ -7,6 +7,7 @@ import { HomeDataFreshness } from "@/components/home-data-freshness";
 import { HomeDashboard } from "@/components/home-dashboard";
 import { HomeSkeleton } from "@/components/home-skeleton";
 import { SiteFooter } from "@/components/site-footer";
+import { isExternalDataBuildSkipped } from "@/lib/env";
 import { buildStaticPageMetadata } from "@/lib/seo/static-metadata";
 import { resolveSiteUrl } from "@/lib/site-url";
 
@@ -64,6 +65,7 @@ export default function HomePage({
   searchParams: Promise<RawSearchParams>;
 }) {
   const siteUrl = resolveSiteUrl();
+  const skipExternalData = isExternalDataBuildSkipped();
   const structuredData = JSON.stringify({
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -93,19 +95,29 @@ export default function HomePage({
               Le marché tech junior, mesuré plutôt que raconté.
             </p>
           </div>
-          <Suspense
-            fallback={
-              <span className="freshness-badge" aria-hidden="true">
-                Actualisation…
-              </span>
-            }
-          >
-            <FilteredFreshness searchParams={searchParams} />
-          </Suspense>
+          {skipExternalData ? (
+            <span className="freshness-badge" aria-hidden="true">
+              Actualisation…
+            </span>
+          ) : (
+            <Suspense
+              fallback={
+                <span className="freshness-badge" aria-hidden="true">
+                  Actualisation…
+                </span>
+              }
+            >
+              <FilteredFreshness searchParams={searchParams} />
+            </Suspense>
+          )}
         </section>
-        <Suspense fallback={<HomeSkeleton />}>
-          <FilteredDashboard searchParams={searchParams} />
-        </Suspense>
+        {skipExternalData ? (
+          <HomeSkeleton />
+        ) : (
+          <Suspense fallback={<HomeSkeleton />}>
+            <FilteredDashboard searchParams={searchParams} />
+          </Suspense>
+        )}
       </main>
       <SiteFooter />
       <script type="application/ld+json">{structuredData}</script>

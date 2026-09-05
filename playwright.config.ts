@@ -2,8 +2,9 @@ import { defineConfig, devices } from "@playwright/test";
 
 import { readToolEnvironment } from "./src/lib/env";
 
-const { CI } = readToolEnvironment();
+const { CI, PLAYWRIGHT_BASE_URL } = readToolEnvironment();
 const isContinuousIntegration = Boolean(CI);
+const baseURL = PLAYWRIGHT_BASE_URL ?? "http://127.0.0.1:3000";
 
 export default defineConfig({
   testDir: "./tests/e2e",
@@ -12,14 +13,18 @@ export default defineConfig({
   retries: isContinuousIntegration ? 1 : 0,
   reporter: isContinuousIntegration ? "github" : "list",
   use: {
-    baseURL: "http://127.0.0.1:3000",
+    baseURL,
     trace: "on-first-retry",
   },
-  webServer: {
-    command: "pnpm start",
-    url: "http://127.0.0.1:3000",
-    reuseExistingServer: !isContinuousIntegration,
-  },
+  ...(PLAYWRIGHT_BASE_URL
+    ? {}
+    : {
+        webServer: {
+          command: "pnpm start",
+          url: baseURL,
+          reuseExistingServer: !isContinuousIntegration,
+        },
+      }),
   projects: [
     { name: "chromium", use: { ...devices["Desktop Chrome"] } },
     { name: "firefox", use: { ...devices["Desktop Firefox"] } },

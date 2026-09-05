@@ -11,6 +11,9 @@ jobs:
   browser-tests:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    env:
+      PLAYWRIGHT_BASE_URL: ${{ vars.PRODUCTION_URL }}
+      PLAYWRIGHT_EXPECT_PUBLIC_INDEXING: "true"
     steps:
       - uses: actions/checkout@v6
       - uses: pnpm/action-setup@v6
@@ -23,5 +26,14 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm exec playwright install --with-deps chromium firefox webkit
-      - run: pnpm test:e2e
-      - run: pnpm test:lighthouse
+      - name: Require the production URL
+        run: test -n "$PLAYWRIGHT_BASE_URL"
+      - run: pnpm exec playwright test
+      - name: Lighthouse production budgets
+        run: |
+          origin="${PLAYWRIGHT_BASE_URL%/}"
+          pnpm exec lhci autorun \
+            --collect.startServerCommand="" \
+            --collect.url="$origin/" \
+            --collect.url="$origin/explorer" \
+            --collect.url="$origin/methodologie"

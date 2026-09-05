@@ -14,6 +14,10 @@ export const metadata: Metadata = buildStaticPageMetadata({
     "Fraîcheur, dernière collecte, couverture, incidents et versions des données publiées.",
 });
 
+// Operational status is meaningful only when read from the configured live
+// database, so it is rendered at request time and then served from its cache.
+export const instant = false;
+
 const dateTimeFormatter = new Intl.DateTimeFormat("fr-FR", {
   dateStyle: "long",
   timeStyle: "short",

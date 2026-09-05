@@ -17,6 +17,10 @@ export const metadata: Metadata = buildStaticPageMetadata({
     "Source, collecte, classification déterministe et calcul des indicateurs de Junior, vraiment ?",
 });
 
+// The examples and current versions are real database reads. They must never
+// be fabricated merely to let a source-only CI build prerender this route.
+export const instant = false;
+
 const navigation = [
   { href: "#source", label: "Source et périmètre" },
   { href: "#collecte", label: "Collecte et déduplication" },

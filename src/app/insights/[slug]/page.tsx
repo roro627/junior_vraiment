@@ -14,6 +14,10 @@ import { insightExplorerHref } from "@/domain/insights/editorial";
 import { METHODOLOGY_VERSION } from "@/domain/metrics/rate";
 import { isPublicIndexingEnabled } from "@/lib/env";
 import { formatInteger, formatLongDate, formatRate } from "@/lib/format";
+import {
+  isSourceOnlyInsightBuildSlug,
+  SOURCE_ONLY_INSIGHT_BUILD_SLUG,
+} from "@/lib/seo/insight-build";
 import { resolveSiteUrl } from "@/lib/site-url";
 
 type InsightPageProps = {
@@ -22,13 +26,16 @@ type InsightPageProps = {
 
 const APP_VERSION = "0.1.0";
 
-// Published slugs are prerendered below. Unknown and newly published slugs may
-// resolve at request time so that `notFound()` can still return a real 404.
-// Next.js 16 Cache Components rejects `dynamicParams = false`; opting this
-// segment out of static-shell validation preserves both behaviors.
+// Production builds prerender the real published slugs so an unknown slug can
+// return its HTTP 404 before streaming begins. Source-only CI uses one explicit
+// non-data sentinel because Cache Components requires at least one parameter.
 export const instant = false;
 
 export async function generateStaticParams(): Promise<Array<{ slug: string }>> {
+  if (isSourceOnlyInsightBuildSlug(SOURCE_ONLY_INSIGHT_BUILD_SLUG)) {
+    return [{ slug: SOURCE_ONLY_INSIGHT_BUILD_SLUG }];
+  }
+
   const insights = await getCachedPublicInsights();
   return insights.map(({ slug }) => ({ slug }));
 }
@@ -47,6 +54,9 @@ export async function generateMetadata({
   params,
 }: InsightPageProps): Promise<Metadata> {
   const { slug } = await params;
+  if (isSourceOnlyInsightBuildSlug(slug)) {
+    return { robots: { index: false, follow: false } };
+  }
   const insight = await getCachedPublicInsight(slug);
 
   if (!insight) {
@@ -87,6 +97,9 @@ export async function generateMetadata({
 
 export default async function InsightPage({ params }: InsightPageProps) {
   const { slug } = await params;
+  if (isSourceOnlyInsightBuildSlug(slug)) {
+    notFound();
+  }
   const insight = await getCachedPublicInsight(slug);
   if (!insight) notFound();
 

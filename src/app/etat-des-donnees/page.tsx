@@ -1,1 +1,1 @@
-export { default, metadata } from "../statut-donnees/page";
+export { default, instant, metadata } from "../statut-donnees/page";

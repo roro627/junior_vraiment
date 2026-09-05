@@ -94,6 +94,8 @@ const cursorEnvironmentSchema = z.object({
 
 const toolEnvironmentSchema = z.object({
   CI: z.string().optional(),
+  PLAYWRIGHT_BASE_URL: httpUrl.optional(),
+  PLAYWRIGHT_EXPECT_PUBLIC_INDEXING: z.enum(["true", "false"]).optional(),
   RUN_DATASET_ROLLBACK_GAME_DAY: z.string().optional(),
   RUN_LIVE_DATABASE: z.string().optional(),
   RUN_LIVE_FRANCE_TRAVAIL: z.string().optional(),
@@ -117,6 +119,10 @@ const nextBuildEnvironmentSchema = z.object({
   NODE_ENV: z
     .enum(["development", "production", "test"])
     .default("development"),
+  SKIP_EXTERNAL_DATA_DURING_BUILD: z
+    .enum(["true", "false"])
+    .default("false")
+    .transform((value) => value === "true"),
 });
 
 const sentryServerEnvironmentSchema = z.object({
@@ -240,7 +246,15 @@ export function readCursorEnvironment(
 export function readToolEnvironment(
   environment: EnvironmentInput = process.env,
 ): ToolEnvironment {
-  return toolEnvironmentSchema.parse(environment);
+  return toolEnvironmentSchema.parse({
+    CI: environment["CI"],
+    PLAYWRIGHT_BASE_URL: environment["PLAYWRIGHT_BASE_URL"],
+    PLAYWRIGHT_EXPECT_PUBLIC_INDEXING:
+      environment["PLAYWRIGHT_EXPECT_PUBLIC_INDEXING"],
+    RUN_DATASET_ROLLBACK_GAME_DAY: environment["RUN_DATASET_ROLLBACK_GAME_DAY"],
+    RUN_LIVE_DATABASE: environment["RUN_LIVE_DATABASE"],
+    RUN_LIVE_FRANCE_TRAVAIL: environment["RUN_LIVE_FRANCE_TRAVAIL"],
+  });
 }
 
 export function readRollbackGameDayEnvironment(
@@ -256,6 +270,12 @@ export function readNextBuildEnvironment(
   environment: EnvironmentInput = process.env,
 ): NextBuildEnvironment {
   return nextBuildEnvironmentSchema.parse(environment);
+}
+
+export function isExternalDataBuildSkipped(
+  environment: EnvironmentInput = process.env,
+): boolean {
+  return readNextBuildEnvironment(environment).SKIP_EXTERNAL_DATA_DURING_BUILD;
 }
 
 export function isPublicIndexingEnabled(

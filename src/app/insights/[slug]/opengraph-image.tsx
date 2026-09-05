@@ -5,7 +5,9 @@ import { ImageResponse } from "next/og";
 
 import { getCachedPublicInsight } from "@/application/queries/cached-public-data";
 import { InsightOgCard } from "@/components/og/insight-card";
+import { isExternalDataBuildSkipped } from "@/lib/env";
 import { buildInsightOgModel, INSIGHT_OG_SIZE } from "@/lib/seo/build-og-model";
+import { isSourceOnlyInsightBuildSlug } from "@/lib/seo/insight-build";
 import { resolveSiteUrl } from "@/lib/site-url";
 
 const geistRegular = await readFile(
@@ -21,11 +23,45 @@ const geistRegular = await readFile(
   ),
 );
 
+function unavailableInsightImage(): ImageResponse {
+  return new ImageResponse(
+    <div
+      style={{
+        display: "flex",
+        width: "100%",
+        height: "100%",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "#f7f5fb",
+        color: "#17152b",
+        fontFamily: "Geist",
+        fontSize: 54,
+      }}
+    >
+      Insight indisponible
+    </div>,
+    {
+      ...INSIGHT_OG_SIZE,
+      status: 404,
+      fonts: [
+        {
+          name: "Geist",
+          data: Uint8Array.from(geistRegular).buffer,
+          weight: 400,
+          style: "normal",
+        },
+      ],
+    },
+  );
+}
+
 export async function generateImageMetadata({
   params,
 }: {
   params: { slug: string };
 }) {
+  if (isExternalDataBuildSkipped()) return [];
+
   const insight = await getCachedPublicInsight(params.slug);
   if (!insight) return [];
 
@@ -46,38 +82,13 @@ export default async function Image({
   id: Promise<string | number>;
 }) {
   const { slug } = await params;
+  if (isSourceOnlyInsightBuildSlug(slug)) {
+    return unavailableInsightImage();
+  }
   const insight = await getCachedPublicInsight(slug);
 
   if (!insight) {
-    return new ImageResponse(
-      <div
-        style={{
-          display: "flex",
-          width: "100%",
-          height: "100%",
-          alignItems: "center",
-          justifyContent: "center",
-          background: "#f7f5fb",
-          color: "#17152b",
-          fontFamily: "Geist",
-          fontSize: 54,
-        }}
-      >
-        Insight indisponible
-      </div>,
-      {
-        ...INSIGHT_OG_SIZE,
-        status: 404,
-        fonts: [
-          {
-            name: "Geist",
-            data: Uint8Array.from(geistRegular).buffer,
-            weight: 400,
-            style: "normal",
-          },
-        ],
-      },
-    );
+    return unavailableInsightImage();
   }
 
   return new ImageResponse(

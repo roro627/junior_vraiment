@@ -1,5 +1,10 @@
 import { expect, test } from "@playwright/test";
 
+import { readToolEnvironment } from "../../src/lib/env";
+
+const expectsPublicIndexing =
+  readToolEnvironment().PLAYWRIGHT_EXPECT_PUBLIC_INDEXING === "true";
+
 test("public pages send the launch security headers", async ({ request }) => {
   const response = await request.get("/");
 
@@ -26,16 +31,24 @@ test("API responses are excluded from search indexing", async ({ request }) => {
   );
 });
 
-test("non-production builds block indexing and expose no sitemap URL", async ({
+test("robots and sitemap match the tested deployment environment", async ({
   request,
 }) => {
   const robots = await request.get("/robots.txt");
-  expect(await robots.text()).toContain("Disallow: /");
-
   const sitemap = await request.get("/sitemap.xml");
+  const robotsBody = await robots.text();
   const sitemapBody = await sitemap.text();
-  expect(sitemapBody).toContain("<urlset");
-  expect(sitemapBody).not.toContain("<url>");
+
+  if (expectsPublicIndexing) {
+    expect(robotsBody).toContain("Allow: /");
+    expect(robotsBody).toContain("Disallow: /api/");
+    expect(robotsBody).toContain("Sitemap:");
+    expect(sitemapBody).toContain("<url>");
+  } else {
+    expect(robotsBody).toContain("Disallow: /");
+    expect(sitemapBody).toContain("<urlset");
+    expect(sitemapBody).not.toContain("<url>");
+  }
 });
 
 test("homepage structured data is valid and Explorer is non-indexable", async ({

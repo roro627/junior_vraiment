@@ -15,6 +15,10 @@ export const metadata: Metadata = buildStaticPageMetadata({
     "Des chiffres figés avec leur période, leur échantillon et leur méthode.",
 });
 
+// Published insights come from Neon. Rendering waits for a real request so a
+// source-less CI build validates the application without inventing data.
+export const instant = false;
+
 export default async function InsightsPage() {
   const insights = await getCachedPublicInsights();
 

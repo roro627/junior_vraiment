@@ -2,6 +2,7 @@ import "server-only";
 
 import { neon } from "@neondatabase/serverless";
 import { cacheLife, cacheTag } from "next/cache";
+import { connection } from "next/server";
 
 import { getDataStatus } from "@/db/queries/get-data-status";
 import {
@@ -17,6 +18,7 @@ import {
   readBaseServerEnvironment,
   readCursorEnvironment,
   readDatabaseEnvironment,
+  isExternalDataBuildSkipped,
 } from "@/lib/env";
 
 import type {
@@ -32,6 +34,11 @@ export type CachedPublicOffersResult =
   | { outcome: "invalid_cursor" };
 
 export async function getCachedDataStatus() {
+  await waitForExternalDataRuntime();
+  return getCachedDataStatusValue();
+}
+
+async function getCachedDataStatusValue() {
   "use cache";
 
   cacheLife({ stale: 60, revalidate: 60, expire: 600 });
@@ -49,6 +56,13 @@ export async function getCachedDataStatus() {
 }
 
 export async function getCachedPublicOffers(
+  query: OffersQuery,
+): Promise<CachedPublicOffersResult> {
+  await waitForExternalDataRuntime();
+  return getCachedPublicOffersValue(query);
+}
+
+async function getCachedPublicOffersValue(
   query: OffersQuery,
 ): Promise<CachedPublicOffersResult> {
   "use cache";
@@ -80,6 +94,11 @@ export async function getCachedPublicOffers(
 }
 
 export async function getCachedPublicOverview(query: OverviewQuery) {
+  await waitForExternalDataRuntime();
+  return getCachedPublicOverviewValue(query);
+}
+
+async function getCachedPublicOverviewValue(query: OverviewQuery) {
   "use cache";
 
   cacheLife({ stale: 300, revalidate: 300, expire: 3_600 });
@@ -97,6 +116,11 @@ export async function getCachedPublicOverview(query: OverviewQuery) {
 }
 
 export async function getCachedPublicTaxonomies() {
+  await waitForExternalDataRuntime();
+  return getCachedPublicTaxonomiesValue();
+}
+
+async function getCachedPublicTaxonomiesValue() {
   "use cache";
 
   cacheLife({ stale: 86_400, revalidate: 86_400, expire: 604_800 });
@@ -113,6 +137,11 @@ export async function getCachedPublicTaxonomies() {
 }
 
 export async function getCachedPublicTrends(query: TrendsQuery) {
+  await waitForExternalDataRuntime();
+  return getCachedPublicTrendsValue(query);
+}
+
+async function getCachedPublicTrendsValue(query: TrendsQuery) {
   "use cache";
 
   cacheLife({ stale: 900, revalidate: 900, expire: 21_600 });
@@ -130,6 +159,11 @@ export async function getCachedPublicTrends(query: TrendsQuery) {
 }
 
 export async function getCachedPublicInsight(slug: string) {
+  await waitForExternalDataRuntime();
+  return getCachedPublicInsightValue(slug);
+}
+
+async function getCachedPublicInsightValue(slug: string) {
   "use cache";
 
   const parsedSlug = publicInsightSlugSchema.safeParse(slug);
@@ -149,6 +183,11 @@ export async function getCachedPublicInsight(slug: string) {
 }
 
 export async function getCachedPublicInsights() {
+  await waitForExternalDataRuntime();
+  return getCachedPublicInsightsValue();
+}
+
+async function getCachedPublicInsightsValue() {
   "use cache";
 
   cacheLife({ stale: 3_600, revalidate: 3_600, expire: 86_400 });
@@ -156,4 +195,8 @@ export async function getCachedPublicInsights() {
 
   const database = readDatabaseEnvironment();
   return listPublicInsights(neon(database.DATABASE_URL), 50);
+}
+
+async function waitForExternalDataRuntime(): Promise<void> {
+  if (isExternalDataBuildSkipped()) await connection();
 }

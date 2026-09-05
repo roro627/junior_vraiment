@@ -52,3 +52,11 @@ représenter une offre dont le contenu revient à une version antérieure après
 L’implémentation conserve un index non unique sur ces colonnes et garantit séparément qu’un seul
 snapshot est courant. L’idempotence repose sur le hash du snapshot courant, pas sur tout
 l’historique.
+
+## Frontière du build
+
+Les pages alimentées par Neon attendent une requête réelle avant de lire la base. Un build de code
+source peut ainsi compiler sans secret et sans fabriquer de données ; les lectures restent mises en
+cache au runtime. Le workflow E2E distant cible explicitement l’URL publique configurée dans la
+variable GitHub `PRODUCTION_URL`, tandis que la commande locale construit puis teste le serveur de
+production local connecté à l’environnement du développeur.

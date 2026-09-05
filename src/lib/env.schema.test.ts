@@ -2,6 +2,9 @@ import { describe, expect, it } from "vitest";
 
 import {
   areSentrySourceMapsConfigured,
+  isExternalDataBuildSkipped,
+  isHttpsDeploymentEnvironment,
+  isPublicIndexingEnabled,
   readAnalyticsEnvironment,
   readBaseServerEnvironment,
   readCursorEnvironment,
@@ -9,8 +12,6 @@ import {
   readFranceTravailEnvironment,
   readSentryClientEnvironment,
   readSentryServerEnvironment,
-  isHttpsDeploymentEnvironment,
-  isPublicIndexingEnabled,
   readNextBuildEnvironment,
   readPublicEnvironment,
   readRevalidationEnvironment,
@@ -52,6 +53,7 @@ describe("environment validation", () => {
   it("exposes the validated Next.js build mode", () => {
     expect(readNextBuildEnvironment({ NODE_ENV: "production" })).toEqual({
       NODE_ENV: "production",
+      SKIP_EXTERNAL_DATA_DURING_BUILD: false,
     });
   });
 
@@ -122,6 +124,20 @@ describe("environment validation", () => {
 
   it("rejects a database integration without connection strings", () => {
     expect(() => readDatabaseEnvironment({})).toThrow();
+  });
+
+  it("requires an explicit source-only build flag", () => {
+    expect(isExternalDataBuildSkipped({})).toBe(false);
+    expect(
+      isExternalDataBuildSkipped({
+        SKIP_EXTERNAL_DATA_DURING_BUILD: "true",
+      }),
+    ).toBe(true);
+    expect(() =>
+      isExternalDataBuildSkipped({
+        SKIP_EXTERNAL_DATA_DURING_BUILD: "yes",
+      }),
+    ).toThrow();
   });
 
   it("accepts the unpooled connection name emitted by the Neon CLI", () => {
