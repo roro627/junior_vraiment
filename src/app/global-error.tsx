@@ -14,7 +14,7 @@ type GlobalErrorProps = Readonly<{
 export default function GlobalError({ error, retry }: GlobalErrorProps) {
   useEffect(() => {
     if (!sentry.enabled) return;
-    void import("@sentry/nextjs").then((Sentry) => {
+    void import("@/lib/observability/sentry-browser").then((Sentry) => {
       Sentry.captureException(error);
     });
   }, [error]);

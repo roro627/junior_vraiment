@@ -1,5 +1,10 @@
 type EnvironmentInput = Readonly<Record<string, string | undefined>>;
 
+export function readSentryClientRelease(): string | undefined {
+  // Injected by withSentryConfig from the actual build release.
+  return process.env._sentryRelease;
+}
+
 export type SentryClientEnvironment =
   | { enabled: false; environment: string }
   | { enabled: true; dsn: string; environment: string };

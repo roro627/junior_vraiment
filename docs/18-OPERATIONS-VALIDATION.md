@@ -87,7 +87,6 @@ paramètres fournisseur de consentement, traitement de l’IP et conservation.
 - les preuves de sept ingestions quotidiennes consécutives nécessitent sept exécutions planifiées ;
 - PostHog reste désactivé tant que ses vraies variables et sa configuration de confidentialité
   ne sont pas vérifiées ;
-- la vérification Sentry de production et des source maps reste à terminer ;
 - les mentions légales et les paramètres réels de conservation restent à valider par le
   propriétaire.
 
@@ -104,6 +103,35 @@ Une erreur synthétique a été envoyée avec la configuration SDK serveur du d�
 de test d’e-mail, de token, d’IP et de corps d’offre étaient absentes. Ce test valide la réception
 et le filtrage serveur, pas encore la chaîne de déploiement ni une notification e-mail reçue.
 
+Le déploiement Vercel du commit `3800d44` a ensuite créé la release Sentry correspondante.
+L’erreur navigateur synthétique `52dc1c9cb47341e88a313ca95bd0814a`, déclenchée depuis le site
+de production, a été reçue avec l’environnement `production` et cette release. La relecture
+confirme le filtrage des valeurs de test. Le diagnostic source maps de Sentry confirme la présence
+du bundle et, pour la frame compilée, du fichier source et de la map associés au bon debug ID.
+La frame créée par le test navigateur n’a naturellement pas de source map de l’application.
+
+Les secrets ont été configurés dans Vercel Production. Le token autorisé par le propriétaire
+sert au build ; il n’est pas envoyé au navigateur. Le DSN public est distinct d’un secret
+d’administration. La réception effective d’une notification e-mail et les alertes opérationnelles
+complètes restent à vérifier séparément.
+
 Le filtrage local supprime également les variables des frames, les données et descriptions de
 spans SQL/HTTP ainsi que les URL invalides. Les régressions correspondantes sont couvertes par
 les tests unitaires.
+
+### Budget JavaScript après activation
+
+Le contrôle distant `33991244094` a détecté une régression après activation du SDK complet :
+341 595 octets de JavaScript sur l’accueil et 368 852 sur Explorer, avec un LCP médian
+d’Explorer à 4,08 s. Les 76 scénarios Playwright passaient, mais pas les budgets Lighthouse.
+
+L’initialisation navigateur utilise désormais le `BrowserClient` explicite documenté par Sentry,
+avec uniquement les intégrations de capture et déduplication des erreurs. Elle n’inclut ni
+breadcrumbs, ni replay, ni traçage navigateur. Les traces serveur conservent leur échantillonnage
+de 5 %. Cette réduction ne vaut donc pas validation d’une mesure Sentry des Web Vitals navigateur.
+Les identifiants techniques de trace valides sont conservés par le filtre, sans leurs données,
+afin de ne pas rendre les transactions serveur invalides.
+
+Les options de tree shaking du plugin Sentry sont limitées à Webpack dans la version installée.
+Le dépôt conserve Turbopack ; son entrée asynchrone restreinte évite l’import de toutes les
+fonctionnalités du SDK. Aucun budget n’a été relevé.

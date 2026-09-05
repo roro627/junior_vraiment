@@ -15,6 +15,10 @@ const httpsDeployment = isHttpsDeploymentEnvironment();
 const nextConfig: NextConfig = {
   allowedDevOrigins: ["127.0.0.1"],
   cacheComponents: true,
+  compiler: {
+    // Turbopack does not apply Sentry's webpack-only tree-shaking options.
+    define: { __SENTRY_DEBUG__: false },
+  },
   async headers() {
     return [
       {

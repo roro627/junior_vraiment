@@ -3,6 +3,29 @@ import { describe, expect, it } from "vitest";
 import { redactTelemetryText, scrubSentryEvent } from "./sentry-scrub";
 
 describe("Sentry redaction", () => {
+  it("preserves valid technical trace identifiers without context payloads", () => {
+    const traceId = "1234567890abcdef1234567890abcdef";
+    const spanId = "1234567890abcdef";
+    const event = scrubSentryEvent({
+      contexts: {
+        trace: {
+          trace_id: traceId,
+          span_id: spanId,
+          data: { "db.statement": "private source content" },
+        },
+        browser: { name: "private context" },
+      },
+    });
+    expect(event.contexts).toEqual({
+      trace: { trace_id: traceId, span_id: spanId },
+    });
+    expect(
+      scrubSentryEvent({
+        contexts: { trace: { trace_id: "private value", span_id: spanId } },
+      }),
+    ).not.toHaveProperty("contexts");
+  });
+
   it("removes invalid URLs, span payloads and local exception variables", () => {
     const event = scrubSentryEvent({
       request: { url: "not-a-url?secret=fixture" },
