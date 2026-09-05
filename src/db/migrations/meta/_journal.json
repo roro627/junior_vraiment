@@ -1,0 +1,48 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1788442873765,
+      "tag": "20260903134113_outstanding_korath",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1788449803627,
+      "tag": "20260903153643_bored_green_goblin",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1788506177962,
+      "tag": "20260904071617_lucky_banshee",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1788527004075,
+      "tag": "20260904130324_round_karma",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1788527322238,
+      "tag": "20260904130842_premium_thanos",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1788538234473,
+      "tag": "20260904161034_boring_catseye",
+      "breakpoints": true
+    }
+  ]
+}

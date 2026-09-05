@@ -1,0 +1,738 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "documentVersion": "1.2.0",
+  "status": "initial-baseline-to-validate-against-source",
+  "locale": "fr-FR",
+  "notes": [
+    "Les identifiants sont publics et doivent rester stables après le lancement.",
+    "Les alias servent à détecter une technologie ou à composer les requêtes de collecte; ils ne remplacent pas les référentiels de France Travail.",
+    "Une occurrence dans le nom d'une entreprise, une URL, une liste de bénéfices ou un bloc légal ne doit pas être comptée comme compétence.",
+    "Toute modification influençant les résultats exige une nouvelle version de taxonomie et un recalcul comparable."
+  ],
+  "technologyMatchingContract": {
+    "defaultCaseSensitivity": "insensitive",
+    "defaultBoundary": "unicode_word",
+    "matchFields": [
+      "title",
+      "description",
+      "skills",
+      "experienceLabel"
+    ],
+    "ignoredSections": [
+      "company_name",
+      "application_url",
+      "legal_footer",
+      "benefits_boilerplate"
+    ],
+    "shortAliasMaximumLength": 3,
+    "shortAliasPolicy": "Un alias de trois caractères ou moins exige la casse exacte ou un signal technique dans une fenêtre de 80 caractères.",
+    "contextWindowCharacters": 80,
+    "evidenceRequired": true,
+    "multipleMatchesPerTechnology": "deduplicate_per_offer_snapshot",
+    "overlapPolicy": "Le motif le plus long gagne avant les exclusions; par exemple React Native est évalué avant React."
+  },
+  "jobFamilies": [
+    {
+      "id": "frontend",
+      "label": "Développement frontend",
+      "sourceSearchTerms": [
+        "développeur frontend",
+        "développeur front-end",
+        "intégrateur web"
+      ],
+      "includeSignals": [
+        "frontend",
+        "front-end",
+        "interface web",
+        "intégration web"
+      ],
+      "excludeSignals": [
+        "commercial",
+        "support utilisateur"
+      ],
+      "sortOrder": 10
+    },
+    {
+      "id": "backend",
+      "label": "Développement backend",
+      "sourceSearchTerms": [
+        "développeur backend",
+        "développeur back-end"
+      ],
+      "includeSignals": [
+        "backend",
+        "back-end",
+        "api",
+        "services web"
+      ],
+      "excludeSignals": [],
+      "sortOrder": 20
+    },
+    {
+      "id": "fullstack",
+      "label": "Développement full-stack",
+      "sourceSearchTerms": [
+        "développeur full stack",
+        "développeur fullstack",
+        "développeur full-stack"
+      ],
+      "includeSignals": [
+        "full stack",
+        "fullstack",
+        "full-stack"
+      ],
+      "excludeSignals": [],
+      "sortOrder": 30
+    },
+    {
+      "id": "mobile",
+      "label": "Développement mobile",
+      "sourceSearchTerms": [
+        "développeur mobile",
+        "développeur applications mobiles"
+      ],
+      "includeSignals": [
+        "mobile",
+        "android",
+        "ios",
+        "react native",
+        "flutter"
+      ],
+      "excludeSignals": [
+        "téléphonie mobile",
+        "vendeur mobile"
+      ],
+      "sortOrder": 40
+    },
+    {
+      "id": "software",
+      "label": "Développement logiciel",
+      "sourceSearchTerms": [
+        "développeur logiciel",
+        "ingénieur logiciel"
+      ],
+      "includeSignals": [
+        "logiciel",
+        "software",
+        "applicatif"
+      ],
+      "excludeSignals": [],
+      "sortOrder": 50
+    },
+    {
+      "id": "data",
+      "label": "Data et ingénierie des données",
+      "sourceSearchTerms": [
+        "data analyst",
+        "data engineer",
+        "ingénieur données",
+        "développeur data"
+      ],
+      "includeSignals": [
+        "data analyst",
+        "data engineer",
+        "ingénieur données",
+        "etl",
+        "elt"
+      ],
+      "excludeSignals": [
+        "saisie de données"
+      ],
+      "sortOrder": 60
+    },
+    {
+      "id": "ai-ml",
+      "label": "IA et machine learning",
+      "sourceSearchTerms": [
+        "machine learning engineer",
+        "ingénieur intelligence artificielle",
+        "développeur ia"
+      ],
+      "includeSignals": [
+        "machine learning",
+        "intelligence artificielle",
+        "deep learning",
+        "ml engineer"
+      ],
+      "excludeSignals": [],
+      "sortOrder": 70
+    },
+    {
+      "id": "devops-cloud",
+      "label": "DevOps, SRE et cloud",
+      "sourceSearchTerms": [
+        "devops",
+        "site reliability engineer",
+        "ingénieur cloud"
+      ],
+      "includeSignals": [
+        "devops",
+        "sre",
+        "site reliability",
+        "cloud engineer"
+      ],
+      "excludeSignals": [],
+      "sortOrder": 80
+    },
+    {
+      "id": "cybersecurity",
+      "label": "Cybersécurité",
+      "sourceSearchTerms": [
+        "analyste cybersécurité",
+        "ingénieur cybersécurité",
+        "développeur sécurité"
+      ],
+      "includeSignals": [
+        "cybersécurité",
+        "cybersecurity",
+        "sécurité informatique",
+        "soc analyst"
+      ],
+      "excludeSignals": [
+        "agent de sécurité"
+      ],
+      "sortOrder": 90
+    },
+    {
+      "id": "qa-test",
+      "label": "Qualité logicielle et tests",
+      "sourceSearchTerms": [
+        "testeur logiciel",
+        "qa engineer",
+        "automaticien de tests"
+      ],
+      "includeSignals": [
+        "qa",
+        "quality assurance",
+        "test logiciel",
+        "automaticien de tests"
+      ],
+      "excludeSignals": [
+        "contrôle qualité industriel"
+      ],
+      "sortOrder": 100
+    }
+  ],
+  "technologies": [
+    {
+      "id": "javascript",
+      "label": "JavaScript",
+      "aliases": [
+        "javascript",
+        "ecmascript"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 10,
+      "caseSensitiveAliases": [
+        "JS"
+      ],
+      "contextSignals": [
+        "frontend",
+        "front-end",
+        "node",
+        "react",
+        "typescript",
+        "web"
+      ]
+    },
+    {
+      "id": "typescript",
+      "label": "TypeScript",
+      "aliases": [
+        "typescript"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 20,
+      "caseSensitiveAliases": [
+        "TS"
+      ],
+      "contextSignals": [
+        "frontend",
+        "front-end",
+        "node",
+        "react",
+        "javascript",
+        "web"
+      ]
+    },
+    {
+      "id": "react",
+      "label": "React",
+      "aliases": [
+        "react.js",
+        "reactjs",
+        "react"
+      ],
+      "wordBoundary": true,
+      "exclusions": [
+        "react native"
+      ],
+      "sortOrder": 30
+    },
+    {
+      "id": "nextjs",
+      "label": "Next.js",
+      "aliases": [
+        "next.js",
+        "nextjs"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 40
+    },
+    {
+      "id": "tailwind-css",
+      "label": "Tailwind CSS",
+      "aliases": [
+        "tailwind css",
+        "tailwindcss",
+        "tailwind"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 45
+    },
+    {
+      "id": "vue",
+      "label": "Vue.js",
+      "aliases": [
+        "vue.js",
+        "vuejs"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 50
+    },
+    {
+      "id": "angular",
+      "label": "Angular",
+      "aliases": [
+        "angular"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 60
+    },
+    {
+      "id": "svelte",
+      "label": "Svelte",
+      "aliases": [
+        "svelte",
+        "sveltekit"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 70
+    },
+    {
+      "id": "react-native",
+      "label": "React Native",
+      "aliases": [
+        "react native",
+        "react-native"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 80
+    },
+    {
+      "id": "expo",
+      "label": "Expo",
+      "aliases": [
+        "expo router"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 90,
+      "contextRequiredAliases": [
+        "expo"
+      ],
+      "contextSignals": [
+        "react native",
+        "mobile",
+        "application",
+        "eas",
+        "router"
+      ]
+    },
+    {
+      "id": "flutter",
+      "label": "Flutter",
+      "aliases": [
+        "flutter"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 100
+    },
+    {
+      "id": "android",
+      "label": "Android",
+      "aliases": [
+        "android"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 110
+    },
+    {
+      "id": "kotlin",
+      "label": "Kotlin",
+      "aliases": [
+        "kotlin"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 120
+    },
+    {
+      "id": "ios",
+      "label": "iOS",
+      "aliases": [
+        "ios",
+        "ipados"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 130
+    },
+    {
+      "id": "swift",
+      "label": "Swift",
+      "aliases": [
+        "swift",
+        "swiftui"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 140
+    },
+    {
+      "id": "nodejs",
+      "label": "Node.js",
+      "aliases": [
+        "node.js",
+        "nodejs"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 150
+    },
+    {
+      "id": "nestjs",
+      "label": "NestJS",
+      "aliases": [
+        "nestjs",
+        "nest.js"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 160
+    },
+    {
+      "id": "java",
+      "label": "Java",
+      "aliases": [
+        "java"
+      ],
+      "wordBoundary": true,
+      "exclusions": [
+        "javascript"
+      ],
+      "sortOrder": 170
+    },
+    {
+      "id": "spring",
+      "label": "Spring",
+      "aliases": [
+        "spring boot",
+        "spring framework"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 180,
+      "contextRequiredAliases": [
+        "spring"
+      ],
+      "contextSignals": [
+        "java",
+        "backend",
+        "microservice",
+        "framework",
+        "api"
+      ]
+    },
+    {
+      "id": "dotnet",
+      "label": ".NET",
+      "aliases": [
+        ".net",
+        "asp.net",
+        "dotnet"
+      ],
+      "wordBoundary": false,
+      "sortOrder": 190
+    },
+    {
+      "id": "csharp",
+      "label": "C#",
+      "aliases": [
+        "c#",
+        "c sharp"
+      ],
+      "wordBoundary": false,
+      "sortOrder": 200
+    },
+    {
+      "id": "python",
+      "label": "Python",
+      "aliases": [
+        "python"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 210
+    },
+    {
+      "id": "django",
+      "label": "Django",
+      "aliases": [
+        "django"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 220
+    },
+    {
+      "id": "fastapi",
+      "label": "FastAPI",
+      "aliases": [
+        "fastapi",
+        "fast api"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 230
+    },
+    {
+      "id": "php",
+      "label": "PHP",
+      "aliases": [
+        "php"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 240
+    },
+    {
+      "id": "symfony",
+      "label": "Symfony",
+      "aliases": [
+        "symfony"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 250
+    },
+    {
+      "id": "laravel",
+      "label": "Laravel",
+      "aliases": [
+        "laravel"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 260
+    },
+    {
+      "id": "ruby",
+      "label": "Ruby",
+      "aliases": [
+        "ruby"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 270
+    },
+    {
+      "id": "rails",
+      "label": "Ruby on Rails",
+      "aliases": [
+        "ruby on rails"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 280,
+      "contextRequiredAliases": [
+        "rails"
+      ],
+      "contextSignals": [
+        "ruby",
+        "backend",
+        "framework",
+        "web"
+      ]
+    },
+    {
+      "id": "go",
+      "label": "Go",
+      "aliases": [
+        "golang"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 290,
+      "contextRequiredAliases": [
+        "go"
+      ],
+      "contextSignals": [
+        "langage",
+        "language",
+        "backend",
+        "developer",
+        "développeur",
+        "microservice",
+        "golang"
+      ]
+    },
+    {
+      "id": "rust",
+      "label": "Rust",
+      "aliases": [],
+      "wordBoundary": true,
+      "sortOrder": 300,
+      "contextRequiredAliases": [
+        "rust"
+      ],
+      "contextSignals": [
+        "langage",
+        "language",
+        "backend",
+        "système",
+        "systems",
+        "developer",
+        "développeur",
+        "cargo"
+      ]
+    },
+    {
+      "id": "sql",
+      "label": "SQL",
+      "aliases": [
+        "sql"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 310
+    },
+    {
+      "id": "postgresql",
+      "label": "PostgreSQL",
+      "aliases": [
+        "postgresql",
+        "postgres"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 320
+    },
+    {
+      "id": "mysql",
+      "label": "MySQL",
+      "aliases": [
+        "mysql"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 330
+    },
+    {
+      "id": "mongodb",
+      "label": "MongoDB",
+      "aliases": [
+        "mongodb",
+        "mongo db"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 340
+    },
+    {
+      "id": "redis",
+      "label": "Redis",
+      "aliases": [
+        "redis"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 350
+    },
+    {
+      "id": "graphql",
+      "label": "GraphQL",
+      "aliases": [
+        "graphql"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 360
+    },
+    {
+      "id": "docker",
+      "label": "Docker",
+      "aliases": [
+        "docker"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 370
+    },
+    {
+      "id": "kubernetes",
+      "label": "Kubernetes",
+      "aliases": [
+        "kubernetes",
+        "k8s"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 380
+    },
+    {
+      "id": "aws",
+      "label": "AWS",
+      "aliases": [
+        "amazon web services",
+        "aws"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 390
+    },
+    {
+      "id": "azure",
+      "label": "Microsoft Azure",
+      "aliases": [
+        "microsoft azure",
+        "azure"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 400
+    },
+    {
+      "id": "gcp",
+      "label": "Google Cloud",
+      "aliases": [
+        "google cloud platform",
+        "google cloud",
+        "gcp"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 410
+    },
+    {
+      "id": "terraform",
+      "label": "Terraform",
+      "aliases": [
+        "terraform"
+      ],
+      "wordBoundary": true,
+      "sortOrder": 420
+    },
+    {
+      "id": "git",
+      "label": "Git",
+      "aliases": [
+        "git"
+      ],
+      "wordBoundary": true,
+      "exclusions": [
+        "digital"
+      ],
+      "sortOrder": 430
+    },
+    {
+      "id": "ci-cd",
+      "label": "CI/CD",
+      "aliases": [
+        "ci/cd",
+        "ci-cd",
+        "continuous integration",
+        "continuous delivery",
+        "continuous deployment",
+        "intégration continue",
+        "livraison continue",
+        "déploiement continu"
+      ],
+      "wordBoundary": false,
+      "sortOrder": 440
+    }
+  ]
+}

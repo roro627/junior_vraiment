@@ -1,0 +1,311 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "documentVersion": "1.0.3",
+  "privacyMode": {
+    "autocapture": false,
+    "sessionReplay": false,
+    "recordFreeText": false,
+    "recordFullUrls": false,
+    "recordOfferDescriptions": false,
+    "recordCompanyNames": false,
+    "recordSourceOfferIds": false,
+    "ipPersistence": "disabled-or-anonymized-by-provider",
+    "consentRequired": "apply-final-legal-review-before-production"
+  },
+  "globalProperties": [
+    "app_version",
+    "dataset_id",
+    "classifier_version",
+    "methodology_version",
+    "locale",
+    "viewport_bucket",
+    "referrer_category"
+  ],
+  "customTypes": {
+    "classification_label": {
+      "type": "enum",
+      "values": [
+        "contradictory",
+        "beginner_friendly",
+        "junior_unresolved",
+        "other_junior",
+        "not_explicitly_junior",
+        "ambiguous",
+        "unknown"
+      ]
+    },
+    "taxonomy_id": {
+      "type": "string",
+      "maxLength": 64,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "metric_id": {
+      "type": "enum",
+      "values": [
+        "junior_contradiction_rate",
+        "beginner_friendly_rate",
+        "salary_transparency_rate",
+        "minimum_experience_distribution",
+        "offer_volume",
+        "technology_mentions",
+        "contract_distribution",
+        "remote_mode_distribution"
+      ]
+    }
+  },
+  "events": [
+    {
+      "name": "page_view",
+      "purpose": "Comprendre les pages consultées.",
+      "properties": {
+        "route_name": {
+          "type": "enum",
+          "values": [
+            "home",
+            "explorer",
+            "methodology",
+            "about",
+            "data_status",
+            "insight"
+          ]
+        },
+        "insight_slug": {
+          "type": "string",
+          "maxLength": 100,
+          "optional": true
+        }
+      }
+    },
+    {
+      "name": "filter_changed",
+      "purpose": "Mesurer les filtres réellement utiles.",
+      "properties": {
+        "filter_name": {
+          "type": "enum",
+          "values": [
+            "job_family",
+            "technology",
+            "region",
+            "department",
+            "city",
+            "contract_type",
+            "remote_mode",
+            "period",
+            "classification"
+          ]
+        },
+        "action": {
+          "type": "enum",
+          "values": [
+            "add",
+            "remove",
+            "clear"
+          ]
+        },
+        "value_id": {
+          "type": "taxonomy_id",
+          "maxLength": 64
+        }
+      }
+    },
+    {
+      "name": "filter_set_shared",
+      "purpose": "Mesurer l'usage des URL partageables.",
+      "properties": {
+        "active_filter_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "share_method": {
+          "type": "enum",
+          "values": [
+            "copy_link",
+            "native_share",
+            "linkedin"
+          ]
+        }
+      }
+    },
+    {
+      "name": "metric_opened",
+      "purpose": "Identifier les indicateurs qui déclenchent une exploration.",
+      "properties": {
+        "metric_id": {
+          "type": "metric_id"
+        },
+        "displayability": {
+          "type": "enum",
+          "values": [
+            "hidden",
+            "caution",
+            "standard"
+          ]
+        },
+        "sample_size_bucket": {
+          "type": "enum",
+          "values": [
+            "0-19",
+            "20-49",
+            "50-199",
+            "200-999",
+            "1000+"
+          ]
+        }
+      }
+    },
+    {
+      "name": "chart_interacted",
+      "purpose": "Savoir si les visualisations sont comprises et utilisées.",
+      "properties": {
+        "chart_id": {
+          "type": "string",
+          "maxLength": 80
+        },
+        "interaction": {
+          "type": "enum",
+          "values": [
+            "focus_point",
+            "change_series",
+            "open_table",
+            "download_image"
+          ]
+        }
+      }
+    },
+    {
+      "name": "offer_opened",
+      "purpose": "Mesurer l'exploration des preuves sans identifier l'annonce.",
+      "properties": {
+        "classification": {
+          "type": "classification_label"
+        },
+        "entry_point": {
+          "type": "enum",
+          "values": [
+            "offer_table",
+            "metric_detail",
+            "insight"
+          ]
+        },
+        "rank_bucket": {
+          "type": "enum",
+          "values": [
+            "1-5",
+            "6-10",
+            "11-25",
+            "26+"
+          ]
+        }
+      }
+    },
+    {
+      "name": "evidence_expanded",
+      "purpose": "Mesurer l'intérêt pour l'explicabilité.",
+      "properties": {
+        "classification": {
+          "type": "classification_label"
+        },
+        "evidence_kind": {
+          "type": "enum",
+          "values": [
+            "junior_claim",
+            "required_experience",
+            "desired_experience",
+            "exclusion",
+            "ambiguity"
+          ]
+        }
+      }
+    },
+    {
+      "name": "source_offer_clicked",
+      "purpose": "Mesurer les sorties vers la source officielle.",
+      "properties": {
+        "classification": {
+          "type": "classification_label"
+        },
+        "source_type": {
+          "type": "enum",
+          "values": [
+            "france_travail",
+            "partner"
+          ]
+        }
+      }
+    },
+    {
+      "name": "methodology_opened",
+      "purpose": "Mesurer la consultation de la méthode.",
+      "properties": {
+        "entry_point": {
+          "type": "enum",
+          "values": [
+            "header",
+            "metric",
+            "offer",
+            "footer",
+            "data_warning"
+          ]
+        }
+      }
+    },
+    {
+      "name": "insight_shared",
+      "purpose": "Mesurer le contenu qui circule.",
+      "properties": {
+        "insight_slug": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "share_method": {
+          "type": "enum",
+          "values": [
+            "copy_link",
+            "native_share",
+            "linkedin",
+            "download_image"
+          ]
+        }
+      }
+    },
+    {
+      "name": "data_warning_opened",
+      "purpose": "Vérifier que les avertissements de qualité sont visibles.",
+      "properties": {
+        "warning_code": {
+          "type": "enum",
+          "values": [
+            "SMALL_SAMPLE",
+            "PARTIAL_COLLECTION",
+            "STALE_DATA",
+            "SOURCE_SCHEMA_CHANGE",
+            "CLASSIFICATION_DRIFT",
+            "UNKNOWN"
+          ]
+        },
+        "severity": {
+          "type": "enum",
+          "values": [
+            "info",
+            "warning",
+            "critical"
+          ]
+        }
+      }
+    }
+  ],
+  "forbiddenProperties": [
+    "email",
+    "phone",
+    "name",
+    "full_url",
+    "search_text",
+    "offer_title",
+    "company_name",
+    "offer_description",
+    "source_offer_id",
+    "precise_location",
+    "ip_address"
+  ]
+}

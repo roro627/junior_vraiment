@@ -1,0 +1,67 @@
+{
+  "resultats": [
+    {
+      "id": "REDACTED_ACTIVE_OFFER_ID",
+      "intitule": "Offre informatique observée — intitulé remplacé",
+      "description": "Le contenu réel de l'offre a été retiré de cette fixture.",
+      "dateCreation": "2026-09-03T00:00:00Z",
+      "dateActualisation": "2026-09-03T00:00:00Z",
+      "lieuTravail": {
+        "libelle": "LOCALISATION REDACTED",
+        "latitude": 0,
+        "longitude": 0,
+        "codePostal": "00000",
+        "commune": "00000"
+      },
+      "romeCode": "M1805",
+      "romeLibelle": "Développeur / Développeuse informatique",
+      "appellationlibelle": "Appellation remplacée",
+      "entreprise": {
+        "nom": "ENTREPRISE REDACTED",
+        "description": "DESCRIPTION ENTREPRISE REDACTED",
+        "entrepriseAdaptee": false
+      },
+      "typeContrat": "CDI",
+      "typeContratLibelle": "CDI",
+      "natureContrat": "Contrat travail",
+      "experienceExige": "S",
+      "experienceLibelle": "Expérience souhaitée",
+      "formations": [],
+      "competences": [],
+      "salaire": {
+        "commentaire": "VALEUR REDACTED"
+      },
+      "dureeTravailLibelle": "35H/semaine",
+      "dureeTravailLibelleConverti": "Temps plein",
+      "alternance": false,
+      "contact": {
+        "nom": "CONTACT REDACTED",
+        "courriel": "CONTACT REDACTED"
+      },
+      "agence": {
+        "courriel": "AGENCE REDACTED"
+      },
+      "nombrePostes": 1,
+      "deplacementCode": "1",
+      "deplacementLibelle": "Jamais",
+      "qualificationCode": "7",
+      "qualificationLibelle": "Technicien",
+      "codeNAF": "00.00Z",
+      "secteurActivite": "00",
+      "secteurActiviteLibelle": "SECTEUR REDACTED",
+      "qualitesProfessionnelles": [],
+      "trancheEffectifEtab": "EFFECTIF REDACTED",
+      "origineOffre": {
+        "origine": "1",
+        "urlOrigine": "https://candidat.francetravail.fr/offres/recherche/detail/REDACTED"
+      },
+      "offresManqueCandidats": false,
+      "contexteTravail": {
+        "horaires": "HORAIRES REDACTED"
+      },
+      "entrepriseAdaptee": false,
+      "employeurHandiEngage": false
+    }
+  ],
+  "filtresPossibles": []
+}

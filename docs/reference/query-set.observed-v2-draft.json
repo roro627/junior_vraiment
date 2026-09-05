@@ -1,0 +1,288 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "documentVersion": "2.0.0",
+  "status": "draft-disabled-pending-relevance-validation",
+  "querySetVersion": "queries-2.0.0-observed-title-filtered-draft",
+  "source": "france-travail",
+  "sourceContractObservedAt": "2026-09-04",
+  "sourceApiVersion": "2.01",
+  "territoryScope": "france",
+  "changeBasis": [
+    "The 1.0 draft was rejected at 58.2% overall relevance precision.",
+    "Occupation-only discovery produced 54 false positives among 81 resolved exclusive-channel samples.",
+    "The 2.0 candidate keeps observed source parameters but admits only results whose title contains an explicit role signal from the documented taxonomy or observed ROME label."
+  ],
+  "sourceParameterMapping": {
+    "occupationReferences": "codeROME",
+    "keywords": "motsCles",
+    "territory": ["region", "departement", "commune", "distance"],
+    "pagination": "range",
+    "sort": "sort"
+  },
+  "postFilter": {
+    "field": "normalized title",
+    "operator": "unicode whole phrase contains any",
+    "purpose": "Reject description-only technology mentions and adjacent occupations deterministically before the offer enters a group perimeter."
+  },
+  "requestRules": {
+    "maxRequestsPerSecondInitial": 5,
+    "maxResultsPerRange": 150,
+    "maxStartIndex": 3000,
+    "maxEndIndex": 3149,
+    "keywordListOperator": "and",
+    "keywordsAnyExpansion": "one-source-request-per-keyword"
+  },
+  "groups": [
+    {
+      "id": "frontend",
+      "enabled": false,
+      "jobFamilies": ["frontend"],
+      "occupationReferences": ["M1855"],
+      "keywordsAny": [
+        "développeur frontend",
+        "développeuse frontend",
+        "développeur front-end",
+        "développeuse front-end",
+        "développeur web",
+        "développeuse web",
+        "intégrateur web",
+        "intégratrice web"
+      ],
+      "titleIncludesAny": [
+        "frontend",
+        "front-end",
+        "front end",
+        "développeur web",
+        "développeuse web",
+        "intégrateur web",
+        "intégratrice web"
+      ]
+    },
+    {
+      "id": "backend",
+      "enabled": false,
+      "jobFamilies": ["backend"],
+      "occupationReferences": ["M1805", "M1861"],
+      "keywordsAny": [
+        "développeur backend",
+        "développeuse backend",
+        "développeur back-end",
+        "développeuse back-end",
+        "développeur API",
+        "développeuse API"
+      ],
+      "titleIncludesAny": [
+        "backend",
+        "back-end",
+        "back end",
+        "développeur API",
+        "développeuse API"
+      ]
+    },
+    {
+      "id": "fullstack",
+      "enabled": false,
+      "jobFamilies": ["fullstack"],
+      "occupationReferences": ["M1805", "M1855", "M1861"],
+      "keywordsAny": [
+        "développeur fullstack",
+        "développeuse fullstack",
+        "développeur full-stack",
+        "développeuse full-stack",
+        "développeur full stack",
+        "développeuse full stack"
+      ],
+      "titleIncludesAny": ["fullstack", "full-stack", "full stack"]
+    },
+    {
+      "id": "mobile",
+      "enabled": false,
+      "jobFamilies": ["mobile"],
+      "occupationReferences": ["M1805", "M1861"],
+      "keywordsAny": [
+        "développeur mobile",
+        "développeuse mobile",
+        "ingénieur mobile",
+        "ingénieure mobile",
+        "développeur application mobile",
+        "développeuse application mobile",
+        "développeur applications mobiles",
+        "développeuse applications mobiles",
+        "développement mobile",
+        "développement application mobile",
+        "développeur Android",
+        "développeuse Android",
+        "développeur iOS",
+        "développeuse iOS",
+        "développeur Flutter",
+        "développeuse Flutter",
+        "React Native",
+        "mobile developer",
+        "mobile engineer"
+      ],
+      "titleIncludesAny": [
+        "développeur mobile",
+        "développeuse mobile",
+        "développeur application mobile",
+        "développeuse application mobile",
+        "développeur applications mobiles",
+        "développeuse applications mobiles",
+        "ingénieur mobile",
+        "ingénieure mobile",
+        "mobile",
+        "développement mobile",
+        "développement application mobile",
+        "application mobile",
+        "applications mobiles",
+        "développeur Android",
+        "développeuse Android",
+        "développeur iOS",
+        "développeuse iOS",
+        "développeur Flutter",
+        "développeuse Flutter",
+        "React Native",
+        "Android",
+        "iOS",
+        "Flutter",
+        "mobile developer",
+        "mobile engineer"
+      ]
+    },
+    {
+      "id": "data",
+      "enabled": false,
+      "jobFamilies": ["data"],
+      "occupationReferences": ["M1811", "M1824", "M1851"],
+      "keywordsAny": [
+        "data analyst",
+        "data engineer",
+        "ingénieur données",
+        "ingénieure données",
+        "développeur data",
+        "développeuse data"
+      ],
+      "titleIncludesAny": [
+        "data analyst",
+        "data engineer",
+        "ingénieur données",
+        "ingénieure données",
+        "développeur data",
+        "développeuse data",
+        "développeur décisionnel",
+        "développeuse décisionnel",
+        "analyste décisionnel"
+      ]
+    },
+    {
+      "id": "devops-cloud",
+      "enabled": false,
+      "jobFamilies": ["devops-cloud"],
+      "occupationReferences": ["M1827", "M1860", "M1876", "M1879"],
+      "keywordsAny": [
+        "ingénieur DevOps",
+        "ingénieure DevOps",
+        "site reliability engineer",
+        "ingénieur cloud",
+        "ingénieure cloud",
+        "architecte cloud",
+        "technicien cloud",
+        "technicienne cloud"
+      ],
+      "titleIncludesAny": [
+        "devops",
+        "site reliability engineer",
+        "ingénieur cloud",
+        "ingénieure cloud",
+        "architecte cloud",
+        "technicien cloud",
+        "technicienne cloud"
+      ]
+    },
+    {
+      "id": "cybersecurity",
+      "enabled": false,
+      "jobFamilies": ["cybersecurity"],
+      "occupationReferences": [
+        "M1812",
+        "M1817",
+        "M1819",
+        "M1833",
+        "M1846",
+        "M1856",
+        "M1863",
+        "M1866",
+        "M1882",
+        "M1883"
+      ],
+      "keywordsAny": [
+        "analyste cybersécurité",
+        "ingénieur cybersécurité",
+        "ingénieure cybersécurité",
+        "sécurité informatique",
+        "analyste SOC",
+        "pentesteur",
+        "pentesteuse"
+      ],
+      "titleIncludesAny": [
+        "cybersécurité",
+        "cybersecurity",
+        "sécurité informatique",
+        "sécurité web",
+        "analyste SOC",
+        "pentest",
+        "RSSI"
+      ]
+    },
+    {
+      "id": "qa-test",
+      "enabled": false,
+      "jobFamilies": ["qa-test"],
+      "occupationReferences": ["M1815", "M1820", "M1832", "M1842"],
+      "keywordsAny": [
+        "testeur logiciel",
+        "testeuse logiciel",
+        "ingénieur QA",
+        "ingénieure QA",
+        "qa engineer",
+        "qa automation",
+        "automaticien de tests",
+        "automaticienne de tests",
+        "ingénieur test logiciel",
+        "ingénieure test logiciel",
+        "validation logiciel"
+      ],
+      "titleIncludesAny": [
+        "testeur logiciel",
+        "testeuse logiciel",
+        "testeur QA",
+        "testeuse QA",
+        "ingénieur QA",
+        "ingénieure QA",
+        "qa engineer",
+        "qa analyst",
+        "qa automation",
+        "quality assurance",
+        "automaticien de tests",
+        "automaticienne de tests",
+        "automatisation test",
+        "ingénieur test",
+        "ingénieure test",
+        "test et validation",
+        "test & validation",
+        "tests et validation",
+        "validation logiciel",
+        "valideur logiciel",
+        "qualification logicielle",
+        "spécialiste test",
+        "qualiticien logiciel"
+      ]
+    }
+  ],
+  "activationGate": [
+    "collect a fresh real sample using this exact query set version",
+    "annotate exactly one blind LLM A pass under query-relevance-gate-1.0.0",
+    "meet every unchanged global and per-group relevance threshold",
+    "confirm pagination completeness under the 3150-result API ceiling",
+    "keep every group disabled until the gate passes"
+  ]
+}

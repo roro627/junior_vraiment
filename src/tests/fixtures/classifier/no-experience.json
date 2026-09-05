@@ -1,0 +1,67 @@
+[
+  {
+    "fixtureId": "no-experience-text",
+    "title": "Développeur web",
+    "description": "Aucune expérience n'est requise pour ce poste.",
+    "experienceRequired": null,
+    "experienceLabel": null,
+    "expected": {
+      "status": "classified",
+      "minimumExperienceMonths": 0,
+      "beginnerFriendly": true,
+      "contradictoryJunior": false
+    }
+  },
+  {
+    "fixtureId": "without-experience-text",
+    "title": "Intégratrice front-end",
+    "description": "Sans expérience requise : une formation interne est prévue.",
+    "experienceRequired": null,
+    "experienceLabel": null,
+    "expected": {
+      "status": "classified",
+      "minimumExperienceMonths": 0,
+      "beginnerFriendly": true,
+      "contradictoryJunior": false
+    }
+  },
+  {
+    "fixtureId": "beginner-accepted-text",
+    "title": "Technicien support applicatif",
+    "description": "Débutants acceptés, avec accompagnement à la prise de poste.",
+    "experienceRequired": null,
+    "experienceLabel": null,
+    "expected": {
+      "status": "classified",
+      "minimumExperienceMonths": 0,
+      "beginnerFriendly": true,
+      "contradictoryJunior": false
+    }
+  },
+  {
+    "fixtureId": "structured-beginner-accepted",
+    "title": "Administratrice systèmes",
+    "description": "Vous rejoindrez une équipe d'exploitation.",
+    "experienceRequired": false,
+    "experienceLabel": "Débutant accepté",
+    "expected": {
+      "status": "classified",
+      "minimumExperienceMonths": 0,
+      "beginnerFriendly": true,
+      "contradictoryJunior": false
+    }
+  },
+  {
+    "fixtureId": "structured-no-experience-required",
+    "title": "Développeur logiciel",
+    "description": "Une période de mentorat est organisée à l'arrivée.",
+    "experienceRequired": false,
+    "experienceLabel": "Aucune expérience requise",
+    "expected": {
+      "status": "classified",
+      "minimumExperienceMonths": 0,
+      "beginnerFriendly": true,
+      "contradictoryJunior": false
+    }
+  }
+]

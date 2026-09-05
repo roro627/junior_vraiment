@@ -1,0 +1,58 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "dependencyDashboard": true,
+  "rangeStrategy": "pin",
+  "schedule": ["before 5am on monday"],
+  "timezone": "Europe/Paris",
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "schedule": ["at any time"]
+  },
+  "packageRules": [
+    {
+      "description": "Regrouper React et Next.js sans fusion automatique",
+      "matchPackageNames": ["next", "react", "react-dom"],
+      "groupName": "React et Next.js",
+      "automerge": false
+    },
+    {
+      "description": "Regrouper Neon et Drizzle sans fusion automatique",
+      "matchPackageNames": [
+        "@neondatabase/serverless",
+        "drizzle-orm",
+        "drizzle-kit"
+      ],
+      "groupName": "Neon et Drizzle",
+      "automerge": false
+    },
+    {
+      "description": "Regrouper Trigger.dev sans fusion automatique",
+      "matchPackageNames": ["@trigger.dev/**", "trigger.dev"],
+      "groupName": "Trigger.dev",
+      "automerge": false
+    },
+    {
+      "description": "Fusionner les correctifs des dépendances de développement après les contrôles requis",
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["patch"],
+      "automerge": true,
+      "automergeType": "pr",
+      "platformAutomerge": true
+    },
+    {
+      "description": "Garder les dépendances structurantes sous revue humaine",
+      "matchPackageNames": [
+        "next",
+        "react",
+        "react-dom",
+        "@neondatabase/serverless",
+        "drizzle-orm",
+        "drizzle-kit",
+        "@trigger.dev/**",
+        "trigger.dev"
+      ],
+      "automerge": false
+    }
+  ]
+}

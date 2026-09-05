@@ -1,0 +1,43 @@
+name: Erreur de donnée ou de classification
+description: Signaler une décision ou une donnée publique qui semble incorrecte.
+title: "[Donnée] "
+labels: ["data-correction"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Merci de ne joindre aucune donnée personnelle ni copie intégrale d'une annonce.
+  - type: input
+    id: offer
+    attributes:
+      label: URL ou identifiant public de l'offre
+      description: Utilisez le lien public de l'Explorateur ou l'URL de l'offre source.
+    validations:
+      required: true
+  - type: input
+    id: classification
+    attributes:
+      label: Classification observée
+    validations:
+      required: true
+  - type: input
+    id: classifier-version
+    attributes:
+      label: Version du classificateur
+      description: Elle apparaît en bas du panneau de preuves.
+    validations:
+      required: true
+  - type: textarea
+    id: reason
+    attributes:
+      label: Pourquoi cette décision semble-t-elle incorrecte ?
+      description: Décrivez la règle ou l'extrait concerné sans ajouter de donnée personnelle.
+    validations:
+      required: true
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Vérification
+      options:
+        - label: Je confirme ne pas avoir ajouté de donnée personnelle ni de secret.
+          required: true

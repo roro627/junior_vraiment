@@ -1,0 +1,17 @@
+allowBuilds:
+  "@depot/cli": false
+  "@sentry/cli": false
+  core-js: false
+  esbuild: true
+  msw: false
+  sharp: true
+  unrs-resolver: true
+
+overrides:
+  "@lhci/cli>lighthouse": 13.4.1
+  "@opentelemetry/core@2.7.1": 2.8.0
+  deepmerge-ts: 8.0.2
+  "esbuild@0.18.20": 0.25.12
+  "esbuild@0.23.1": 0.25.12
+  tar: 7.5.22
+  ws: 8.21.3

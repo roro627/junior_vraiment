@@ -1,0 +1,194 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "documentVersion": "1.0.0",
+  "status": "template-requires-live-france-travail-contract-validation",
+  "querySetVersion": "queries-1.0.0-draft",
+  "source": "france-travail",
+  "territoryScope": "france",
+  "purpose": "Define the repeatable source perimeter without leaking source-specific parameters into the domain.",
+  "importantWarnings": [
+    "This file is not a production query set until the active API contract, reference data and licence have been checked with real credentials.",
+    "Do not invent or freeze ROME codes from memory. Resolve them from the source reference endpoint and record the source reference version.",
+    "Keyword-only searches can introduce occupational and geographic bias; compare coverage against reference occupations before publication.",
+    "Overlapping queries are expected and must be deduplicated by source plus external offer identifier."
+  ],
+  "adapterContract": {
+    "sourceParameterMapping": "pending-live-validation",
+    "referenceDataSnapshot": "required-before-activation",
+    "maxRequestsPerSecondInitial": 5,
+    "sourcePublishedLimitMustBeRespected": true,
+    "paginationCheckpointRequired": true
+  },
+  "groups": [
+    {
+      "id": "software-general",
+      "enabled": false,
+      "label": "Développement logiciel — contrôle de couverture",
+      "jobFamilies": [
+        "frontend",
+        "backend",
+        "fullstack",
+        "mobile"
+      ],
+      "intent": {
+        "keywordsAny": [
+          "développeur logiciel",
+          "développeuse logiciel",
+          "développement informatique"
+        ],
+        "occupationReferences": []
+      },
+      "role": "coverage-control",
+      "activationGate": "Compare overlap and false-positive rate against specialised groups."
+    },
+    {
+      "id": "frontend",
+      "enabled": false,
+      "label": "Développement frontend",
+      "jobFamilies": [
+        "frontend"
+      ],
+      "intent": {
+        "keywordsAny": [
+          "développeur front-end",
+          "développeuse front-end",
+          "frontend"
+        ],
+        "occupationReferences": []
+      },
+      "role": "primary"
+    },
+    {
+      "id": "backend",
+      "enabled": false,
+      "label": "Développement backend",
+      "jobFamilies": [
+        "backend"
+      ],
+      "intent": {
+        "keywordsAny": [
+          "développeur back-end",
+          "développeuse back-end",
+          "backend"
+        ],
+        "occupationReferences": []
+      },
+      "role": "primary"
+    },
+    {
+      "id": "fullstack",
+      "enabled": false,
+      "label": "Développement full-stack",
+      "jobFamilies": [
+        "fullstack"
+      ],
+      "intent": {
+        "keywordsAny": [
+          "développeur full-stack",
+          "développeuse full-stack",
+          "fullstack"
+        ],
+        "occupationReferences": []
+      },
+      "role": "primary"
+    },
+    {
+      "id": "mobile",
+      "enabled": false,
+      "label": "Développement mobile",
+      "jobFamilies": [
+        "mobile"
+      ],
+      "intent": {
+        "keywordsAny": [
+          "développeur mobile",
+          "développeuse mobile",
+          "développement mobile"
+        ],
+        "occupationReferences": []
+      },
+      "role": "primary"
+    },
+    {
+      "id": "data",
+      "enabled": false,
+      "label": "Data et ingénierie des données",
+      "jobFamilies": [
+        "data"
+      ],
+      "intent": {
+        "keywordsAny": [
+          "data analyst",
+          "data engineer",
+          "ingénieur données",
+          "ingénieure données"
+        ],
+        "occupationReferences": []
+      },
+      "role": "primary"
+    },
+    {
+      "id": "devops-cloud",
+      "enabled": false,
+      "label": "DevOps, SRE et cloud",
+      "jobFamilies": [
+        "devops-cloud"
+      ],
+      "intent": {
+        "keywordsAny": [
+          "devops",
+          "site reliability engineer",
+          "ingénieur cloud",
+          "ingénieure cloud"
+        ],
+        "occupationReferences": []
+      },
+      "role": "primary"
+    },
+    {
+      "id": "cybersecurity",
+      "enabled": false,
+      "label": "Cybersécurité",
+      "jobFamilies": [
+        "cybersecurity"
+      ],
+      "intent": {
+        "keywordsAny": [
+          "cybersécurité",
+          "analyste sécurité",
+          "ingénieur sécurité",
+          "ingénieure sécurité"
+        ],
+        "occupationReferences": []
+      },
+      "role": "primary"
+    },
+    {
+      "id": "qa-test",
+      "enabled": false,
+      "label": "Qualité logicielle et test",
+      "jobFamilies": [
+        "qa-test"
+      ],
+      "intent": {
+        "keywordsAny": [
+          "testeur logiciel",
+          "testeuse logiciel",
+          "qa engineer",
+          "automaticien de tests",
+          "automaticienne de tests"
+        ],
+        "occupationReferences": []
+      },
+      "role": "primary"
+    }
+  ],
+  "activationChecklist": [
+    "Map each intent to exact source parameters using the active official documentation.",
+    "Populate occupationReferences from the source reference endpoint.",
+    "Run a labelled sample for relevance and missed-offer analysis.",
+    "Measure overlap, pagination completeness and expected volume ranges.",
+    "Record licence date, API version and reference-data version.",
+    "Set enabled=true only after review and bump querySetVersion from draft."
+  ]
+}

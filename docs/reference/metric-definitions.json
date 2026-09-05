@@ -1,0 +1,168 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "documentVersion": "1.1.0",
+  "status": "normative-reference-do-not-eval-expressions",
+  "methodologyVersion": "methodology-1.0.0",
+  "expressionLanguage": "declarative-pseudocode-no-runtime-eval",
+  "apiRepresentation": {
+    "rateScale": "0_to_1",
+    "displayScale": "percent",
+    "displayMaximumDecimals": 1,
+    "nullValueRule": "value is null when denominator is zero or the sample is below the publication threshold",
+    "commonInvariants": [
+      "0 <= numerator <= denominator <= populationCount",
+      "populationCount == denominator + unknownCount + ambiguousCount",
+      "coverage == denominator / populationCount when populationCount > 0, else null",
+      "value == numerator / denominator when denominator > 0 and publishable, else null"
+    ]
+  },
+  "publicationThresholds": {
+    "basis": "resolved_denominator",
+    "insufficientBelow": 20,
+    "cautionBelow": 50,
+    "normalFrom": 50
+  },
+  "rates": [
+    {
+      "id": "junior_contradiction_rate",
+      "version": "junior-contradiction-1.0.0",
+      "label": "Part d'offres junior contradictoires",
+      "question": "Parmi les offres explicitement junior dont le minimum obligatoire est résolu, quelle part exige au moins 24 mois ?",
+      "populationPredicate": "active && inScope && valid && deduplicated && hasExplicitJuniorEvidence",
+      "denominatorPredicate": "status == 'classified' && claimsJunior == true && minimumExperienceMonths != null",
+      "numeratorPredicate": "denominatorPredicate && minimumExperienceMonths >= 24",
+      "unknownPredicate": "status == 'classified' && claimsJunior == true && minimumExperienceMonths == null",
+      "ambiguousPredicate": "status == 'ambiguous' && hasExplicitJuniorEvidence",
+      "thresholds": {
+        "contradictionMinimumMonths": 24
+      },
+      "notes": [
+        "A desired-only duration never resolves the denominator.",
+        "Explicit beginner acceptance resolves the minimum to 0 months.",
+        "Ambiguous offers are visible but never forced into numerator or denominator."
+      ]
+    },
+    {
+      "id": "beginner_friendly_rate",
+      "version": "beginner-friendly-1.0.0",
+      "label": "Accessibilité réelle aux débutants",
+      "question": "Parmi les offres dont l'accessibilité est résolue, quelle part accepte explicitement les débutants ou exige au plus 12 mois ?",
+      "populationPredicate": "active && inScope && valid && deduplicated",
+      "denominatorPredicate": "status == 'classified' && beginnerFriendly != null",
+      "numeratorPredicate": "beginnerFriendly == true",
+      "unknownPredicate": "status != 'ambiguous' && beginnerFriendly == null",
+      "ambiguousPredicate": "status == 'ambiguous'",
+      "thresholds": {
+        "beginnerMaximumMonths": 12
+      },
+      "notes": [
+        "Unknown is not false.",
+        "The UI must display coverage next to the rate."
+      ]
+    },
+    {
+      "id": "salary_transparency_rate",
+      "version": "salary-transparency-1.0.0",
+      "label": "Transparence salariale",
+      "question": "Quelle part des offres entièrement traitées contient une rémunération explicite exploitable ?",
+      "populationPredicate": "active && inScope && valid && deduplicated && fullPayloadProcessed",
+      "denominatorPredicate": "populationPredicate",
+      "numeratorPredicate": "salaryTransparent == true",
+      "unknownPredicate": "false",
+      "ambiguousPredicate": "false",
+      "notes": [
+        "A complete offer with no exploitable salary is a valid false observation.",
+        "An incomplete or invalid payload is quarantined before publication rather than converted to false.",
+        "Experience ambiguity does not remove the offer from this metric."
+      ]
+    }
+  ],
+  "counters": [
+    {
+      "id": "offer_volume",
+      "version": "offer-volume-1.0.0",
+      "label": "Volume d'offres actives",
+      "populationPredicate": "active && inScope && valid && deduplicated",
+      "valueDefinition": "count(populationPredicate)",
+      "countingUnit": "unique source-offer pair in the current published dataset",
+      "notes": [
+        "A snapshot is not an additional offer.",
+        "Quarantined or incomplete payloads are excluded before publication.",
+        "The displayed volume must carry the dataset version and data freshness date."
+      ]
+    }
+  ],
+  "distributions": [
+    {
+      "id": "minimum_experience_distribution",
+      "version": "minimum-experience-distribution-1.0.0",
+      "label": "Expérience minimale demandée",
+      "populationPredicate": "active && inScope && valid && deduplicated",
+      "buckets": [
+        {
+          "id": "none",
+          "predicate": "status == 'classified' && minimumExperienceMonths == 0"
+        },
+        {
+          "id": "1_12",
+          "predicate": "status == 'classified' && 1 <= minimumExperienceMonths <= 12"
+        },
+        {
+          "id": "13_23",
+          "predicate": "status == 'classified' && 13 <= minimumExperienceMonths <= 23"
+        },
+        {
+          "id": "24_35",
+          "predicate": "status == 'classified' && 24 <= minimumExperienceMonths <= 35"
+        },
+        {
+          "id": "36_59",
+          "predicate": "status == 'classified' && 36 <= minimumExperienceMonths <= 59"
+        },
+        {
+          "id": "60_plus",
+          "predicate": "status == 'classified' && minimumExperienceMonths >= 60"
+        },
+        {
+          "id": "unknown",
+          "predicate": "status != 'ambiguous' && minimumExperienceMonths == null"
+        },
+        {
+          "id": "ambiguous",
+          "predicate": "status == 'ambiguous'"
+        }
+      ],
+      "invariant": "Each population row belongs to exactly one bucket."
+    },
+    {
+      "id": "contract_distribution",
+      "version": "contract-distribution-1.0.0",
+      "label": "Types de contrat",
+      "populationPredicate": "active && inScope && valid && deduplicated",
+      "bucketSource": "versioned contract taxonomy",
+      "unknownBucketRequired": true
+    },
+    {
+      "id": "technology_mentions",
+      "version": "technology-mentions-1.0.0",
+      "label": "Technologies citées",
+      "populationPredicate": "active && inScope && valid && deduplicated",
+      "countingUnit": "unique offer-technology pair",
+      "multipleMembership": true,
+      "note": "Shares do not sum to 1 because one offer can mention several technologies."
+    },
+    {
+      "id": "remote_mode_distribution",
+      "version": "remote-mode-distribution-1.0.0",
+      "label": "Modalités de télétravail",
+      "populationPredicate": "active && inScope && valid && deduplicated",
+      "buckets": [
+        "remote",
+        "hybrid",
+        "onsite",
+        "unknown"
+      ],
+      "invariant": "A simple workplace location never implies onsite."
+    }
+  ]
+}

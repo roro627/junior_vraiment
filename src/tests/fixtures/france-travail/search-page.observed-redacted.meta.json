@@ -1,0 +1,12 @@
+{
+  "observedAt": "2026-09-03",
+  "source": "France Travail API Offres d'emploi v2.01",
+  "request": {
+    "grandDomaine": "M18",
+    "sort": "1",
+    "range": "0-4"
+  },
+  "responseStatus": 206,
+  "contentRange": "offres 0-4/7895",
+  "fixturePolicy": "Field names and optionality were observed on a real response. All offer text, identifiers, company, contact and detailed location values are synthetic or redacted. This fixture does not prove continued API availability."
+}

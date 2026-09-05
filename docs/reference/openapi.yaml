@@ -1,0 +1,1223 @@
+openapi: 3.1.0
+info:
+  title: Junior, vraiment ? — API publique
+  version: 1.0.0
+  summary: API de lecture de l'observatoire du marché tech junior.
+  description: |
+    Ce contrat décrit les routes publiques sous `/api/v1`.
+
+    Toutes les réponses de données proviennent d'un jeu publié de façon atomique.
+    Une réponse ne doit jamais mélanger plusieurs versions de dataset, de requêtes,
+    de métriques ou de classificateur. Les pourcentages sont transmis entre 0 et 1.
+  license:
+    name: À définir avant publication après validation de la licence de réutilisation
+servers:
+  - url: "{baseUrl}/api/v1"
+    variables:
+      baseUrl:
+        default: "http://localhost:3000"
+tags:
+  - name: Overview
+    description: Indicateurs synthétiques d'un périmètre.
+  - name: Trends
+    description: Séries temporelles.
+  - name: Offers
+    description: Offres, classification et preuves.
+  - name: Taxonomies
+    description: Valeurs de filtres supportées.
+  - name: Data status
+    description: Fraîcheur et qualité de la chaîne de données.
+
+paths:
+  /overview:
+    get:
+      operationId: getOverview
+      tags: [Overview]
+      summary: Retourne les cartes principales du périmètre demandé.
+      parameters:
+        - $ref: "#/components/parameters/Job"
+        - $ref: "#/components/parameters/Tech"
+        - $ref: "#/components/parameters/Area"
+        - $ref: "#/components/parameters/Contract"
+        - $ref: "#/components/parameters/Remote"
+        - $ref: "#/components/parameters/Period"
+      responses:
+        "200":
+          description: Vue synthétique.
+          headers:
+            ETag:
+              $ref: "#/components/headers/ETag"
+            Cache-Control:
+              $ref: "#/components/headers/CacheControl"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OverviewEnvelope"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "503":
+          $ref: "#/components/responses/DataUnavailable"
+
+  /trends:
+    get:
+      operationId: getTrends
+      tags: [Trends]
+      summary: Retourne une série temporelle bornée.
+      parameters:
+        - $ref: "#/components/parameters/Job"
+        - $ref: "#/components/parameters/Tech"
+        - $ref: "#/components/parameters/Area"
+        - $ref: "#/components/parameters/Contract"
+        - $ref: "#/components/parameters/Remote"
+        - name: metric
+          in: query
+          required: true
+          description: Indicateur demandé.
+          schema:
+            $ref: "#/components/schemas/MetricId"
+        - name: from
+          in: query
+          description: Date de début inclusive.
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          description: Date de fin inclusive. La plage ne peut dépasser 366 jours.
+          schema:
+            type: string
+            format: date
+      responses:
+        "200":
+          description: Série quotidienne.
+          headers:
+            ETag:
+              $ref: "#/components/headers/ETag"
+            Cache-Control:
+              $ref: "#/components/headers/CacheControl"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TrendEnvelope"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "503":
+          $ref: "#/components/responses/DataUnavailable"
+
+  /offers:
+    get:
+      operationId: listOffers
+      tags: [Offers]
+      summary: Liste les offres composant un indicateur ou un périmètre.
+      description: |
+        Le payload source brut n'est jamais exposé. Les extraits de preuve sont
+        limités à ce qui est nécessaire pour expliquer la décision.
+      parameters:
+        - $ref: "#/components/parameters/Job"
+        - $ref: "#/components/parameters/Tech"
+        - $ref: "#/components/parameters/Area"
+        - $ref: "#/components/parameters/Contract"
+        - $ref: "#/components/parameters/Remote"
+        - $ref: "#/components/parameters/Period"
+        - name: classification
+          in: query
+          description: Filtre de lecture dérivé de la sortie du classificateur.
+          schema:
+            type: string
+            enum: [contradictory, beginner_friendly, junior_unresolved, other_junior, not_explicitly_junior, ambiguous, unknown]
+        - name: salaryPublished
+          in: query
+          schema:
+            type: boolean
+        - name: experience
+          in: query
+          description: Une ou plusieurs tranches d'expérience.
+          schema:
+            type: array
+            maxItems: 8
+            items:
+              $ref: "#/components/schemas/ExperienceBucketKey"
+          style: form
+          explode: false
+        - name: sort
+          in: query
+          schema:
+            type: string
+            enum:
+              - published_desc
+              - published_asc
+              - experience_desc
+              - experience_asc
+            default: published_desc
+        - name: cursor
+          in: query
+          description: Curseur opaque retourné par la page précédente.
+          schema:
+            type: string
+            maxLength: 512
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            default: 25
+      responses:
+        "200":
+          description: Page d'offres.
+          headers:
+            ETag:
+              $ref: "#/components/headers/ETag"
+            Cache-Control:
+              $ref: "#/components/headers/CacheControl"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OffersEnvelope"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "503":
+          $ref: "#/components/responses/DataUnavailable"
+
+  /taxonomies:
+    get:
+      operationId: getTaxonomies
+      tags: [Taxonomies]
+      summary: Retourne les options de filtres et leurs versions.
+      responses:
+        "200":
+          description: Taxonomies publiques.
+          headers:
+            ETag:
+              $ref: "#/components/headers/ETag"
+            Cache-Control:
+              $ref: "#/components/headers/CacheControl"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaxonomiesEnvelope"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "503":
+          $ref: "#/components/responses/DataUnavailable"
+
+  /data-status:
+    get:
+      operationId: getDataStatus
+      tags: [Data status]
+      summary: Retourne l'état public de la collecte et du dataset actif.
+      responses:
+        "200":
+          description: État des données.
+          headers:
+            ETag:
+              $ref: "#/components/headers/ETag"
+            Cache-Control:
+              $ref: "#/components/headers/CacheControl"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DataStatusEnvelope"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "503":
+          $ref: "#/components/responses/DataUnavailable"
+
+components:
+  headers:
+    ETag:
+      description: Empreinte de la représentation.
+      schema:
+        type: string
+    CacheControl:
+      description: Directive de cache adaptée à la route.
+      schema:
+        type: string
+
+  parameters:
+    Job:
+      name: job
+      in: query
+      description: Slug stable d'une famille de métier.
+      schema:
+        type: string
+        pattern: "^[a-z0-9-]{1,64}$"
+    Tech:
+      name: tech
+      in: query
+      description: Jusqu'à trois slugs de technologies, séparés par des virgules.
+      schema:
+        type: array
+        maxItems: 3
+        items:
+          type: string
+          pattern: "^[a-z0-9.+#-]{1,64}$"
+      style: form
+      explode: false
+    Area:
+      name: area
+      in: query
+      description: |
+        Périmètre géographique canonique : `france`, `region:<code>`,
+        `department:<code>` ou `commune:<code>`.
+      schema:
+        type: string
+        maxLength: 40
+        pattern: "^(france|(region|department|commune):[0-9A-Z-]+)$"
+        default: france
+    Contract:
+      name: contract
+      in: query
+      description: Catégories de contrats normalisées, séparées par des virgules.
+      schema:
+        type: array
+        maxItems: 10
+        items:
+          $ref: "#/components/schemas/ContractKind"
+      style: form
+      explode: false
+    Remote:
+      name: remote
+      in: query
+      schema:
+        $ref: "#/components/schemas/RemoteMode"
+    Period:
+      name: period
+      in: query
+      description: Fenêtre de lecture.
+      schema:
+        type: string
+        enum: [7d, 30d, 90d, current]
+        default: 30d
+
+  responses:
+    BadRequest:
+      description: Paramètre absent, invalide ou combinaison non supportée.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+    TooManyRequests:
+      description: Trop de requêtes sur une fenêtre courte.
+      headers:
+        Retry-After:
+          description: Secondes avant une nouvelle tentative.
+          schema:
+            type: integer
+            minimum: 1
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+    DataUnavailable:
+      description: Aucun dataset publiable n'est actuellement disponible.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+
+  schemas:
+    ResponseMeta:
+      type: object
+      additionalProperties: false
+      required:
+        - generatedAt
+        - dataAsOf
+        - datasetVersion
+        - classifierVersion
+        - metricVersions
+        - querySetVersion
+        - quality
+      properties:
+        generatedAt:
+          type: string
+          format: date-time
+        dataAsOf:
+          type: string
+          format: date-time
+        datasetVersion:
+          type: string
+          minLength: 1
+          maxLength: 100
+        classifierVersion:
+          type: string
+          minLength: 1
+          maxLength: 100
+        metricVersions:
+          type: object
+          minProperties: 1
+          additionalProperties:
+            type: string
+            minLength: 1
+            maxLength: 100
+          description: Versions des métriques contenues ou référencées par la réponse.
+        querySetVersion:
+          type: string
+          minLength: 1
+          maxLength: 100
+        sampleSize:
+          type: integer
+          minimum: 0
+        quality:
+          $ref: "#/components/schemas/DataQuality"
+        warnings:
+          type: array
+          items:
+            $ref: "#/components/schemas/DataWarning"
+
+    DataQuality:
+      type: string
+      enum: [normal, limited, partial, stale, insufficient, unavailable]
+
+    DataWarning:
+      type: object
+      additionalProperties: false
+      required: [code, severity, message]
+      properties:
+        code:
+          type: string
+          enum:
+            - SMALL_SAMPLE
+            - PARTIAL_COLLECTION
+            - STALE_DATA
+            - SOURCE_SCHEMA_CHANGE
+            - CLASSIFICATION_DRIFT
+            - METHODOLOGY_BREAK
+            - UNKNOWN
+        severity:
+          type: string
+          enum: [info, warning, critical]
+        message:
+          type: string
+          maxLength: 500
+
+    Scope:
+      type: object
+      additionalProperties: false
+      required: [job, technologies, area, contracts, remote, period]
+      properties:
+        job:
+          type: [string, "null"]
+          pattern: "^[a-z0-9-]{1,64}$"
+        technologies:
+          type: array
+          maxItems: 3
+          items:
+            type: string
+        area:
+          type: string
+          pattern: "^(france|(region|department|commune):[0-9A-Z-]+)$"
+        contracts:
+          type: array
+          items:
+            $ref: "#/components/schemas/ContractKind"
+        remote:
+          oneOf:
+            - $ref: "#/components/schemas/RemoteMode"
+            - type: "null"
+        period:
+          type: string
+          enum: [7d, 30d, 90d, current]
+
+    MetricId:
+      type: string
+      enum:
+        - junior_contradiction_rate
+        - beginner_friendly_rate
+        - salary_transparency_rate
+
+    MetricValue:
+      type: object
+      additionalProperties: false
+      description: |
+        Contrat commun d'un taux publié. Les invariants applicatifs sont :
+        `numerator <= denominator <= populationCount`,
+        `populationCount = denominator + unknownCount + ambiguousCount`,
+        `value = numerator / denominator` uniquement lorsque le dénominateur atteint
+        le seuil de publication, et `coverage = denominator / populationCount` lorsque
+        la population est non nulle. Une valeur non publiable reste `null`, jamais `0`.
+      required:
+        - metric
+        - metricVersion
+        - value
+        - numerator
+        - denominator
+        - populationCount
+        - unknownCount
+        - ambiguousCount
+        - coverage
+        - sampleQuality
+      allOf:
+        - if:
+            properties:
+              sampleQuality:
+                const: insufficient
+            required: [sampleQuality]
+          then:
+            properties:
+              denominator:
+                type: integer
+                minimum: 0
+                maximum: 19
+              value:
+                type: "null"
+        - if:
+            properties:
+              sampleQuality:
+                const: caution
+            required: [sampleQuality]
+          then:
+            properties:
+              denominator:
+                type: integer
+                minimum: 20
+                maximum: 49
+              value:
+                type: number
+                minimum: 0
+                maximum: 1
+        - if:
+            properties:
+              sampleQuality:
+                const: normal
+            required: [sampleQuality]
+          then:
+            properties:
+              denominator:
+                type: integer
+                minimum: 50
+              value:
+                type: number
+                minimum: 0
+                maximum: 1
+      properties:
+        metric:
+          $ref: "#/components/schemas/MetricId"
+        metricVersion:
+          type: string
+          minLength: 1
+          maxLength: 100
+        value:
+          type: [number, "null"]
+          minimum: 0
+          maximum: 1
+        numerator:
+          type: integer
+          minimum: 0
+        denominator:
+          type: integer
+          minimum: 0
+        populationCount:
+          type: integer
+          minimum: 0
+          description: Population avant exclusion des cas inconnus et ambigus propres à la métrique.
+        unknownCount:
+          type: integer
+          minimum: 0
+        ambiguousCount:
+          type: integer
+          minimum: 0
+        coverage:
+          type: [number, "null"]
+          minimum: 0
+          maximum: 1
+          description: Part de la population pour laquelle la métrique est résolue.
+        sampleQuality:
+          type: string
+          enum: [normal, caution, insufficient]
+        changePoints:
+          type: [number, "null"]
+          description: Évolution en points de pourcentage, pas en ratio.
+        caveat:
+          type: [string, "null"]
+          maxLength: 500
+
+    ExperienceBucketKey:
+      type: string
+      enum: [none, "1_12", "13_23", "24_35", "36_59", "60_plus", unknown, ambiguous]
+
+    CountItem:
+      type: object
+      additionalProperties: false
+      required: [key, count]
+      properties:
+        key:
+          type: string
+        label:
+          type: string
+        count:
+          type: integer
+          minimum: 0
+        share:
+          type: [number, "null"]
+          minimum: 0
+          maximum: 1
+
+    TechnologyCount:
+      allOf:
+        - $ref: "#/components/schemas/CountItem"
+        - type: object
+          properties:
+            key:
+              type: string
+              pattern: "^[a-z0-9.+#-]{1,64}$"
+
+    ContractKind:
+      type: string
+      enum: [cdi, cdd, interim, alternance, internship, freelance, public, other, unknown]
+
+    RemoteMode:
+      type: string
+      enum: [remote, hybrid, onsite, unknown]
+
+    OfferAvailability:
+      type: string
+      enum: [active, not_seen, closed]
+
+    ClassificationStatus:
+      type: string
+      enum: [classified, ambiguous, unclassified]
+
+    Classification:
+      type: object
+      additionalProperties: false
+      required:
+        - status
+        - claimsJunior
+        - beginnerFriendly
+        - contradictoryJunior
+        - classifierVersion
+        - warnings
+      properties:
+        status:
+          $ref: "#/components/schemas/ClassificationStatus"
+        claimsJunior:
+          type: [boolean, "null"]
+        beginnerFriendly:
+          type: [boolean, "null"]
+        contradictoryJunior:
+          type: [boolean, "null"]
+        classifierVersion:
+          type: string
+        warnings:
+          type: array
+          items:
+            type: string
+            maxLength: 120
+
+    EvidenceKind:
+      type: string
+      enum:
+        - junior_claim
+        - required_experience
+        - desired_experience
+        - salary
+        - remote
+        - technology
+        - job_family
+        - conflict
+        - exclusion
+        - ambiguity
+        - other
+
+    PublicEvidence:
+      type: object
+      additionalProperties: false
+      required: [kind, ruleId, excerpt]
+      properties:
+        kind:
+          $ref: "#/components/schemas/EvidenceKind"
+        ruleId:
+          type: string
+          pattern: "^[A-Z0-9_]+$"
+        sourceField:
+          type: [string, "null"]
+          maxLength: 100
+        excerpt:
+          type: string
+          maxLength: 700
+        normalizedValue:
+          type: [string, "null"]
+          maxLength: 100
+
+    PublicSalary:
+      type: object
+      additionalProperties: false
+      required: [published, label]
+      properties:
+        published:
+          type: boolean
+        label:
+          type: [string, "null"]
+          maxLength: 250
+        minimumAnnualGross:
+          type: [number, "null"]
+          minimum: 0
+        maximumAnnualGross:
+          type: [number, "null"]
+          minimum: 0
+        currency:
+          type: [string, "null"]
+          pattern: "^[A-Z]{3}$"
+        period:
+          type: [string, "null"]
+          enum: [hour, month, year, null]
+
+    PublicSource:
+      type: object
+      additionalProperties: false
+      required: [label, offerUrl, attributionUrl]
+      properties:
+        label:
+          type: string
+          maxLength: 100
+        offerUrl:
+          type: [string, "null"]
+          format: uri
+        attributionUrl:
+          type: string
+          format: uri
+
+    PublicOffer:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - title
+        - companyName
+        - locationLabel
+        - contractLabel
+        - publishedAt
+        - lastSeenAt
+        - availability
+        - minimumExperienceMonths
+        - experienceLabel
+        - classification
+        - evidence
+        - technologies
+        - salary
+        - remoteMode
+        - source
+      properties:
+        id:
+          type: string
+          pattern: "^[a-zA-Z0-9_-]{8,100}$"
+        title:
+          type: string
+          maxLength: 250
+        companyName:
+          type: [string, "null"]
+          maxLength: 250
+        locationLabel:
+          type: [string, "null"]
+          maxLength: 250
+        contractLabel:
+          type: [string, "null"]
+          maxLength: 150
+        publishedAt:
+          type: [string, "null"]
+          format: date-time
+        lastSeenAt:
+          type: string
+          format: date-time
+        availability:
+          $ref: "#/components/schemas/OfferAvailability"
+        minimumExperienceMonths:
+          type: [integer, "null"]
+          minimum: 0
+        experienceLabel:
+          type: [string, "null"]
+          maxLength: 250
+        classification:
+          $ref: "#/components/schemas/Classification"
+        evidence:
+          type: array
+          items:
+            $ref: "#/components/schemas/PublicEvidence"
+        technologies:
+          type: array
+          items:
+            type: string
+        salary:
+          oneOf:
+            - $ref: "#/components/schemas/PublicSalary"
+            - type: "null"
+        remoteMode:
+          $ref: "#/components/schemas/RemoteMode"
+        source:
+          $ref: "#/components/schemas/PublicSource"
+
+    OverviewData:
+      type: object
+      additionalProperties: false
+      required:
+        - scope
+        - headline
+        - beginnerFriendly
+        - salaryTransparency
+        - experienceBuckets
+        - topTechnologies
+        - contracts
+        - remoteModes
+        - examples
+      properties:
+        scope:
+          $ref: "#/components/schemas/Scope"
+        headline:
+          $ref: "#/components/schemas/MetricValue"
+        beginnerFriendly:
+          $ref: "#/components/schemas/MetricValue"
+        salaryTransparency:
+          $ref: "#/components/schemas/MetricValue"
+        experienceBuckets:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            required: [key, count]
+            properties:
+              key:
+                $ref: "#/components/schemas/ExperienceBucketKey"
+              count:
+                type: integer
+                minimum: 0
+        topTechnologies:
+          type: array
+          items:
+            $ref: "#/components/schemas/TechnologyCount"
+        contracts:
+          type: array
+          items:
+            $ref: "#/components/schemas/CountItem"
+        remoteModes:
+          type: array
+          items:
+            $ref: "#/components/schemas/CountItem"
+        examples:
+          type: array
+          maxItems: 10
+          items:
+            $ref: "#/components/schemas/PublicOffer"
+
+    OverviewEnvelope:
+      type: object
+      additionalProperties: false
+      required: [data, meta]
+      properties:
+        data:
+          $ref: "#/components/schemas/OverviewData"
+        meta:
+          $ref: "#/components/schemas/ResponseMeta"
+
+    TrendAnnotation:
+      type: object
+      additionalProperties: false
+      required: [kind, label]
+      properties:
+        kind:
+          type: string
+          enum: [partial_day, incident, methodology_change, classifier_change, source_change]
+        label:
+          type: string
+          maxLength: 200
+
+    TrendPoint:
+      type: object
+      additionalProperties: false
+      required:
+        - date
+        - value
+        - numerator
+        - denominator
+        - populationCount
+        - unknownCount
+        - ambiguousCount
+        - coverage
+        - sampleQuality
+        - quality
+        - datasetVersion
+        - annotation
+      allOf:
+        - if:
+            properties:
+              sampleQuality:
+                const: insufficient
+            required: [sampleQuality]
+          then:
+            properties:
+              denominator:
+                type: integer
+                minimum: 0
+                maximum: 19
+              value:
+                type: "null"
+        - if:
+            properties:
+              sampleQuality:
+                const: caution
+            required: [sampleQuality]
+          then:
+            properties:
+              denominator:
+                type: integer
+                minimum: 20
+                maximum: 49
+              value:
+                type: number
+                minimum: 0
+                maximum: 1
+        - if:
+            properties:
+              sampleQuality:
+                const: normal
+            required: [sampleQuality]
+          then:
+            properties:
+              denominator:
+                type: integer
+                minimum: 50
+              value:
+                type: number
+                minimum: 0
+                maximum: 1
+      properties:
+        date:
+          type: string
+          format: date
+        value:
+          type: [number, "null"]
+          minimum: 0
+          maximum: 1
+        numerator:
+          type: integer
+          minimum: 0
+        denominator:
+          type: integer
+          minimum: 0
+        populationCount:
+          type: integer
+          minimum: 0
+        unknownCount:
+          type: integer
+          minimum: 0
+        ambiguousCount:
+          type: integer
+          minimum: 0
+        coverage:
+          type: [number, "null"]
+          minimum: 0
+          maximum: 1
+        sampleQuality:
+          type: string
+          enum: [normal, caution, insufficient]
+        quality:
+          $ref: "#/components/schemas/DataQuality"
+        datasetVersion:
+          type: string
+        annotation:
+          oneOf:
+            - $ref: "#/components/schemas/TrendAnnotation"
+            - type: "null"
+
+    TrendData:
+      type: object
+      additionalProperties: false
+      required: [scope, metric, metricVersion, timezone, points]
+      properties:
+        scope:
+          $ref: "#/components/schemas/Scope"
+        metric:
+          $ref: "#/components/schemas/MetricId"
+        metricVersion:
+          type: string
+          minLength: 1
+          maxLength: 100
+        timezone:
+          type: string
+          const: Europe/Paris
+        points:
+          type: array
+          maxItems: 366
+          items:
+            $ref: "#/components/schemas/TrendPoint"
+
+    TrendEnvelope:
+      type: object
+      additionalProperties: false
+      required: [data, meta]
+      properties:
+        data:
+          $ref: "#/components/schemas/TrendData"
+        meta:
+          $ref: "#/components/schemas/ResponseMeta"
+
+    CursorPage:
+      type: object
+      additionalProperties: false
+      required: [nextCursor, hasNext]
+      properties:
+        nextCursor:
+          type: [string, "null"]
+        hasNext:
+          type: boolean
+
+    OffersData:
+      type: object
+      additionalProperties: false
+      required: [items, page]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/PublicOffer"
+        page:
+          $ref: "#/components/schemas/CursorPage"
+
+    OffersEnvelope:
+      type: object
+      additionalProperties: false
+      required: [data, meta]
+      properties:
+        data:
+          $ref: "#/components/schemas/OffersData"
+        meta:
+          $ref: "#/components/schemas/ResponseMeta"
+
+    TaxonomyOption:
+      type: object
+      additionalProperties: false
+      required: [id, label, availableCount]
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+        availableCount:
+          type: integer
+          minimum: 0
+        parentId:
+          type: [string, "null"]
+
+    TaxonomyVersions:
+      type: object
+      additionalProperties: false
+      required: [jobs, technologies, geography, contracts]
+      properties:
+        jobs:
+          type: string
+        technologies:
+          type: string
+        geography:
+          type: string
+        contracts:
+          type: string
+
+    TaxonomiesData:
+      type: object
+      additionalProperties: false
+      required:
+        - versions
+        - jobs
+        - technologies
+        - popularAreas
+        - contracts
+        - remoteModes
+      properties:
+        versions:
+          $ref: "#/components/schemas/TaxonomyVersions"
+        jobs:
+          type: array
+          items:
+            $ref: "#/components/schemas/TaxonomyOption"
+        technologies:
+          type: array
+          items:
+            $ref: "#/components/schemas/TaxonomyOption"
+        popularAreas:
+          type: array
+          items:
+            $ref: "#/components/schemas/TaxonomyOption"
+        contracts:
+          type: array
+          items:
+            $ref: "#/components/schemas/TaxonomyOption"
+        remoteModes:
+          type: array
+          items:
+            $ref: "#/components/schemas/TaxonomyOption"
+
+    TaxonomiesEnvelope:
+      type: object
+      additionalProperties: false
+      required: [data, meta]
+      properties:
+        data:
+          $ref: "#/components/schemas/TaxonomiesData"
+        meta:
+          $ref: "#/components/schemas/ResponseMeta"
+
+    LatestRunPublic:
+      type: object
+      additionalProperties: false
+      required:
+        - status
+        - durationMs
+        - requests
+        - queries
+        - partialQueries
+        - received
+        - valid
+        - new
+        - updated
+        - quarantined
+        - markedMissing
+        - closed
+        - ambiguousRate
+      properties:
+        status:
+          type: string
+          enum: [succeeded, partial, failed]
+        durationMs:
+          type: integer
+          minimum: 0
+        requests:
+          type: integer
+          minimum: 0
+        queries:
+          type: integer
+          minimum: 0
+        partialQueries:
+          type: integer
+          minimum: 0
+        received:
+          type: integer
+          minimum: 0
+        valid:
+          type: integer
+          minimum: 0
+        new:
+          type: integer
+          minimum: 0
+        updated:
+          type: integer
+          minimum: 0
+        quarantined:
+          type: integer
+          minimum: 0
+        markedMissing:
+          type: integer
+          minimum: 0
+        closed:
+          type: [integer, "null"]
+          minimum: 0
+        ambiguousRate:
+          type: number
+          minimum: 0
+          maximum: 1
+
+    PublicIncident:
+      type: object
+      additionalProperties: false
+      required: [id, status, startedAt, summary]
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum: [investigating, identified, monitoring, resolved]
+        startedAt:
+          type: string
+          format: date-time
+        resolvedAt:
+          type: [string, "null"]
+          format: date-time
+        summary:
+          type: string
+          maxLength: 500
+
+    DataStatusData:
+      type: object
+      additionalProperties: false
+      required:
+        - status
+        - lastSuccessfulRunAt
+        - dataAsOf
+        - freshness
+        - latestRun
+        - incidents
+      properties:
+        status:
+          type: string
+          enum: [operational, degraded, unavailable, maintenance]
+        lastSuccessfulRunAt:
+          type: [string, "null"]
+          format: date-time
+        dataAsOf:
+          type: [string, "null"]
+          format: date-time
+        freshness:
+          type: string
+          enum: [fresh, delayed, stale, unavailable]
+        latestRun:
+          oneOf:
+            - $ref: "#/components/schemas/LatestRunPublic"
+            - type: "null"
+        incidents:
+          type: array
+          items:
+            $ref: "#/components/schemas/PublicIncident"
+
+    DataStatusEnvelope:
+      type: object
+      additionalProperties: false
+      required: [data, meta]
+      properties:
+        data:
+          $ref: "#/components/schemas/DataStatusData"
+        meta:
+          $ref: "#/components/schemas/ResponseMeta"
+
+    FieldError:
+      type: object
+      additionalProperties: false
+      required: [path, message]
+      properties:
+        path:
+          type: string
+        message:
+          type: string
+
+    Problem:
+      type: object
+      additionalProperties: false
+      required: [type, title, status, code]
+      properties:
+        type:
+          type: string
+          format: uri-reference
+        title:
+          type: string
+        status:
+          type: integer
+          minimum: 400
+          maximum: 599
+        detail:
+          type: string
+        instance:
+          type: string
+          format: uri-reference
+        code:
+          type: string
+          pattern: "^[A-Z0-9_]+$"
+        errors:
+          type: array
+          items:
+            $ref: "#/components/schemas/FieldError"
+        traceId:
+          type: string

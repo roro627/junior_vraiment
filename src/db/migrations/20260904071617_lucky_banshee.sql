@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX "ingestion_runs_trigger_run_unique_idx" ON "ingestion_runs" USING btree ("trigger_run_id") WHERE "ingestion_runs"."trigger_run_id" is not null;

@@ -1,0 +1,340 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "documentationVersion": "1.0.0",
+  "generatedAt": "2026-09-02T17:20:00+02:00",
+  "rootFolder": "junior-vraiment-documentation",
+  "manifestPolicy": "The files array excludes DOCUMENTATION-MANIFEST.json itself to avoid a recursive hash.",
+  "validation": {
+    "status": "passed",
+    "report": "VALIDATION.md",
+    "openapiVersion": "3.1.0",
+    "openapiOperations": 5,
+    "openapiFixtures": 6,
+    "sqlReferenceTables": 16
+  },
+  "totals": {
+    "filesExcludingManifest": 53,
+    "bytesExcludingManifest": 414036,
+    "wordsExcludingManifest": 44763
+  },
+  "files": [
+    {
+      "path": ".env.example",
+      "bytes": 945,
+      "words": 82,
+      "sha256": "dcc2bc7ca756e41e0e4de5e4dab4c4db36f73fec14ebfa789a7b70396c2f49f2"
+    },
+    {
+      "path": ".github/PULL_REQUEST_TEMPLATE.md",
+      "bytes": 1241,
+      "words": 135,
+      "sha256": "43a319ea110b7b12458e9048389f854768835d3c08164326840c7938fd2636ca"
+    },
+    {
+      "path": ".node-version",
+      "bytes": 8,
+      "words": 3,
+      "sha256": "5b9d0e73029969ae9000117cb877f17bb9841c1279bfe8024e294acfcf017800"
+    },
+    {
+      "path": ".nvmrc",
+      "bytes": 8,
+      "words": 3,
+      "sha256": "5b9d0e73029969ae9000117cb877f17bb9841c1279bfe8024e294acfcf017800"
+    },
+    {
+      "path": "AGENTS.md",
+      "bytes": 4428,
+      "words": 556,
+      "sha256": "7f7f0c775d6b7eaeac4759fefba794c64a9787de8adc507e5cad18984ca33607"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "bytes": 1678,
+      "words": 213,
+      "sha256": "513e96abbd2afe30ffd7b4b5f3f2ea836605f62919e5d36b46b148e92867a95f"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "bytes": 2602,
+      "words": 304,
+      "sha256": "34bd3a589cb4210e7cad12225ab9ac279df5b6fbe65dc47bd406702fe0d88e43"
+    },
+    {
+      "path": "DATA_SOURCES.md",
+      "bytes": 1743,
+      "words": 195,
+      "sha256": "9cf762ae1a6247ffe68905332d59c044336bfd0f49ce89919a5425a9c5a7f254"
+    },
+    {
+      "path": "LICENSE-CHOICE.md",
+      "bytes": 842,
+      "words": 125,
+      "sha256": "134bce27d08580905a489db94a4acff7ed9ba6315cb0bf976b7e9d70e90c240f"
+    },
+    {
+      "path": "PRIVACY-TEMPLATE.md",
+      "bytes": 1412,
+      "words": 163,
+      "sha256": "16892877ce416025803033d5c9fcb420df4054e80a8258a5d2a1b7c4bd47973e"
+    },
+    {
+      "path": "README.md",
+      "bytes": 18756,
+      "words": 2254,
+      "sha256": "3e01569fa7c382806c34e60067f282fbf5c1c26056804d3cb86832b02d191919"
+    },
+    {
+      "path": "SECURITY.md",
+      "bytes": 1587,
+      "words": 206,
+      "sha256": "24df86092a653b5f2e6cebfb34d710f930393551cdc5fd962327219688b24cf7"
+    },
+    {
+      "path": "SPEC.md",
+      "bytes": 26931,
+      "words": 3297,
+      "sha256": "bc36913d09e3a63f6844879b6c22579c4373bdd6de5ef00e4ca59d61c590ab62"
+    },
+    {
+      "path": "STACK.md",
+      "bytes": 19390,
+      "words": 2446,
+      "sha256": "1a218e77063efde4f6b597adc215fd03b0842942fcdddb99437e2307a54624ff"
+    },
+    {
+      "path": "VALIDATION.md",
+      "bytes": 6778,
+      "words": 847,
+      "sha256": "cc8b43cbb5422c3f6591d73be063e71342abcb8a187d96d3b5926eda9b7fb783"
+    },
+    {
+      "path": "docs/00-PRODUCT-SPEC.md",
+      "bytes": 14416,
+      "words": 1761,
+      "sha256": "457c0ba46792da26400d4878f183d8f156545bd7d813854f048a7e6cc1718bef"
+    },
+    {
+      "path": "docs/01-ARCHITECTURE.md",
+      "bytes": 14520,
+      "words": 1551,
+      "sha256": "15b584d97aebe3450ae2d6f8eabfda3dfccf41f0fcb1320e5beab14c29f45f52"
+    },
+    {
+      "path": "docs/02-DATA-METHODOLOGY.md",
+      "bytes": 23495,
+      "words": 2703,
+      "sha256": "fd72a0f12a1845a11c7d4ee5ef08ab8f60f726f08c54802a2e796df11b0f3410"
+    },
+    {
+      "path": "docs/03-UX-UI-DESIGN-SYSTEM.md",
+      "bytes": 12174,
+      "words": 1498,
+      "sha256": "47a80d68850e0a4e1514afae0526929bc3cd1b7f22fe5c13d0e03e6a0369da3d"
+    },
+    {
+      "path": "docs/04-MOTION-SPEC.md",
+      "bytes": 9438,
+      "words": 1211,
+      "sha256": "ca75fa26909387932a4ba047279cf93c7b015bc36dc8f536c6ab1cb4d6bb513c"
+    },
+    {
+      "path": "docs/05-DATABASE.md",
+      "bytes": 11420,
+      "words": 1283,
+      "sha256": "d59ca69c5493692cf9673dbe0c7118f5f632c6a351c8bf8f8e6fdc4c30646c84"
+    },
+    {
+      "path": "docs/06-API-CONTRACT.md",
+      "bytes": 13944,
+      "words": 1395,
+      "sha256": "bd5abba8efda7eb37c4c97f4276c3f2cebf3fa2c0235ea9b945af1266987b725"
+    },
+    {
+      "path": "docs/07-TESTING-QUALITY.md",
+      "bytes": 9098,
+      "words": 1088,
+      "sha256": "de116bc3eebc39c7c082b400f63b81940b8700d5ca822b26dfe8e8dcfa0daf2b"
+    },
+    {
+      "path": "docs/08-SECURITY-PRIVACY-LEGAL.md",
+      "bytes": 10728,
+      "words": 1246,
+      "sha256": "3abf86c857672954f25b7691ade94fd449686931fcc9c5c8162b8e895e143556"
+    },
+    {
+      "path": "docs/09-DEPLOYMENT-OPERATIONS.md",
+      "bytes": 8989,
+      "words": 978,
+      "sha256": "7bf758d4feff5a4aef5d15ea975b6fbed1fa31c162a121a250fdfa293fe48af4"
+    },
+    {
+      "path": "docs/10-SEO-SHARING-ANALYTICS.md",
+      "bytes": 9468,
+      "words": 1091,
+      "sha256": "7f92bfca4b0f6fbb2ea3bdcb50806f2579821b525341a1881d5b273726d0da43"
+    },
+    {
+      "path": "docs/11-IMPLEMENTATION-PLAN.md",
+      "bytes": 9805,
+      "words": 1141,
+      "sha256": "ea835a6a8a4f8dbc64b12d129503b19903f78d8b95b6764caae89c51e70f61eb"
+    },
+    {
+      "path": "docs/12-CONTENT-COPY.md",
+      "bytes": 9030,
+      "words": 1121,
+      "sha256": "7728f725c9902822a90cea73aba0a664187f8867965cf3a9cf8f29a27ee77546"
+    },
+    {
+      "path": "docs/13-GLOSSARY.md",
+      "bytes": 4315,
+      "words": 529,
+      "sha256": "4c798cbbdca002540fcccd4081ea1a25e1278a490d40fa7f7627f35e54c0dda8"
+    },
+    {
+      "path": "docs/14-REFERENCES.md",
+      "bytes": 6934,
+      "words": 915,
+      "sha256": "945099eacc1f2b7afb648b29754388793026725ad775281104223c61920cdc70"
+    },
+    {
+      "path": "docs/15-BOOTSTRAP.md",
+      "bytes": 13534,
+      "words": 1606,
+      "sha256": "40281be5c12eae2854fde6afb50fdbc24ed7c427476560c884e9b2760d246ac7"
+    },
+    {
+      "path": "docs/README.md",
+      "bytes": 5362,
+      "words": 606,
+      "sha256": "58abdf9df2ab6641bdd62412add2b0d45e7ae6a2060ce75713c24a826df37122"
+    },
+    {
+      "path": "docs/adr/0001-nextjs-app-router.md",
+      "bytes": 976,
+      "words": 118,
+      "sha256": "0e22e04a8e5dc9332d309944213127cd606e462646cdf185f66b966d1d6f858e"
+    },
+    {
+      "path": "docs/adr/0002-deterministic-classifier.md",
+      "bytes": 985,
+      "words": 116,
+      "sha256": "42b46f83a7e0c28d12bb54e3b7cb8bb16d71f8abf4b1e8777d4627ec2b59c02a"
+    },
+    {
+      "path": "docs/adr/0003-postgresql-drizzle.md",
+      "bytes": 732,
+      "words": 78,
+      "sha256": "04aee7a5406f4a06621ad6b6b2cc501a7c1ecdfcba64a3b57734b80a607461b6"
+    },
+    {
+      "path": "docs/adr/0004-trigger-dev-jobs.md",
+      "bytes": 802,
+      "words": 88,
+      "sha256": "65613b4b45049ba43d0f7540e904d4a4baac34a2fa53432c85ac7dba29a78ca5"
+    },
+    {
+      "path": "docs/adr/0005-url-state.md",
+      "bytes": 671,
+      "words": 76,
+      "sha256": "79c00c9c7e89c570a8c55ee7c814954c8bf32200e5946c6a557e3c44b4c14f2c"
+    },
+    {
+      "path": "docs/adr/0006-single-repository.md",
+      "bytes": 723,
+      "words": 90,
+      "sha256": "e7a8e369e349eaa251a862d0845719aac1b9a2f72165b1d0f24c4b70d4ab5b73"
+    },
+    {
+      "path": "docs/adr/0007-motion-system.md",
+      "bytes": 653,
+      "words": 69,
+      "sha256": "5e44f0d22823c70c7a0f7dc777ec0ae6f2553b7ad5b876b656bed0f68e3be434"
+    },
+    {
+      "path": "docs/adr/0008-precomputed-metrics.md",
+      "bytes": 728,
+      "words": 80,
+      "sha256": "8cf9f0443d1082b63de18a4a46480cea43ac01e821d4db941fcb4ac7cf62cb8c"
+    },
+    {
+      "path": "docs/checklists/dataset-release.md",
+      "bytes": 4498,
+      "words": 589,
+      "sha256": "e7b412ed4fee343ae48b7a21f78adff3a464dea64c214c8880bbaeb0cfb14d78"
+    },
+    {
+      "path": "docs/checklists/definition-of-done.md",
+      "bytes": 6430,
+      "words": 842,
+      "sha256": "f2366afd797a5af176f15b9bcca9ab9a6cf3ae33090d55b0a927aa6c9511c19e"
+    },
+    {
+      "path": "docs/checklists/launch.md",
+      "bytes": 5841,
+      "words": 766,
+      "sha256": "4c1315ba67c5b2cb5d8a32077807208e36c84da30dd26b4dcd77a6a01ed5c30f"
+    },
+    {
+      "path": "docs/checklists/maquette-integration.md",
+      "bytes": 3749,
+      "words": 459,
+      "sha256": "04b546001fc5a1ec2780eafd9f4df14808490d9d1ca81fba532b0e742321264b"
+    },
+    {
+      "path": "docs/reference/classifier-rules.example.json",
+      "bytes": 9772,
+      "words": 758,
+      "sha256": "a02f47996f93f1c3f248c7ed6f5620e6362620956628f82c2df6f33b45af19e9"
+    },
+    {
+      "path": "docs/reference/events.json",
+      "bytes": 7088,
+      "words": 359,
+      "sha256": "aa173fc054d70d6d96365f07e93f927e92c81490e77ec1329784faf1733b3e9c"
+    },
+    {
+      "path": "docs/reference/initial-taxonomy.json",
+      "bytes": 14967,
+      "words": 989,
+      "sha256": "6202705120bf3edc864d8f33ba1a4d72868d67609e4f7d474130d610309b9002"
+    },
+    {
+      "path": "docs/reference/metric-definitions.json",
+      "bytes": 6830,
+      "words": 533,
+      "sha256": "78ce32f774ed9aa7876f6d4ccbdff3df3c62ad950a5c36d5f3befa048a516de4"
+    },
+    {
+      "path": "docs/reference/openapi-examples.json",
+      "bytes": 12734,
+      "words": 830,
+      "sha256": "7763ae24ae860cf39d3288f5a79b75a7d41cb50d415fd5f052b0be42ace4864e"
+    },
+    {
+      "path": "docs/reference/openapi.yaml",
+      "bytes": 31933,
+      "words": 2434,
+      "sha256": "6b935e7f06a301382c2bb35fc962db40ab2ca112f7006f38fa9f6b1c9ea40ee8"
+    },
+    {
+      "path": "docs/reference/query-set.template.json",
+      "bytes": 5442,
+      "words": 386,
+      "sha256": "de82d6048bf88a1eb801c510f2a12a5c6cd5cca3cfd832830676884440c5772e"
+    },
+    {
+      "path": "docs/reference/schema.sql",
+      "bytes": 19944,
+      "words": 2139,
+      "sha256": "bac3d63786ef4da99e51f5ef44d0be8505441227add1c7231cfd958ba46805ab"
+    },
+    {
+      "path": "maquette/README.md",
+      "bytes": 3519,
+      "words": 412,
+      "sha256": "924500872e5eedf53ce3e7989e644d990488670e1660a6d71a05cb157f0ac9f5"
+    }
+  ]
+}

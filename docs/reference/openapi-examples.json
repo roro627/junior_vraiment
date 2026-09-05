@@ -1,0 +1,460 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "documentVersion": "1.0.0",
+  "note": "Fixtures représentatives. Elles doivent être validées contre docs/reference/openapi.yaml et contre les schémas Zod exécutables.",
+  "overview": {
+    "data": {
+      "scope": {
+        "job": "frontend",
+        "technologies": [
+          "react",
+          "typescript"
+        ],
+        "area": "region:32",
+        "contracts": [
+          "cdi"
+        ],
+        "remote": "hybrid",
+        "period": "30d"
+      },
+      "headline": {
+        "metric": "junior_contradiction_rate",
+        "metricVersion": "junior-contradiction-1.0.0",
+        "value": 0.45,
+        "numerator": 36,
+        "denominator": 80,
+        "populationCount": 100,
+        "unknownCount": 15,
+        "ambiguousCount": 5,
+        "coverage": 0.8,
+        "sampleQuality": "normal",
+        "changePoints": 2.4,
+        "caveat": null
+      },
+      "beginnerFriendly": {
+        "metric": "beginner_friendly_rate",
+        "metricVersion": "beginner-friendly-1.0.0",
+        "value": 0.48,
+        "numerator": 48,
+        "denominator": 100,
+        "populationCount": 120,
+        "unknownCount": 15,
+        "ambiguousCount": 5,
+        "coverage": 0.8333333333333334,
+        "sampleQuality": "normal",
+        "changePoints": 2.4,
+        "caveat": null
+      },
+      "salaryTransparency": {
+        "metric": "salary_transparency_rate",
+        "metricVersion": "salary-transparency-1.0.0",
+        "value": 0.625,
+        "numerator": 75,
+        "denominator": 120,
+        "populationCount": 120,
+        "unknownCount": 0,
+        "ambiguousCount": 0,
+        "coverage": 1.0,
+        "sampleQuality": "normal",
+        "changePoints": 2.4,
+        "caveat": null
+      },
+      "experienceBuckets": [
+        {
+          "key": "none",
+          "count": 12
+        },
+        {
+          "key": "1_12",
+          "count": 18
+        },
+        {
+          "key": "13_23",
+          "count": 10
+        },
+        {
+          "key": "24_35",
+          "count": 34
+        },
+        {
+          "key": "36_59",
+          "count": 24
+        },
+        {
+          "key": "60_plus",
+          "count": 7
+        },
+        {
+          "key": "unknown",
+          "count": 10
+        },
+        {
+          "key": "ambiguous",
+          "count": 5
+        }
+      ],
+      "topTechnologies": [
+        {
+          "key": "react",
+          "label": "React",
+          "count": 52,
+          "share": 0.4333333333
+        }
+      ],
+      "contracts": [
+        {
+          "key": "cdi",
+          "label": "CDI",
+          "count": 90,
+          "share": 0.75
+        }
+      ],
+      "remoteModes": [
+        {
+          "key": "remote",
+          "label": "100 % à distance",
+          "count": 12,
+          "share": 0.1
+        },
+        {
+          "key": "hybrid",
+          "label": "Hybride",
+          "count": 54,
+          "share": 0.45
+        },
+        {
+          "key": "onsite",
+          "label": "Sur site",
+          "count": 30,
+          "share": 0.25
+        },
+        {
+          "key": "unknown",
+          "label": "Non précisé",
+          "count": 24,
+          "share": 0.2
+        }
+      ],
+      "examples": [
+        {
+          "id": "ft_12345678",
+          "title": "Développeur frontend junior",
+          "companyName": "Entreprise exemple",
+          "locationLabel": "Lille (59)",
+          "contractLabel": "CDI",
+          "publishedAt": "2026-09-01T06:00:00Z",
+          "lastSeenAt": "2026-09-02T04:00:00Z",
+          "availability": "active",
+          "minimumExperienceMonths": 24,
+          "experienceLabel": "2 ans d'expérience exigés",
+          "classification": {
+            "status": "classified",
+            "claimsJunior": true,
+            "beginnerFriendly": false,
+            "contradictoryJunior": true,
+            "classifierVersion": "classifier-1.0.0",
+            "warnings": []
+          },
+          "evidence": [
+            {
+              "kind": "junior_claim",
+              "ruleId": "JUNIOR_EXPLICIT_TITLE",
+              "sourceField": "title",
+              "excerpt": "Développeur frontend junior",
+              "normalizedValue": "junior"
+            },
+            {
+              "kind": "required_experience",
+              "ruleId": "REQUIRED_EXPERIENCE_YEARS",
+              "sourceField": "description",
+              "excerpt": "Deux ans d'expérience exigés.",
+              "normalizedValue": "24"
+            }
+          ],
+          "technologies": [
+            "react",
+            "typescript"
+          ],
+          "salary": {
+            "published": true,
+            "label": "35 000 à 40 000 € brut/an",
+            "minimumAnnualGross": 35000,
+            "maximumAnnualGross": 40000,
+            "currency": "EUR",
+            "period": "year"
+          },
+          "remoteMode": "hybrid",
+          "source": {
+            "label": "France Travail",
+            "offerUrl": "https://candidat.francetravail.fr/offres/recherche/detail/12345678",
+            "attributionUrl": "https://www.francetravail.fr/"
+          }
+        }
+      ]
+    },
+    "meta": {
+      "generatedAt": "2026-09-02T14:30:00Z",
+      "dataAsOf": "2026-09-02T04:00:00Z",
+      "datasetVersion": "dataset-2026-09-02-v1",
+      "classifierVersion": "classifier-1.0.0",
+      "metricVersions": {
+        "junior_contradiction_rate": "junior-contradiction-1.0.0",
+        "beginner_friendly_rate": "beginner-friendly-1.0.0",
+        "salary_transparency_rate": "salary-transparency-1.0.0"
+      },
+      "querySetVersion": "queries-1.0.0",
+      "sampleSize": 120,
+      "quality": "normal",
+      "warnings": []
+    }
+  },
+  "trends": {
+    "data": {
+      "scope": {
+        "job": "frontend",
+        "technologies": [
+          "react",
+          "typescript"
+        ],
+        "area": "region:32",
+        "contracts": [
+          "cdi"
+        ],
+        "remote": "hybrid",
+        "period": "30d"
+      },
+      "metric": "junior_contradiction_rate",
+      "metricVersion": "junior-contradiction-1.0.0",
+      "timezone": "Europe/Paris",
+      "points": [
+        {
+          "date": "2026-09-01",
+          "value": 0.45,
+          "numerator": 36,
+          "denominator": 80,
+          "populationCount": 100,
+          "unknownCount": 15,
+          "ambiguousCount": 5,
+          "coverage": 0.8,
+          "quality": "normal",
+          "datasetVersion": "dataset-2026-09-01-v1",
+          "annotation": null,
+          "sampleQuality": "normal"
+        }
+      ]
+    },
+    "meta": {
+      "generatedAt": "2026-09-02T14:30:00Z",
+      "dataAsOf": "2026-09-02T04:00:00Z",
+      "datasetVersion": "dataset-2026-09-02-v1",
+      "classifierVersion": "classifier-1.0.0",
+      "metricVersions": {
+        "junior_contradiction_rate": "junior-contradiction-1.0.0",
+        "beginner_friendly_rate": "beginner-friendly-1.0.0",
+        "salary_transparency_rate": "salary-transparency-1.0.0"
+      },
+      "querySetVersion": "queries-1.0.0",
+      "sampleSize": 120,
+      "quality": "normal",
+      "warnings": []
+    }
+  },
+  "offers": {
+    "data": {
+      "items": [
+        {
+          "id": "ft_12345678",
+          "title": "Développeur frontend junior",
+          "companyName": "Entreprise exemple",
+          "locationLabel": "Lille (59)",
+          "contractLabel": "CDI",
+          "publishedAt": "2026-09-01T06:00:00Z",
+          "lastSeenAt": "2026-09-02T04:00:00Z",
+          "availability": "active",
+          "minimumExperienceMonths": 24,
+          "experienceLabel": "2 ans d'expérience exigés",
+          "classification": {
+            "status": "classified",
+            "claimsJunior": true,
+            "beginnerFriendly": false,
+            "contradictoryJunior": true,
+            "classifierVersion": "classifier-1.0.0",
+            "warnings": []
+          },
+          "evidence": [
+            {
+              "kind": "junior_claim",
+              "ruleId": "JUNIOR_EXPLICIT_TITLE",
+              "sourceField": "title",
+              "excerpt": "Développeur frontend junior",
+              "normalizedValue": "junior"
+            },
+            {
+              "kind": "required_experience",
+              "ruleId": "REQUIRED_EXPERIENCE_YEARS",
+              "sourceField": "description",
+              "excerpt": "Deux ans d'expérience exigés.",
+              "normalizedValue": "24"
+            }
+          ],
+          "technologies": [
+            "react",
+            "typescript"
+          ],
+          "salary": {
+            "published": true,
+            "label": "35 000 à 40 000 € brut/an",
+            "minimumAnnualGross": 35000,
+            "maximumAnnualGross": 40000,
+            "currency": "EUR",
+            "period": "year"
+          },
+          "remoteMode": "hybrid",
+          "source": {
+            "label": "France Travail",
+            "offerUrl": "https://candidat.francetravail.fr/offres/recherche/detail/12345678",
+            "attributionUrl": "https://www.francetravail.fr/"
+          }
+        }
+      ],
+      "page": {
+        "nextCursor": "eyJvZmZzZXQiOjIwfQ",
+        "hasNext": true
+      }
+    },
+    "meta": {
+      "generatedAt": "2026-09-02T14:30:00Z",
+      "dataAsOf": "2026-09-02T04:00:00Z",
+      "datasetVersion": "dataset-2026-09-02-v1",
+      "classifierVersion": "classifier-1.0.0",
+      "metricVersions": {
+        "junior_contradiction_rate": "junior-contradiction-1.0.0",
+        "beginner_friendly_rate": "beginner-friendly-1.0.0",
+        "salary_transparency_rate": "salary-transparency-1.0.0"
+      },
+      "querySetVersion": "queries-1.0.0",
+      "sampleSize": 120,
+      "quality": "normal",
+      "warnings": []
+    }
+  },
+  "taxonomies": {
+    "data": {
+      "versions": {
+        "jobs": "jobs-1.0.0",
+        "technologies": "technologies-1.2.0",
+        "geography": "geography-2026-09-02",
+        "contracts": "contracts-1.0.0"
+      },
+      "jobs": [
+        {
+          "id": "frontend",
+          "label": "Développement frontend",
+          "availableCount": 120,
+          "parentId": null
+        }
+      ],
+      "technologies": [
+        {
+          "id": "react",
+          "label": "React",
+          "availableCount": 52,
+          "parentId": null
+        }
+      ],
+      "popularAreas": [
+        {
+          "id": "region:32",
+          "label": "Hauts-de-France",
+          "availableCount": 240,
+          "parentId": "france"
+        }
+      ],
+      "contracts": [
+        {
+          "id": "cdi",
+          "label": "CDI",
+          "availableCount": 90,
+          "parentId": null
+        }
+      ],
+      "remoteModes": [
+        {
+          "id": "hybrid",
+          "label": "Hybride",
+          "availableCount": 54,
+          "parentId": null
+        }
+      ]
+    },
+    "meta": {
+      "generatedAt": "2026-09-02T14:30:00Z",
+      "dataAsOf": "2026-09-02T04:00:00Z",
+      "datasetVersion": "dataset-2026-09-02-v1",
+      "classifierVersion": "classifier-1.0.0",
+      "metricVersions": {
+        "junior_contradiction_rate": "junior-contradiction-1.0.0",
+        "beginner_friendly_rate": "beginner-friendly-1.0.0",
+        "salary_transparency_rate": "salary-transparency-1.0.0"
+      },
+      "querySetVersion": "queries-1.0.0",
+      "sampleSize": 120,
+      "quality": "normal",
+      "warnings": []
+    }
+  },
+  "dataStatus": {
+    "data": {
+      "status": "operational",
+      "lastSuccessfulRunAt": "2026-09-02T04:05:00Z",
+      "dataAsOf": "2026-09-02T04:00:00Z",
+      "freshness": "fresh",
+      "latestRun": {
+          "status": "succeeded",
+          "durationMs": 84231,
+          "requests": 48,
+          "queries": 12,
+          "partialQueries": 0,
+          "received": 4200,
+          "valid": 4193,
+          "new": 126,
+          "updated": 532,
+          "quarantined": 7,
+          "markedMissing": 18,
+          "closed": 4,
+          "ambiguousRate": 0.041
+      },
+      "incidents": []
+    },
+    "meta": {
+      "generatedAt": "2026-09-02T14:30:00Z",
+      "dataAsOf": "2026-09-02T04:00:00Z",
+      "datasetVersion": "dataset-2026-09-02-v1",
+      "classifierVersion": "classifier-1.0.0",
+      "metricVersions": {
+        "junior_contradiction_rate": "junior-contradiction-1.0.0",
+        "beginner_friendly_rate": "beginner-friendly-1.0.0",
+        "salary_transparency_rate": "salary-transparency-1.0.0"
+      },
+      "querySetVersion": "queries-1.0.0",
+      "sampleSize": 120,
+      "quality": "normal",
+      "warnings": []
+    }
+  },
+  "problem": {
+    "type": "https://junior-vraiment.example/problems/invalid-filter",
+    "title": "Paramètre invalide",
+    "status": 400,
+    "detail": "Le filtre demandé est invalide.",
+    "instance": "/api/v1/overview",
+    "code": "INVALID_FILTER",
+    "errors": [
+      {
+        "path": "area",
+        "message": "Format invalide."
+      }
+    ],
+    "traceId": "trace_123"
+  }
+}

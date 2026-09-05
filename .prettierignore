@@ -1,0 +1,14 @@
+.next
+.trigger
+coverage
+node_modules
+playwright-report
+storybook-static
+test-results
+pnpm-lock.yaml
+maquette/*.png
+id_france_travail.json
+Set up Neon.txt
+*.md
+docs/**
+maquette/**

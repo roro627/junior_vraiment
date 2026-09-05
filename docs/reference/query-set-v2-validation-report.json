@@ -1,0 +1,8132 @@
+{
+  "reportVersion": "query-set-validation-report-2.0.0",
+  "evaluatedAt": "2026-09-04T23:08:45.263Z",
+  "gateStatus": "passed",
+  "querySetVersion": "queries-2.0.0-observed-title-filtered-draft",
+  "reference": {
+    "referenceSetVersion": "query-relevance-llm-a-reference-2.0.0",
+    "annotationProtocolVersion": "query-relevance-llm-a-1.0.0",
+    "activationPolicyVersion": "query-relevance-gate-1.0.0",
+    "methodology": "single-blind-llm-pass-a-query-relevance",
+    "model": "gpt-5.6-terra",
+    "reasoningEffort": "medium",
+    "collectedAt": "2026-09-04T12:51:43.700Z",
+    "rowCount": 240,
+    "sourceSha256": "096be5567fcb9a1fb1b49fe328748c44ccd1a636d3c4c57f04e7a9ef4143e97a",
+    "annotationChunks": [
+      {
+        "fileName": "pass-a-001-024.json",
+        "rowCount": 24,
+        "sha256": "716134067833e5365268e2c0201b8693eed6177cbf01f90f68bbd7d3a56db698"
+      },
+      {
+        "fileName": "pass-a-025-048.json",
+        "rowCount": 24,
+        "sha256": "3becff92222dd6d10e57fe610ebc3284aa4cfb7b27cc248898cc725ff8c02041"
+      },
+      {
+        "fileName": "pass-a-049-072.json",
+        "rowCount": 24,
+        "sha256": "7826362645a17754b85099143383b7babe13c84cc0cb233052f1b2306514eed3"
+      },
+      {
+        "fileName": "pass-a-073-096.json",
+        "rowCount": 24,
+        "sha256": "291d85b14dc841e6d69c9e218d01ca0343f172ea4f9bb003843f29a8cc80e15f"
+      },
+      {
+        "fileName": "pass-a-097-120.json",
+        "rowCount": 24,
+        "sha256": "0067681ee08e4743407ae3696f50cbef52dd7cbb133cced92824e233e8f3b3ab"
+      },
+      {
+        "fileName": "pass-a-121-144.json",
+        "rowCount": 24,
+        "sha256": "bfca8bfb9c6431b43ef34fec2ddd612f34b1b5b055c6f43873cfd4283af72b9e"
+      },
+      {
+        "fileName": "pass-a-145-168.json",
+        "rowCount": 24,
+        "sha256": "00f51b09e956d54d660391f28df2439bc92abc2fd0254fd7d89de2afd09082b6"
+      },
+      {
+        "fileName": "pass-a-169-192.json",
+        "rowCount": 24,
+        "sha256": "4eea85106b93865c094baff3b28b9c8233c10b34b321f46052df41598e87f0da"
+      },
+      {
+        "fileName": "pass-a-193-216.json",
+        "rowCount": 24,
+        "sha256": "bc69cc122c1061536436291329de5b4ce50368111e9625c8c7839bfb8b772491"
+      },
+      {
+        "fileName": "pass-a-217-240.json",
+        "rowCount": 24,
+        "sha256": "abd9df71af45ab55534eac00233f91da8d558c731e9c2a3e32c1b4f6c64cbf08"
+      }
+    ],
+    "sha256": "7e35e480dede6ac93eff2cccacc86f51eba69604b41a45920c9a63a7dda10fc4"
+  },
+  "collection": {
+    "collectedAt": "2026-09-04T12:51:43.700Z",
+    "queryCount": 335,
+    "completeQueries": 335,
+    "overCapQueries": 0,
+    "incompleteQueries": 0,
+    "totalReported": 15190,
+    "uniqueOffers": 1253,
+    "quarantined": 0,
+    "warnings": [],
+    "sourceSha256": "f49ca8656d40f0e0afb82c09b5a57323d79ed91c1ac84a34220055aa1bd78042",
+    "sha256": "4c8a50cbab68bdab24424df798201f381b8b577af6d50fa0f2a94535089cc1c2"
+  },
+  "metrics": {
+    "resolvedCoverage": {
+      "status": "passed",
+      "numerator": 239,
+      "denominator": 240,
+      "value": 0.9958333333333333,
+      "threshold": 0.9,
+      "reason": null
+    },
+    "overallRelevancePrecision": {
+      "status": "passed",
+      "numerator": 210,
+      "denominator": 239,
+      "value": 0.8786610878661087,
+      "threshold": 0.8,
+      "reason": null
+    },
+    "annotationEvidenceCoverage": {
+      "status": "passed",
+      "numerator": 240,
+      "denominator": 240,
+      "value": 1,
+      "threshold": 1,
+      "reason": null
+    }
+  },
+  "collectionGates": {
+    "paginationComplete": {
+      "status": "passed",
+      "value": true,
+      "expected": true,
+      "reason": null
+    },
+    "quarantineEmpty": {
+      "status": "passed",
+      "value": true,
+      "expected": true,
+      "reason": null
+    },
+    "contractWarningsEmpty": {
+      "status": "passed",
+      "value": true,
+      "expected": true,
+      "reason": null
+    }
+  },
+  "groups": [
+    {
+      "groupId": "frontend",
+      "sampleCount": 30,
+      "resolvedCount": 29,
+      "relevantCount": 22,
+      "coverage": {
+        "status": "passed",
+        "numerator": 29,
+        "denominator": 30,
+        "value": 0.9666666666666667,
+        "threshold": 0.9,
+        "reason": null
+      },
+      "precision": {
+        "status": "passed",
+        "numerator": 22,
+        "denominator": 29,
+        "value": 0.7586206896551724,
+        "threshold": 0.7,
+        "reason": null
+      },
+      "sampleSizeGate": {
+        "status": "passed",
+        "value": true,
+        "expected": true,
+        "reason": null
+      }
+    },
+    {
+      "groupId": "backend",
+      "sampleCount": 30,
+      "resolvedCount": 30,
+      "relevantCount": 30,
+      "coverage": {
+        "status": "passed",
+        "numerator": 30,
+        "denominator": 30,
+        "value": 1,
+        "threshold": 0.9,
+        "reason": null
+      },
+      "precision": {
+        "status": "passed",
+        "numerator": 30,
+        "denominator": 30,
+        "value": 1,
+        "threshold": 0.7,
+        "reason": null
+      },
+      "sampleSizeGate": {
+        "status": "passed",
+        "value": true,
+        "expected": true,
+        "reason": null
+      }
+    },
+    {
+      "groupId": "fullstack",
+      "sampleCount": 30,
+      "resolvedCount": 30,
+      "relevantCount": 26,
+      "coverage": {
+        "status": "passed",
+        "numerator": 30,
+        "denominator": 30,
+        "value": 1,
+        "threshold": 0.9,
+        "reason": null
+      },
+      "precision": {
+        "status": "passed",
+        "numerator": 26,
+        "denominator": 30,
+        "value": 0.8666666666666667,
+        "threshold": 0.7,
+        "reason": null
+      },
+      "sampleSizeGate": {
+        "status": "passed",
+        "value": true,
+        "expected": true,
+        "reason": null
+      }
+    },
+    {
+      "groupId": "mobile",
+      "sampleCount": 30,
+      "resolvedCount": 30,
+      "relevantCount": 23,
+      "coverage": {
+        "status": "passed",
+        "numerator": 30,
+        "denominator": 30,
+        "value": 1,
+        "threshold": 0.9,
+        "reason": null
+      },
+      "precision": {
+        "status": "passed",
+        "numerator": 23,
+        "denominator": 30,
+        "value": 0.7666666666666667,
+        "threshold": 0.7,
+        "reason": null
+      },
+      "sampleSizeGate": {
+        "status": "passed",
+        "value": true,
+        "expected": true,
+        "reason": null
+      }
+    },
+    {
+      "groupId": "data",
+      "sampleCount": 30,
+      "resolvedCount": 30,
+      "relevantCount": 29,
+      "coverage": {
+        "status": "passed",
+        "numerator": 30,
+        "denominator": 30,
+        "value": 1,
+        "threshold": 0.9,
+        "reason": null
+      },
+      "precision": {
+        "status": "passed",
+        "numerator": 29,
+        "denominator": 30,
+        "value": 0.9666666666666667,
+        "threshold": 0.7,
+        "reason": null
+      },
+      "sampleSizeGate": {
+        "status": "passed",
+        "value": true,
+        "expected": true,
+        "reason": null
+      }
+    },
+    {
+      "groupId": "devops-cloud",
+      "sampleCount": 30,
+      "resolvedCount": 30,
+      "relevantCount": 29,
+      "coverage": {
+        "status": "passed",
+        "numerator": 30,
+        "denominator": 30,
+        "value": 1,
+        "threshold": 0.9,
+        "reason": null
+      },
+      "precision": {
+        "status": "passed",
+        "numerator": 29,
+        "denominator": 30,
+        "value": 0.9666666666666667,
+        "threshold": 0.7,
+        "reason": null
+      },
+      "sampleSizeGate": {
+        "status": "passed",
+        "value": true,
+        "expected": true,
+        "reason": null
+      }
+    },
+    {
+      "groupId": "cybersecurity",
+      "sampleCount": 30,
+      "resolvedCount": 30,
+      "relevantCount": 24,
+      "coverage": {
+        "status": "passed",
+        "numerator": 30,
+        "denominator": 30,
+        "value": 1,
+        "threshold": 0.9,
+        "reason": null
+      },
+      "precision": {
+        "status": "passed",
+        "numerator": 24,
+        "denominator": 30,
+        "value": 0.8,
+        "threshold": 0.7,
+        "reason": null
+      },
+      "sampleSizeGate": {
+        "status": "passed",
+        "value": true,
+        "expected": true,
+        "reason": null
+      }
+    },
+    {
+      "groupId": "qa-test",
+      "sampleCount": 30,
+      "resolvedCount": 30,
+      "relevantCount": 27,
+      "coverage": {
+        "status": "passed",
+        "numerator": 30,
+        "denominator": 30,
+        "value": 1,
+        "threshold": 0.9,
+        "reason": null
+      },
+      "precision": {
+        "status": "passed",
+        "numerator": 27,
+        "denominator": 30,
+        "value": 0.9,
+        "threshold": 0.7,
+        "reason": null
+      },
+      "sampleSizeGate": {
+        "status": "passed",
+        "value": true,
+        "expected": true,
+        "reason": null
+      }
+    }
+  ],
+  "diagnostics": {
+    "groupUniqueVolumes": {
+      "frontend": 99,
+      "backend": 49,
+      "fullstack": 236,
+      "mobile": 33,
+      "data": 258,
+      "devops-cloud": 251,
+      "cybersecurity": 305,
+      "qa-test": 49
+    },
+    "relevanceByExclusiveDiscoveryStratum": {
+      "occupation-only": {
+        "resolvedCount": 18,
+        "relevantCount": 15,
+        "relevanceRate": 0.8333333333333334
+      },
+      "keyword-only": {
+        "resolvedCount": 109,
+        "relevantCount": 98,
+        "relevanceRate": 0.8990825688073395
+      },
+      "overlap": {
+        "resolvedCount": 112,
+        "relevantCount": 97,
+        "relevanceRate": 0.8660714285714286
+      }
+    },
+    "atomicQueryDiagnostics": [
+      {
+        "queryId": "00b45b81c02035a2",
+        "kind": "keyword-only",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 6,
+        "resolvedCount": 6,
+        "relevantCount": 5,
+        "relevanceRate": 0.8333333333333334
+      },
+      {
+        "queryId": "01a9fed9ddaa681e",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "0388656927b91ca2",
+        "kind": "overlap",
+        "groupIds": [
+          "data"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "0512164084149106",
+        "kind": "keyword-only",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 7,
+        "resolvedCount": 7,
+        "relevantCount": 6,
+        "relevanceRate": 0.8571428571428571
+      },
+      {
+        "queryId": "053e80bceef9f7d0",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "057e6dafed400c58",
+        "kind": "keyword-only",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 5,
+        "resolvedCount": 5,
+        "relevantCount": 5,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "07744835a1a52d53",
+        "kind": "overlap",
+        "groupIds": [
+          "data"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "09970e4af29a51e6",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "09d0841b418f0c16",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "09f90bbd9058e0fd",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "09faa73f544a393d",
+        "kind": "overlap",
+        "groupIds": [
+          "fullstack"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "0a0ab7c89178d7ae",
+        "kind": "occupation-only",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "0a106e9ee394650c",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "0a9a30b1817cd17f",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "0c789013ade98b4b",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 4,
+        "resolvedCount": 4,
+        "relevantCount": 4,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "0ce703223d2c4e8f",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "0d1c18e49cc4a4a1",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "0d248e54f6433e33",
+        "kind": "occupation-only",
+        "groupIds": [
+          "backend",
+          "fullstack",
+          "mobile"
+        ],
+        "sampleCount": 6,
+        "resolvedCount": 6,
+        "relevantCount": 6,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "0e6afd80aee2a442",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "10bb9f54a879fb3d",
+        "kind": "overlap",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "11003a53d2e5f44a",
+        "kind": "keyword-only",
+        "groupIds": [
+          "data"
+        ],
+        "sampleCount": 12,
+        "resolvedCount": 12,
+        "relevantCount": 12,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "111b257ab4ec03f6",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "1125fd6825e57946",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "123795bbd82003b4",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "12c21c7536b84f0f",
+        "kind": "occupation-only",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 14,
+        "resolvedCount": 14,
+        "relevantCount": 14,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "1330dac407582047",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "141addb36883a235",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "14237a4efc9c1af5",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "142a2c32ad5eba2a",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 7,
+        "resolvedCount": 7,
+        "relevantCount": 6,
+        "relevanceRate": 0.8571428571428571
+      },
+      {
+        "queryId": "14dd5ceb70bc7a75",
+        "kind": "keyword-only",
+        "groupIds": [
+          "fullstack"
+        ],
+        "sampleCount": 13,
+        "resolvedCount": 13,
+        "relevantCount": 10,
+        "relevanceRate": 0.7692307692307693
+      },
+      {
+        "queryId": "150f40ae75724ccb",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "15e4bf74503c1868",
+        "kind": "keyword-only",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "171a209add586e3a",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 3,
+        "resolvedCount": 3,
+        "relevantCount": 3,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "197e825bc161dd46",
+        "kind": "overlap",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "1ba2066228791c3b",
+        "kind": "keyword-only",
+        "groupIds": [
+          "backend"
+        ],
+        "sampleCount": 5,
+        "resolvedCount": 5,
+        "relevantCount": 5,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "1bfed4518167f13a",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 0,
+        "relevanceRate": 0
+      },
+      {
+        "queryId": "1c97765d6f6ccc20",
+        "kind": "keyword-only",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 14,
+        "resolvedCount": 14,
+        "relevantCount": 14,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "1cb486af5bd0c6c1",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "1d91fd8f620ec49f",
+        "kind": "overlap",
+        "groupIds": [
+          "backend"
+        ],
+        "sampleCount": 3,
+        "resolvedCount": 3,
+        "relevantCount": 3,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "1ed94eda93b898c7",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "200b477c23c2c85a",
+        "kind": "keyword-only",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 23,
+        "resolvedCount": 23,
+        "relevantCount": 16,
+        "relevanceRate": 0.6956521739130435
+      },
+      {
+        "queryId": "21f4a392d07de2fb",
+        "kind": "overlap",
+        "groupIds": [
+          "data"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "2370228a9ee64278",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "23afcd801678f3c6",
+        "kind": "keyword-only",
+        "groupIds": [
+          "frontend"
+        ],
+        "sampleCount": 28,
+        "resolvedCount": 27,
+        "relevantCount": 20,
+        "relevanceRate": 0.7407407407407407
+      },
+      {
+        "queryId": "23de62885d41b3ad",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "24409bc07b2a8157",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "267244e8ae1aeebf",
+        "kind": "occupation-only",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "27f6960a29d6737b",
+        "kind": "overlap",
+        "groupIds": [
+          "data"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "28cdfbd335ab2efb",
+        "kind": "keyword-only",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 25,
+        "resolvedCount": 25,
+        "relevantCount": 25,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "2985e3d82045e352",
+        "kind": "overlap",
+        "groupIds": [
+          "backend"
+        ],
+        "sampleCount": 2,
+        "resolvedCount": 2,
+        "relevantCount": 2,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "2a27f1ff5e7ed2d3",
+        "kind": "overlap",
+        "groupIds": [
+          "frontend"
+        ],
+        "sampleCount": 7,
+        "resolvedCount": 7,
+        "relevantCount": 7,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "2aa18969bedf9221",
+        "kind": "keyword-only",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 19,
+        "resolvedCount": 19,
+        "relevantCount": 16,
+        "relevanceRate": 0.8421052631578947
+      },
+      {
+        "queryId": "2b0712410bc66542",
+        "kind": "overlap",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "2bc02ada633e55fb",
+        "kind": "keyword-only",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 4,
+        "resolvedCount": 4,
+        "relevantCount": 4,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "2c49dc1980aee3cb",
+        "kind": "keyword-only",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 8,
+        "resolvedCount": 8,
+        "relevantCount": 5,
+        "relevanceRate": 0.625
+      },
+      {
+        "queryId": "2cb0ae5a37d86592",
+        "kind": "keyword-only",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 9,
+        "resolvedCount": 9,
+        "relevantCount": 8,
+        "relevanceRate": 0.8888888888888888
+      },
+      {
+        "queryId": "2dcb5338f7adfb62",
+        "kind": "overlap",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "2dd202d635c1cb4c",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "2ddf87aaeb09ec80",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "2de244443a52f3aa",
+        "kind": "overlap",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "2e85390c98bff08b",
+        "kind": "overlap",
+        "groupIds": [
+          "fullstack"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "2f5119d090406ae3",
+        "kind": "overlap",
+        "groupIds": [
+          "frontend"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "2f65f98a54b735c5",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "308a6d7604a04b55",
+        "kind": "overlap",
+        "groupIds": [
+          "fullstack"
+        ],
+        "sampleCount": 8,
+        "resolvedCount": 8,
+        "relevantCount": 6,
+        "relevanceRate": 0.75
+      },
+      {
+        "queryId": "310151205f3f9bc4",
+        "kind": "keyword-only",
+        "groupIds": [
+          "fullstack"
+        ],
+        "sampleCount": 23,
+        "resolvedCount": 23,
+        "relevantCount": 21,
+        "relevanceRate": 0.9130434782608695
+      },
+      {
+        "queryId": "311986fd5c68a7b4",
+        "kind": "overlap",
+        "groupIds": [
+          "data"
+        ],
+        "sampleCount": 12,
+        "resolvedCount": 12,
+        "relevantCount": 12,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "3203906aada96002",
+        "kind": "keyword-only",
+        "groupIds": [
+          "fullstack"
+        ],
+        "sampleCount": 23,
+        "resolvedCount": 23,
+        "relevantCount": 21,
+        "relevanceRate": 0.9130434782608695
+      },
+      {
+        "queryId": "3242893901afd03c",
+        "kind": "occupation-only",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "32c03bb8fb7ce451",
+        "kind": "overlap",
+        "groupIds": [
+          "backend"
+        ],
+        "sampleCount": 3,
+        "resolvedCount": 3,
+        "relevantCount": 3,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "336d245b84c2eecf",
+        "kind": "occupation-only",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "3428afa1711a735a",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "354a606c98671d9c",
+        "kind": "overlap",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "35849b61c3d18834",
+        "kind": "occupation-only",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 13,
+        "resolvedCount": 13,
+        "relevantCount": 12,
+        "relevanceRate": 0.9230769230769231
+      },
+      {
+        "queryId": "360cf523ba3af188",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "3681c85368d05e07",
+        "kind": "overlap",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 10,
+        "resolvedCount": 10,
+        "relevantCount": 10,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "37225d449d95cf68",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "382ca1c6e7b02f13",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "38481f96494e3a43",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "38b318f8f4804b52",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "38c0f14877d47c12",
+        "kind": "overlap",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "39490489ac0a6348",
+        "kind": "keyword-only",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 25,
+        "resolvedCount": 25,
+        "relevantCount": 25,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "3a72909b84dc3fde",
+        "kind": "overlap",
+        "groupIds": [
+          "frontend"
+        ],
+        "sampleCount": 7,
+        "resolvedCount": 7,
+        "relevantCount": 7,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "3a9a822ad0365a1f",
+        "kind": "keyword-only",
+        "groupIds": [
+          "fullstack"
+        ],
+        "sampleCount": 13,
+        "resolvedCount": 13,
+        "relevantCount": 10,
+        "relevanceRate": 0.7692307692307693
+      },
+      {
+        "queryId": "3b0339e02edf242f",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "3f94db1b5995fdb4",
+        "kind": "overlap",
+        "groupIds": [
+          "data"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "3fbb74c6375de8f0",
+        "kind": "keyword-only",
+        "groupIds": [
+          "frontend"
+        ],
+        "sampleCount": 4,
+        "resolvedCount": 4,
+        "relevantCount": 4,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "3fcf089ae5125614",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "40e9d94483698425",
+        "kind": "keyword-only",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 3,
+        "resolvedCount": 3,
+        "relevantCount": 3,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "417cc99678d0eef5",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "4418dfa3bc8e8f35",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "442987ff9cd141b3",
+        "kind": "overlap",
+        "groupIds": [
+          "fullstack"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "44f7021fc7f5e043",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 3,
+        "resolvedCount": 3,
+        "relevantCount": 3,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "459a0577f6882175",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "46932d69103f41a7",
+        "kind": "overlap",
+        "groupIds": [
+          "backend"
+        ],
+        "sampleCount": 2,
+        "resolvedCount": 2,
+        "relevantCount": 2,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "46d29a5c55f2c981",
+        "kind": "overlap",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "47afc57751c78608",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "4860d66f6c926315",
+        "kind": "overlap",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "488654bca5df2fb4",
+        "kind": "overlap",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "48c1dc7202d948c5",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "49429ecd07571985",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "49f7a622c4df7a2e",
+        "kind": "overlap",
+        "groupIds": [
+          "fullstack"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "4a0ae43acd1d09de",
+        "kind": "occupation-only",
+        "groupIds": [
+          "data"
+        ],
+        "sampleCount": 4,
+        "resolvedCount": 4,
+        "relevantCount": 3,
+        "relevanceRate": 0.75
+      },
+      {
+        "queryId": "4a304c1e27dd5444",
+        "kind": "keyword-only",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "4a7c7d6fe7e8dd86",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "4c6973111bba8c5e",
+        "kind": "occupation-only",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "4ca239eed127c77e",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "4deaa799f4f72d36",
+        "kind": "keyword-only",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 6,
+        "resolvedCount": 6,
+        "relevantCount": 5,
+        "relevanceRate": 0.8333333333333334
+      },
+      {
+        "queryId": "5197e18311fec09a",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "522618b54995f9d8",
+        "kind": "keyword-only",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "524a9e19d55c0f46",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "53537b3dca493823",
+        "kind": "keyword-only",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 6,
+        "resolvedCount": 6,
+        "relevantCount": 5,
+        "relevanceRate": 0.8333333333333334
+      },
+      {
+        "queryId": "53b2b26a3c3a2164",
+        "kind": "overlap",
+        "groupIds": [
+          "frontend"
+        ],
+        "sampleCount": 2,
+        "resolvedCount": 2,
+        "relevantCount": 2,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "546ee0e90a98560a",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "547246f67862a475",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "55bd99e6930f669d",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "57b4d530377d5bc7",
+        "kind": "keyword-only",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 3,
+        "resolvedCount": 3,
+        "relevantCount": 3,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "58c68e606b1b3d24",
+        "kind": "keyword-only",
+        "groupIds": [
+          "frontend"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "591e78302180aa11",
+        "kind": "keyword-only",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "5a877be0c8d48b72",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "5ca9319fc3925f56",
+        "kind": "overlap",
+        "groupIds": [
+          "data"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "5cc39159ebc01668",
+        "kind": "occupation-only",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 2,
+        "resolvedCount": 2,
+        "relevantCount": 2,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "5d3d801b6788e0b7",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "5da0c1084c3bca09",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "5e887bd6858bc139",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "60d7d9b3b62e3437",
+        "kind": "overlap",
+        "groupIds": [
+          "backend"
+        ],
+        "sampleCount": 2,
+        "resolvedCount": 2,
+        "relevantCount": 2,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "6167bbbf6705631d",
+        "kind": "occupation-only",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 7,
+        "resolvedCount": 7,
+        "relevantCount": 6,
+        "relevanceRate": 0.8571428571428571
+      },
+      {
+        "queryId": "6195582a5b69da9b",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "62275f19b02f0914",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 7,
+        "resolvedCount": 7,
+        "relevantCount": 6,
+        "relevanceRate": 0.8571428571428571
+      },
+      {
+        "queryId": "6347581d50074236",
+        "kind": "keyword-only",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "650948aa8d67e32b",
+        "kind": "overlap",
+        "groupIds": [
+          "data"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "65137d7e545c4cf0",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "65a088b123fba17e",
+        "kind": "keyword-only",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 5,
+        "resolvedCount": 5,
+        "relevantCount": 5,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "65b8b289ff5ccd0e",
+        "kind": "overlap",
+        "groupIds": [
+          "data"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "65dcf1e05a02a5db",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "663b4ed49ba63892",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "66b61acd3a685155",
+        "kind": "overlap",
+        "groupIds": [
+          "frontend"
+        ],
+        "sampleCount": 23,
+        "resolvedCount": 22,
+        "relevantCount": 15,
+        "relevanceRate": 0.6818181818181818
+      },
+      {
+        "queryId": "67b5d2d2528f9251",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "68195d0ff320b511",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "68a634c7b5922bcc",
+        "kind": "occupation-only",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 3,
+        "resolvedCount": 3,
+        "relevantCount": 3,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "68ca7abc1cab713c",
+        "kind": "keyword-only",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 5,
+        "resolvedCount": 5,
+        "relevantCount": 5,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "68fc5306b9f46ba2",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "696e5a316a6128ee",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "69c8d8d5179ae5d6",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "6a9d0d5125fc8996",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 0,
+        "relevanceRate": 0
+      },
+      {
+        "queryId": "6ba31eb327c9aba9",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "6cdefb4380288a48",
+        "kind": "overlap",
+        "groupIds": [
+          "data"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "6d9f64b8bd8f1889",
+        "kind": "keyword-only",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 0,
+        "relevanceRate": 0
+      },
+      {
+        "queryId": "6dc9e4cf03825c10",
+        "kind": "overlap",
+        "groupIds": [
+          "frontend"
+        ],
+        "sampleCount": 23,
+        "resolvedCount": 22,
+        "relevantCount": 15,
+        "relevanceRate": 0.6818181818181818
+      },
+      {
+        "queryId": "6f69cf410d289a6d",
+        "kind": "keyword-only",
+        "groupIds": [
+          "data"
+        ],
+        "sampleCount": 13,
+        "resolvedCount": 13,
+        "relevantCount": 13,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "6fcafff4147f5ae8",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "70948ad1daa53756",
+        "kind": "overlap",
+        "groupIds": [
+          "fullstack"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "732b3290b4bfcf25",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "737473277508d198",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "73b57d796b406bf1",
+        "kind": "keyword-only",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 4,
+        "resolvedCount": 4,
+        "relevantCount": 4,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "74b3a5a490c9e385",
+        "kind": "overlap",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "75e4ca1e03f15804",
+        "kind": "overlap",
+        "groupIds": [
+          "data"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "76a0dc7ac2905119",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "783055613dcd528e",
+        "kind": "overlap",
+        "groupIds": [
+          "fullstack"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "7833779b5c6d4639",
+        "kind": "keyword-only",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "7891cb773146dea6",
+        "kind": "overlap",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "78af1d4546840895",
+        "kind": "occupation-only",
+        "groupIds": [
+          "data"
+        ],
+        "sampleCount": 12,
+        "resolvedCount": 12,
+        "relevantCount": 12,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "7906362740c54999",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "79a948f8485e908a",
+        "kind": "overlap",
+        "groupIds": [
+          "fullstack"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "7a8e1b1f9bceec2e",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "7b944c1e24715af5",
+        "kind": "keyword-only",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 8,
+        "resolvedCount": 8,
+        "relevantCount": 5,
+        "relevanceRate": 0.625
+      },
+      {
+        "queryId": "7bad57e700420cc4",
+        "kind": "overlap",
+        "groupIds": [
+          "backend"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "7c14a88f00ee9b90",
+        "kind": "overlap",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "7e42438dff86b213",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 4,
+        "resolvedCount": 4,
+        "relevantCount": 4,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "7ee9e2a3d2dc6a24",
+        "kind": "keyword-only",
+        "groupIds": [
+          "frontend"
+        ],
+        "sampleCount": 7,
+        "resolvedCount": 7,
+        "relevantCount": 7,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "7f08d2e031324910",
+        "kind": "keyword-only",
+        "groupIds": [
+          "frontend"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "7fe06d8cfc0b1d10",
+        "kind": "overlap",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "80df05bb5f75066f",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "81676a9e4d46e34d",
+        "kind": "keyword-only",
+        "groupIds": [
+          "fullstack"
+        ],
+        "sampleCount": 23,
+        "resolvedCount": 23,
+        "relevantCount": 21,
+        "relevanceRate": 0.9130434782608695
+      },
+      {
+        "queryId": "81a1752294579ffd",
+        "kind": "overlap",
+        "groupIds": [
+          "data"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "822b3b7dcec2c345",
+        "kind": "overlap",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 14,
+        "resolvedCount": 14,
+        "relevantCount": 14,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "82faff7e80477fb8",
+        "kind": "occupation-only",
+        "groupIds": [
+          "backend",
+          "fullstack",
+          "mobile"
+        ],
+        "sampleCount": 11,
+        "resolvedCount": 11,
+        "relevantCount": 10,
+        "relevanceRate": 0.9090909090909091
+      },
+      {
+        "queryId": "841e6e72611b87d7",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "85d4132fdf62fe17",
+        "kind": "keyword-only",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 4,
+        "resolvedCount": 4,
+        "relevantCount": 4,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "85e153eed65d8015",
+        "kind": "keyword-only",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 5,
+        "resolvedCount": 5,
+        "relevantCount": 4,
+        "relevanceRate": 0.8
+      },
+      {
+        "queryId": "864c3dbc325b13e9",
+        "kind": "overlap",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "87c5355dea8fd017",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "8894675a4a7d87b1",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 3,
+        "resolvedCount": 3,
+        "relevantCount": 3,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "893b41d1a2b3e8bb",
+        "kind": "occupation-only",
+        "groupIds": [
+          "data"
+        ],
+        "sampleCount": 2,
+        "resolvedCount": 2,
+        "relevantCount": 2,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "8a3b04555add87d1",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "8a4b5971cce708d5",
+        "kind": "keyword-only",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "8b737712524eff7d",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "8cbbefc4c10a0da1",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "8ccca9e985fdd905",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "8cfd0f2f6cb010ea",
+        "kind": "overlap",
+        "groupIds": [
+          "fullstack"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "8d1a6ea61b453a7e",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "8e121d39a2ad10fe",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "8f75d966b7a5b979",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "906e6f5a9698f32c",
+        "kind": "overlap",
+        "groupIds": [
+          "fullstack"
+        ],
+        "sampleCount": 16,
+        "resolvedCount": 16,
+        "relevantCount": 14,
+        "relevanceRate": 0.875
+      },
+      {
+        "queryId": "909fe2940a18fe4c",
+        "kind": "keyword-only",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "912dd346357c04d8",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "9171d931d1683de5",
+        "kind": "overlap",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 5,
+        "resolvedCount": 5,
+        "relevantCount": 4,
+        "relevanceRate": 0.8
+      },
+      {
+        "queryId": "9208659de8631f5b",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "9241d26dd5ec8a1b",
+        "kind": "overlap",
+        "groupIds": [
+          "fullstack"
+        ],
+        "sampleCount": 16,
+        "resolvedCount": 16,
+        "relevantCount": 14,
+        "relevanceRate": 0.875
+      },
+      {
+        "queryId": "9333ef176b91d296",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "9369b6d301222d94",
+        "kind": "keyword-only",
+        "groupIds": [
+          "data"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "9380f2f30d794c53",
+        "kind": "overlap",
+        "groupIds": [
+          "fullstack"
+        ],
+        "sampleCount": 16,
+        "resolvedCount": 16,
+        "relevantCount": 14,
+        "relevanceRate": 0.875
+      },
+      {
+        "queryId": "9433ba7c568cce8b",
+        "kind": "keyword-only",
+        "groupIds": [
+          "data"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "9467842809c4afd6",
+        "kind": "overlap",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "94d02911f6d688a6",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "956cd7cde254847f",
+        "kind": "overlap",
+        "groupIds": [
+          "backend"
+        ],
+        "sampleCount": 2,
+        "resolvedCount": 2,
+        "relevantCount": 2,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "957d7c12787c7684",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "95a4d3faca9bfd01",
+        "kind": "overlap",
+        "groupIds": [
+          "backend"
+        ],
+        "sampleCount": 2,
+        "resolvedCount": 2,
+        "relevantCount": 2,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "9607031e82cbcc76",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "9769c65435ef0fe9",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "979920433f97b763",
+        "kind": "keyword-only",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 19,
+        "resolvedCount": 19,
+        "relevantCount": 19,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "97d564a0e5874522",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "98c62727541a6d37",
+        "kind": "overlap",
+        "groupIds": [
+          "fullstack"
+        ],
+        "sampleCount": 16,
+        "resolvedCount": 16,
+        "relevantCount": 14,
+        "relevanceRate": 0.875
+      },
+      {
+        "queryId": "9a87f4aa0012a37e",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 0,
+        "relevanceRate": 0
+      },
+      {
+        "queryId": "9ac6b7007586b4cb",
+        "kind": "overlap",
+        "groupIds": [
+          "data"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "9adb2badddb07e6b",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "9c4a93bef7f6bd35",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "9d2e0b6e74f2a5e0",
+        "kind": "overlap",
+        "groupIds": [
+          "fullstack"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "9d3c66b5c62049e0",
+        "kind": "keyword-only",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 6,
+        "resolvedCount": 6,
+        "relevantCount": 5,
+        "relevanceRate": 0.8333333333333334
+      },
+      {
+        "queryId": "9d91029501e75811",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "9f688fb06a4c6e93",
+        "kind": "overlap",
+        "groupIds": [
+          "backend"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "9f6ccce1b234f469",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 2,
+        "resolvedCount": 2,
+        "relevantCount": 2,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "a000ff8be0bb6d5d",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "a1d3302f42a49e49",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "a3ebaf4a9d7dea81",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "a427729748cd7ffb",
+        "kind": "overlap",
+        "groupIds": [
+          "fullstack"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "a48faee8b5b6bc9c",
+        "kind": "overlap",
+        "groupIds": [
+          "data"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "a49402f4cd75fc09",
+        "kind": "overlap",
+        "groupIds": [
+          "data"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "a4bfc1a99f349675",
+        "kind": "overlap",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "a8eea759eb862cc8",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "a95b7f0b58aba9d4",
+        "kind": "occupation-only",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "a98cdd6ec74fcab3",
+        "kind": "keyword-only",
+        "groupIds": [
+          "backend"
+        ],
+        "sampleCount": 5,
+        "resolvedCount": 5,
+        "relevantCount": 5,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "aa07c060b808b63e",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "aa157bc5183247f3",
+        "kind": "keyword-only",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 14,
+        "resolvedCount": 14,
+        "relevantCount": 14,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "ab407af21822a547",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 0,
+        "relevanceRate": 0
+      },
+      {
+        "queryId": "ab57d59c34fc2361",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "ac5125d8343bfde3",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "ac86e9ebbbfdc1ea",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "ae25f37ccc961299",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 2,
+        "resolvedCount": 2,
+        "relevantCount": 2,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "ae47d410d361d831",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "af5530d6bd65d1f4",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "afde545e1077f7d3",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "b0142d61c60e951f",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "b0817d2e2d18e7e4",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "b11f714eb504f3ce",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 7,
+        "resolvedCount": 7,
+        "relevantCount": 6,
+        "relevanceRate": 0.8571428571428571
+      },
+      {
+        "queryId": "b15ced2532b805c2",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "b18b62a644f8003f",
+        "kind": "keyword-only",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 6,
+        "resolvedCount": 6,
+        "relevantCount": 5,
+        "relevanceRate": 0.8333333333333334
+      },
+      {
+        "queryId": "b254cb2ed87a5b2d",
+        "kind": "overlap",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "b2d7f137835a8f7b",
+        "kind": "keyword-only",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 8,
+        "resolvedCount": 8,
+        "relevantCount": 8,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "b41f104e449c6dd2",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 4,
+        "resolvedCount": 4,
+        "relevantCount": 3,
+        "relevanceRate": 0.75
+      },
+      {
+        "queryId": "b49f45da9e80478f",
+        "kind": "overlap",
+        "groupIds": [
+          "data"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "b58d0134becdb540",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "b5d7dff5aacd2c84",
+        "kind": "overlap",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "b64955dce7e103d4",
+        "kind": "overlap",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "b65edd555668d08a",
+        "kind": "keyword-only",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "b6cd7e33a54762e5",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 2,
+        "resolvedCount": 2,
+        "relevantCount": 2,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "b792a0fb751bc6ab",
+        "kind": "keyword-only",
+        "groupIds": [
+          "backend"
+        ],
+        "sampleCount": 10,
+        "resolvedCount": 10,
+        "relevantCount": 10,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "b82874d39c68a729",
+        "kind": "occupation-only",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "b94267a3dd9b4cd8",
+        "kind": "keyword-only",
+        "groupIds": [
+          "backend"
+        ],
+        "sampleCount": 10,
+        "resolvedCount": 10,
+        "relevantCount": 10,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "ba253c45b4bcfff3",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "bbc6c388fe9683cc",
+        "kind": "keyword-only",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 10,
+        "resolvedCount": 10,
+        "relevantCount": 8,
+        "relevanceRate": 0.8
+      },
+      {
+        "queryId": "bc5b95814d96e540",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 2,
+        "resolvedCount": 2,
+        "relevantCount": 2,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "bd8d649318297a12",
+        "kind": "keyword-only",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "be176eef0b7ba8ed",
+        "kind": "keyword-only",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 19,
+        "resolvedCount": 19,
+        "relevantCount": 19,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "beffc0f1b5be22c5",
+        "kind": "keyword-only",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "bfdaacc1bed5ec41",
+        "kind": "occupation-only",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 7,
+        "resolvedCount": 7,
+        "relevantCount": 6,
+        "relevanceRate": 0.8571428571428571
+      },
+      {
+        "queryId": "c05ab14f1867a7d7",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "c0fe0b76f55e4fb8",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "c1259c869996533d",
+        "kind": "occupation-only",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "c192ab14c53922d0",
+        "kind": "overlap",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "c2aadc5fd12801f4",
+        "kind": "overlap",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 10,
+        "resolvedCount": 10,
+        "relevantCount": 10,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "c2c72579bb38fa33",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "c3abbd8e6db289c1",
+        "kind": "keyword-only",
+        "groupIds": [
+          "backend"
+        ],
+        "sampleCount": 21,
+        "resolvedCount": 21,
+        "relevantCount": 21,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "c51d51e32fd23fd0",
+        "kind": "occupation-only",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 5,
+        "resolvedCount": 5,
+        "relevantCount": 4,
+        "relevanceRate": 0.8
+      },
+      {
+        "queryId": "c56c337618d3ce49",
+        "kind": "keyword-only",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "c8dce37be3db167f",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "c91ec47e14232e9b",
+        "kind": "overlap",
+        "groupIds": [
+          "frontend"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "c924b773edd61ece",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "c9419c702feb8f81",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "cae0cd51c5ae3404",
+        "kind": "occupation-only",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 2,
+        "resolvedCount": 2,
+        "relevantCount": 1,
+        "relevanceRate": 0.5
+      },
+      {
+        "queryId": "ce238a7e42185f79",
+        "kind": "overlap",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "d08d3a239af7cdc3",
+        "kind": "keyword-only",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 8,
+        "resolvedCount": 8,
+        "relevantCount": 8,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "d10e06bfd43a9785",
+        "kind": "keyword-only",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 10,
+        "resolvedCount": 10,
+        "relevantCount": 8,
+        "relevanceRate": 0.8
+      },
+      {
+        "queryId": "d195b8bba388fa9d",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "d1d8340cdcc27655",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "d2b77c1b7178dad5",
+        "kind": "keyword-only",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 9,
+        "resolvedCount": 9,
+        "relevantCount": 8,
+        "relevanceRate": 0.8888888888888888
+      },
+      {
+        "queryId": "d41c84e7d8607950",
+        "kind": "keyword-only",
+        "groupIds": [
+          "frontend"
+        ],
+        "sampleCount": 7,
+        "resolvedCount": 7,
+        "relevantCount": 7,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "d55c650d85d202b5",
+        "kind": "overlap",
+        "groupIds": [
+          "data"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "d5d6590acadd0ee3",
+        "kind": "overlap",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "d5dd3f630bebc534",
+        "kind": "overlap",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "d6374e9ab14885eb",
+        "kind": "overlap",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "d6bc48eb40434028",
+        "kind": "keyword-only",
+        "groupIds": [
+          "frontend"
+        ],
+        "sampleCount": 4,
+        "resolvedCount": 4,
+        "relevantCount": 4,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "d746a62895231bea",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "d82e169322181c50",
+        "kind": "overlap",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "d845d672e93c90e9",
+        "kind": "keyword-only",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 19,
+        "resolvedCount": 19,
+        "relevantCount": 16,
+        "relevanceRate": 0.8421052631578947
+      },
+      {
+        "queryId": "d8819d4b1c9dfcb1",
+        "kind": "overlap",
+        "groupIds": [
+          "fullstack"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "d91c0cdbcf8da5ee",
+        "kind": "overlap",
+        "groupIds": [
+          "backend"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "d9b7acc19562e1a7",
+        "kind": "keyword-only",
+        "groupIds": [
+          "data"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "dbbe5e79dbf952dd",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "dc0fd9d5f92596c8",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "dcf234304eb9d2bc",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "ddcdb77aab9098f7",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "de1cced120fe2a07",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "e180b99afd36a72e",
+        "kind": "overlap",
+        "groupIds": [
+          "fullstack"
+        ],
+        "sampleCount": 8,
+        "resolvedCount": 8,
+        "relevantCount": 6,
+        "relevanceRate": 0.75
+      },
+      {
+        "queryId": "e1c37f0e796dfae3",
+        "kind": "overlap",
+        "groupIds": [
+          "backend"
+        ],
+        "sampleCount": 2,
+        "resolvedCount": 2,
+        "relevantCount": 2,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "e27f4a14f2a1e875",
+        "kind": "keyword-only",
+        "groupIds": [
+          "fullstack"
+        ],
+        "sampleCount": 23,
+        "resolvedCount": 23,
+        "relevantCount": 21,
+        "relevanceRate": 0.9130434782608695
+      },
+      {
+        "queryId": "e56aad60e8de1b79",
+        "kind": "overlap",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "e5d902b2514e1d99",
+        "kind": "overlap",
+        "groupIds": [
+          "fullstack"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "e6c7801588123a48",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "e6fa6792a0c04eb0",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "e9732f40c0938b0a",
+        "kind": "keyword-only",
+        "groupIds": [
+          "backend"
+        ],
+        "sampleCount": 21,
+        "resolvedCount": 21,
+        "relevantCount": 21,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "e9fcb78a011fcf31",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "ea70c8f862e54ec8",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "ea9badc39827aeab",
+        "kind": "overlap",
+        "groupIds": [
+          "frontend"
+        ],
+        "sampleCount": 2,
+        "resolvedCount": 2,
+        "relevantCount": 2,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "eb7deec8cf3a3a4b",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "ecb1273f5246a5ef",
+        "kind": "occupation-only",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 0,
+        "relevanceRate": 0
+      },
+      {
+        "queryId": "ed3c9a0b7b525e54",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "ef26c262c66d1d81",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "ef3d8ff7c217afd0",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "f0cf494bb42a7c4c",
+        "kind": "occupation-only",
+        "groupIds": [
+          "frontend",
+          "fullstack"
+        ],
+        "sampleCount": 41,
+        "resolvedCount": 40,
+        "relevantCount": 30,
+        "relevanceRate": 0.75
+      },
+      {
+        "queryId": "f1d21710f0792942",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "f295de7bc47bd629",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "f31a72a78a7fac0e",
+        "kind": "keyword-only",
+        "groupIds": [
+          "frontend"
+        ],
+        "sampleCount": 28,
+        "resolvedCount": 27,
+        "relevantCount": 20,
+        "relevanceRate": 0.7407407407407407
+      },
+      {
+        "queryId": "f3b8d6f3b39a2a1a",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 0,
+        "relevanceRate": 0
+      },
+      {
+        "queryId": "f547b8e544a28298",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 2,
+        "resolvedCount": 2,
+        "relevantCount": 2,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "f6524cc46990baf1",
+        "kind": "occupation-only",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "f69fbabce695386c",
+        "kind": "keyword-only",
+        "groupIds": [
+          "data"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "f78b40f155a801f0",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "fa97399b70171f43",
+        "kind": "overlap",
+        "groupIds": [
+          "devops-cloud"
+        ],
+        "sampleCount": 14,
+        "resolvedCount": 14,
+        "relevantCount": 14,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "fbba5f61654c6ed2",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "fc9900b5485fef1e",
+        "kind": "overlap",
+        "groupIds": [
+          "backend"
+        ],
+        "sampleCount": 1,
+        "resolvedCount": 1,
+        "relevantCount": 1,
+        "relevanceRate": 1
+      },
+      {
+        "queryId": "fcc32dd966b63095",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "fd28cd908b928169",
+        "kind": "overlap",
+        "groupIds": [
+          "qa-test"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "fe07b1e742810a09",
+        "kind": "overlap",
+        "groupIds": [
+          "mobile"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "ff67cba8863e548b",
+        "kind": "overlap",
+        "groupIds": [
+          "data"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      },
+      {
+        "queryId": "ffcbc2ba2778d006",
+        "kind": "overlap",
+        "groupIds": [
+          "cybersecurity"
+        ],
+        "sampleCount": 0,
+        "resolvedCount": 0,
+        "relevantCount": 0,
+        "relevanceRate": null
+      }
+    ],
+    "falsePositiveReasons": {
+      "adjacent-role": 13,
+      "insufficient-context": 1,
+      "management-only": 3,
+      "other-domain": 5,
+      "sales-or-recruitment": 4,
+      "technology-mention-only": 1,
+      "training-only": 3
+    },
+    "occupationKeywordOverlapPairCount": 240,
+    "occupationKeywordNonZeroOverlapPairCount": 135,
+    "occupationKeywordMeanJaccard": 0.05808855996736454
+  },
+  "observedRequests": [
+    {
+      "queryId": "00b45b81c02035a2",
+      "kind": "keyword-only",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": null,
+      "motsCles": "développeur applications mobiles",
+      "observedTotal": 8,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "01a9fed9ddaa681e",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1861",
+      "motsCles": "développeur application mobile",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "0388656927b91ca2",
+      "kind": "overlap",
+      "groupIds": [
+        "data"
+      ],
+      "codeROME": "M1851",
+      "motsCles": "développeuse data",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "0512164084149106",
+      "kind": "keyword-only",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": null,
+      "motsCles": "architecte cloud",
+      "observedTotal": 430,
+      "pages": 3,
+      "status": "complete"
+    },
+    {
+      "queryId": "053e80bceef9f7d0",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1842",
+      "motsCles": "qa automation",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "057e6dafed400c58",
+      "kind": "keyword-only",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": null,
+      "motsCles": "développeuse Android",
+      "observedTotal": 7,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "07744835a1a52d53",
+      "kind": "overlap",
+      "groupIds": [
+        "data"
+      ],
+      "codeROME": "M1824",
+      "motsCles": "ingénieur données",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "09970e4af29a51e6",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1861",
+      "motsCles": "mobile developer",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "09d0841b418f0c16",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1833",
+      "motsCles": "ingénieur cybersécurité",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "09f90bbd9058e0fd",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1866",
+      "motsCles": "analyste cybersécurité",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "09faa73f544a393d",
+      "kind": "overlap",
+      "groupIds": [
+        "fullstack"
+      ],
+      "codeROME": "M1805",
+      "motsCles": "développeur fullstack",
+      "observedTotal": 9,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "0a0ab7c89178d7ae",
+      "kind": "occupation-only",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1866",
+      "motsCles": null,
+      "observedTotal": 3,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "0a106e9ee394650c",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1856",
+      "motsCles": "pentesteuse",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "0a9a30b1817cd17f",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1861",
+      "motsCles": "développeuse applications mobiles",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "0c789013ade98b4b",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1842",
+      "motsCles": "ingénieur QA",
+      "observedTotal": 4,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "0ce703223d2c4e8f",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1833",
+      "motsCles": "ingénieure cybersécurité",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "0d1c18e49cc4a4a1",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1882",
+      "motsCles": "ingénieure cybersécurité",
+      "observedTotal": 7,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "0d248e54f6433e33",
+      "kind": "occupation-only",
+      "groupIds": [
+        "backend",
+        "fullstack",
+        "mobile"
+      ],
+      "codeROME": "M1861",
+      "motsCles": null,
+      "observedTotal": 111,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "0e6afd80aee2a442",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1856",
+      "motsCles": "ingénieur cybersécurité",
+      "observedTotal": 12,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "10bb9f54a879fb3d",
+      "kind": "overlap",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1876",
+      "motsCles": "technicien cloud",
+      "observedTotal": 18,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "11003a53d2e5f44a",
+      "kind": "keyword-only",
+      "groupIds": [
+        "data"
+      ],
+      "codeROME": null,
+      "motsCles": "data analyst",
+      "observedTotal": 183,
+      "pages": 2,
+      "status": "complete"
+    },
+    {
+      "queryId": "111b257ab4ec03f6",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1846",
+      "motsCles": "ingénieur cybersécurité",
+      "observedTotal": 8,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "1125fd6825e57946",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1832",
+      "motsCles": "ingénieure QA",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "123795bbd82003b4",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1861",
+      "motsCles": "développeur iOS",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "12c21c7536b84f0f",
+      "kind": "occupation-only",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1827",
+      "motsCles": null,
+      "observedTotal": 276,
+      "pages": 2,
+      "status": "complete"
+    },
+    {
+      "queryId": "1330dac407582047",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1815",
+      "motsCles": "ingénieure QA",
+      "observedTotal": 3,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "141addb36883a235",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1861",
+      "motsCles": "développeur mobile",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "14237a4efc9c1af5",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1805",
+      "motsCles": "développeur applications mobiles",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "142a2c32ad5eba2a",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1815",
+      "motsCles": "validation logiciel",
+      "observedTotal": 14,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "14dd5ceb70bc7a75",
+      "kind": "keyword-only",
+      "groupIds": [
+        "fullstack"
+      ],
+      "codeROME": null,
+      "motsCles": "développeur fullstack",
+      "observedTotal": 103,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "150f40ae75724ccb",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1883",
+      "motsCles": "pentesteur",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "15e4bf74503c1868",
+      "kind": "keyword-only",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": null,
+      "motsCles": "pentesteur",
+      "observedTotal": 3,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "171a209add586e3a",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1842",
+      "motsCles": "ingénieure test logiciel",
+      "observedTotal": 3,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "197e825bc161dd46",
+      "kind": "overlap",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1876",
+      "motsCles": "architecte cloud",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "1ba2066228791c3b",
+      "kind": "keyword-only",
+      "groupIds": [
+        "backend"
+      ],
+      "codeROME": null,
+      "motsCles": "développeuse API",
+      "observedTotal": 12,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "1bfed4518167f13a",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1842",
+      "motsCles": "testeur logiciel",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "1c97765d6f6ccc20",
+      "kind": "keyword-only",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": null,
+      "motsCles": "ingénieure QA",
+      "observedTotal": 26,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "1cb486af5bd0c6c1",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1819",
+      "motsCles": "pentesteur",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "1d91fd8f620ec49f",
+      "kind": "overlap",
+      "groupIds": [
+        "backend"
+      ],
+      "codeROME": "M1805",
+      "motsCles": "développeuse API",
+      "observedTotal": 6,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "1ed94eda93b898c7",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1820",
+      "motsCles": "qa engineer",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "200b477c23c2c85a",
+      "kind": "keyword-only",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": null,
+      "motsCles": "développement mobile",
+      "observedTotal": 43,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "21f4a392d07de2fb",
+      "kind": "overlap",
+      "groupIds": [
+        "data"
+      ],
+      "codeROME": "M1851",
+      "motsCles": "ingénieur données",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "2370228a9ee64278",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1861",
+      "motsCles": "développeur Flutter",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "23afcd801678f3c6",
+      "kind": "keyword-only",
+      "groupIds": [
+        "frontend"
+      ],
+      "codeROME": null,
+      "motsCles": "développeuse web",
+      "observedTotal": 508,
+      "pages": 4,
+      "status": "complete"
+    },
+    {
+      "queryId": "23de62885d41b3ad",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1883",
+      "motsCles": "sécurité informatique",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "24409bc07b2a8157",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1832",
+      "motsCles": "qa automation",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "267244e8ae1aeebf",
+      "kind": "occupation-only",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1817",
+      "motsCles": null,
+      "observedTotal": 10,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "27f6960a29d6737b",
+      "kind": "overlap",
+      "groupIds": [
+        "data"
+      ],
+      "codeROME": "M1851",
+      "motsCles": "data engineer",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "28cdfbd335ab2efb",
+      "kind": "keyword-only",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": null,
+      "motsCles": "ingénieure DevOps",
+      "observedTotal": 520,
+      "pages": 4,
+      "status": "complete"
+    },
+    {
+      "queryId": "2985e3d82045e352",
+      "kind": "overlap",
+      "groupIds": [
+        "backend"
+      ],
+      "codeROME": "M1805",
+      "motsCles": "développeur backend",
+      "observedTotal": 3,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "2a27f1ff5e7ed2d3",
+      "kind": "overlap",
+      "groupIds": [
+        "frontend"
+      ],
+      "codeROME": "M1855",
+      "motsCles": "développeur front-end",
+      "observedTotal": 33,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "2aa18969bedf9221",
+      "kind": "keyword-only",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": null,
+      "motsCles": "développeur mobile",
+      "observedTotal": 29,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "2b0712410bc66542",
+      "kind": "overlap",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1860",
+      "motsCles": "ingénieure cloud",
+      "observedTotal": 23,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "2bc02ada633e55fb",
+      "kind": "keyword-only",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": null,
+      "motsCles": "développeur Flutter",
+      "observedTotal": 4,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "2c49dc1980aee3cb",
+      "kind": "keyword-only",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": null,
+      "motsCles": "ingénieur cybersécurité",
+      "observedTotal": 74,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "2cb0ae5a37d86592",
+      "kind": "keyword-only",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": null,
+      "motsCles": "validation logiciel",
+      "observedTotal": 26,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "2dcb5338f7adfb62",
+      "kind": "overlap",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1860",
+      "motsCles": "site reliability engineer",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "2dd202d635c1cb4c",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1863",
+      "motsCles": "pentesteur",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "2ddf87aaeb09ec80",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1882",
+      "motsCles": "pentesteuse",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "2de244443a52f3aa",
+      "kind": "overlap",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1827",
+      "motsCles": "architecte cloud",
+      "observedTotal": 9,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "2e85390c98bff08b",
+      "kind": "overlap",
+      "groupIds": [
+        "fullstack"
+      ],
+      "codeROME": "M1805",
+      "motsCles": "développeur full stack",
+      "observedTotal": 11,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "2f5119d090406ae3",
+      "kind": "overlap",
+      "groupIds": [
+        "frontend"
+      ],
+      "codeROME": "M1855",
+      "motsCles": "intégrateur web",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "2f65f98a54b735c5",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1805",
+      "motsCles": "développeuse applications mobiles",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "308a6d7604a04b55",
+      "kind": "overlap",
+      "groupIds": [
+        "fullstack"
+      ],
+      "codeROME": "M1855",
+      "motsCles": "développeur fullstack",
+      "observedTotal": 87,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "310151205f3f9bc4",
+      "kind": "keyword-only",
+      "groupIds": [
+        "fullstack"
+      ],
+      "codeROME": null,
+      "motsCles": "développeuse full-stack",
+      "observedTotal": 206,
+      "pages": 2,
+      "status": "complete"
+    },
+    {
+      "queryId": "311986fd5c68a7b4",
+      "kind": "overlap",
+      "groupIds": [
+        "data"
+      ],
+      "codeROME": "M1811",
+      "motsCles": "data engineer",
+      "observedTotal": 334,
+      "pages": 3,
+      "status": "complete"
+    },
+    {
+      "queryId": "3203906aada96002",
+      "kind": "keyword-only",
+      "groupIds": [
+        "fullstack"
+      ],
+      "codeROME": null,
+      "motsCles": "développeuse full stack",
+      "observedTotal": 206,
+      "pages": 2,
+      "status": "complete"
+    },
+    {
+      "queryId": "3242893901afd03c",
+      "kind": "occupation-only",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1883",
+      "motsCles": null,
+      "observedTotal": 11,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "32c03bb8fb7ce451",
+      "kind": "overlap",
+      "groupIds": [
+        "backend"
+      ],
+      "codeROME": "M1805",
+      "motsCles": "développeur API",
+      "observedTotal": 6,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "336d245b84c2eecf",
+      "kind": "occupation-only",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1876",
+      "motsCles": null,
+      "observedTotal": 18,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "3428afa1711a735a",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1820",
+      "motsCles": "automaticien de tests",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "354a606c98671d9c",
+      "kind": "overlap",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1879",
+      "motsCles": "ingénieure DevOps",
+      "observedTotal": 11,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "35849b61c3d18834",
+      "kind": "occupation-only",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1856",
+      "motsCles": null,
+      "observedTotal": 188,
+      "pages": 2,
+      "status": "complete"
+    },
+    {
+      "queryId": "360cf523ba3af188",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1882",
+      "motsCles": "pentesteur",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "3681c85368d05e07",
+      "kind": "overlap",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1827",
+      "motsCles": "ingénieure cloud",
+      "observedTotal": 163,
+      "pages": 2,
+      "status": "complete"
+    },
+    {
+      "queryId": "37225d449d95cf68",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1861",
+      "motsCles": "React Native",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "382ca1c6e7b02f13",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1861",
+      "motsCles": "développeuse Flutter",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "38481f96494e3a43",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1861",
+      "motsCles": "développement mobile",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "38b318f8f4804b52",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1856",
+      "motsCles": "analyste SOC",
+      "observedTotal": 6,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "38c0f14877d47c12",
+      "kind": "overlap",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1879",
+      "motsCles": "site reliability engineer",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "39490489ac0a6348",
+      "kind": "keyword-only",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": null,
+      "motsCles": "ingénieur DevOps",
+      "observedTotal": 520,
+      "pages": 4,
+      "status": "complete"
+    },
+    {
+      "queryId": "3a72909b84dc3fde",
+      "kind": "overlap",
+      "groupIds": [
+        "frontend"
+      ],
+      "codeROME": "M1855",
+      "motsCles": "développeuse front-end",
+      "observedTotal": 33,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "3a9a822ad0365a1f",
+      "kind": "keyword-only",
+      "groupIds": [
+        "fullstack"
+      ],
+      "codeROME": null,
+      "motsCles": "développeuse fullstack",
+      "observedTotal": 103,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "3b0339e02edf242f",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1805",
+      "motsCles": "développeur Flutter",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "3f94db1b5995fdb4",
+      "kind": "overlap",
+      "groupIds": [
+        "data"
+      ],
+      "codeROME": "M1811",
+      "motsCles": "ingénieure données",
+      "observedTotal": 15,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "3fbb74c6375de8f0",
+      "kind": "keyword-only",
+      "groupIds": [
+        "frontend"
+      ],
+      "codeROME": null,
+      "motsCles": "développeuse frontend",
+      "observedTotal": 10,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "3fcf089ae5125614",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1846",
+      "motsCles": "ingénieure cybersécurité",
+      "observedTotal": 8,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "40e9d94483698425",
+      "kind": "keyword-only",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": null,
+      "motsCles": "développeur iOS",
+      "observedTotal": 3,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "417cc99678d0eef5",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1812",
+      "motsCles": "pentesteuse",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "4418dfa3bc8e8f35",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1866",
+      "motsCles": "sécurité informatique",
+      "observedTotal": 2,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "442987ff9cd141b3",
+      "kind": "overlap",
+      "groupIds": [
+        "fullstack"
+      ],
+      "codeROME": "M1805",
+      "motsCles": "développeuse full-stack",
+      "observedTotal": 11,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "44f7021fc7f5e043",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1842",
+      "motsCles": "ingénieur test logiciel",
+      "observedTotal": 3,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "459a0577f6882175",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1812",
+      "motsCles": "ingénieure cybersécurité",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "46932d69103f41a7",
+      "kind": "overlap",
+      "groupIds": [
+        "backend"
+      ],
+      "codeROME": "M1861",
+      "motsCles": "développeuse back-end",
+      "observedTotal": 2,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "46d29a5c55f2c981",
+      "kind": "overlap",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1879",
+      "motsCles": "ingénieure cloud",
+      "observedTotal": 27,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "47afc57751c78608",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1812",
+      "motsCles": "pentesteur",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "4860d66f6c926315",
+      "kind": "overlap",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1876",
+      "motsCles": "ingénieure cloud",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "488654bca5df2fb4",
+      "kind": "overlap",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1879",
+      "motsCles": "architecte cloud",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "48c1dc7202d948c5",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1805",
+      "motsCles": "ingénieur mobile",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "49429ecd07571985",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1883",
+      "motsCles": "ingénieur cybersécurité",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "49f7a622c4df7a2e",
+      "kind": "overlap",
+      "groupIds": [
+        "fullstack"
+      ],
+      "codeROME": "M1805",
+      "motsCles": "développeuse full stack",
+      "observedTotal": 11,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "4a0ae43acd1d09de",
+      "kind": "occupation-only",
+      "groupIds": [
+        "data"
+      ],
+      "codeROME": "M1851",
+      "motsCles": null,
+      "observedTotal": 32,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "4a304c1e27dd5444",
+      "kind": "keyword-only",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": null,
+      "motsCles": "technicien cloud",
+      "observedTotal": 402,
+      "pages": 3,
+      "status": "complete"
+    },
+    {
+      "queryId": "4a7c7d6fe7e8dd86",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1863",
+      "motsCles": "analyste SOC",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "4c6973111bba8c5e",
+      "kind": "occupation-only",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1863",
+      "motsCles": null,
+      "observedTotal": 66,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "4ca239eed127c77e",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1832",
+      "motsCles": "qa engineer",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "4deaa799f4f72d36",
+      "kind": "keyword-only",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": null,
+      "motsCles": "développeur application mobile",
+      "observedTotal": 10,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "5197e18311fec09a",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1866",
+      "motsCles": "analyste SOC",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "522618b54995f9d8",
+      "kind": "keyword-only",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": null,
+      "motsCles": "automaticien de tests",
+      "observedTotal": 7,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "524a9e19d55c0f46",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1819",
+      "motsCles": "analyste SOC",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "53537b3dca493823",
+      "kind": "keyword-only",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": null,
+      "motsCles": "développeuse application mobile",
+      "observedTotal": 10,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "53b2b26a3c3a2164",
+      "kind": "overlap",
+      "groupIds": [
+        "frontend"
+      ],
+      "codeROME": "M1855",
+      "motsCles": "développeur frontend",
+      "observedTotal": 8,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "546ee0e90a98560a",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1856",
+      "motsCles": "ingénieure cybersécurité",
+      "observedTotal": 12,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "547246f67862a475",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1866",
+      "motsCles": "ingénieure cybersécurité",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "55bd99e6930f669d",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1863",
+      "motsCles": "ingénieur cybersécurité",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "57b4d530377d5bc7",
+      "kind": "keyword-only",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": null,
+      "motsCles": "développeuse iOS",
+      "observedTotal": 3,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "58c68e606b1b3d24",
+      "kind": "keyword-only",
+      "groupIds": [
+        "frontend"
+      ],
+      "codeROME": null,
+      "motsCles": "intégratrice web",
+      "observedTotal": 2,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "591e78302180aa11",
+      "kind": "keyword-only",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": null,
+      "motsCles": "automaticienne de tests",
+      "observedTotal": 7,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "5a877be0c8d48b72",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1820",
+      "motsCles": "ingénieure QA",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "5ca9319fc3925f56",
+      "kind": "overlap",
+      "groupIds": [
+        "data"
+      ],
+      "codeROME": "M1824",
+      "motsCles": "développeur data",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "5cc39159ebc01668",
+      "kind": "occupation-only",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1812",
+      "motsCles": null,
+      "observedTotal": 81,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "5d3d801b6788e0b7",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1861",
+      "motsCles": "développeuse iOS",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "5da0c1084c3bca09",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1833",
+      "motsCles": "pentesteur",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "5e887bd6858bc139",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1833",
+      "motsCles": "analyste SOC",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "60d7d9b3b62e3437",
+      "kind": "overlap",
+      "groupIds": [
+        "backend"
+      ],
+      "codeROME": "M1805",
+      "motsCles": "développeuse back-end",
+      "observedTotal": 2,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "6167bbbf6705631d",
+      "kind": "occupation-only",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1842",
+      "motsCles": null,
+      "observedTotal": 18,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "6195582a5b69da9b",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1846",
+      "motsCles": "pentesteuse",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "62275f19b02f0914",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1815",
+      "motsCles": "testeur logiciel",
+      "observedTotal": 14,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "6347581d50074236",
+      "kind": "keyword-only",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": null,
+      "motsCles": "technicienne cloud",
+      "observedTotal": 255,
+      "pages": 2,
+      "status": "complete"
+    },
+    {
+      "queryId": "650948aa8d67e32b",
+      "kind": "overlap",
+      "groupIds": [
+        "data"
+      ],
+      "codeROME": "M1824",
+      "motsCles": "ingénieure données",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "65137d7e545c4cf0",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1846",
+      "motsCles": "sécurité informatique",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "65a088b123fba17e",
+      "kind": "keyword-only",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": null,
+      "motsCles": "qa engineer",
+      "observedTotal": 8,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "65b8b289ff5ccd0e",
+      "kind": "overlap",
+      "groupIds": [
+        "data"
+      ],
+      "codeROME": "M1851",
+      "motsCles": "développeur data",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "65dcf1e05a02a5db",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1832",
+      "motsCles": "testeuse logiciel",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "663b4ed49ba63892",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1832",
+      "motsCles": "ingénieure test logiciel",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "66b61acd3a685155",
+      "kind": "overlap",
+      "groupIds": [
+        "frontend"
+      ],
+      "codeROME": "M1855",
+      "motsCles": "développeur web",
+      "observedTotal": 498,
+      "pages": 4,
+      "status": "complete"
+    },
+    {
+      "queryId": "67b5d2d2528f9251",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1817",
+      "motsCles": "ingénieure cybersécurité",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "68195d0ff320b511",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1883",
+      "motsCles": "ingénieure cybersécurité",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "68a634c7b5922bcc",
+      "kind": "occupation-only",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1882",
+      "motsCles": null,
+      "observedTotal": 65,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "68ca7abc1cab713c",
+      "kind": "keyword-only",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": null,
+      "motsCles": "développeur Android",
+      "observedTotal": 7,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "68fc5306b9f46ba2",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1882",
+      "motsCles": "analyste cybersécurité",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "696e5a316a6128ee",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1820",
+      "motsCles": "ingénieur test logiciel",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "69c8d8d5179ae5d6",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1815",
+      "motsCles": "automaticienne de tests",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "6a9d0d5125fc8996",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1842",
+      "motsCles": "testeuse logiciel",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "6ba31eb327c9aba9",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1805",
+      "motsCles": "développeur Android",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "6cdefb4380288a48",
+      "kind": "overlap",
+      "groupIds": [
+        "data"
+      ],
+      "codeROME": "M1811",
+      "motsCles": "ingénieur données",
+      "observedTotal": 15,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "6d9f64b8bd8f1889",
+      "kind": "keyword-only",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": null,
+      "motsCles": "mobile engineer",
+      "observedTotal": 2,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "6dc9e4cf03825c10",
+      "kind": "overlap",
+      "groupIds": [
+        "frontend"
+      ],
+      "codeROME": "M1855",
+      "motsCles": "développeuse web",
+      "observedTotal": 498,
+      "pages": 4,
+      "status": "complete"
+    },
+    {
+      "queryId": "6f69cf410d289a6d",
+      "kind": "keyword-only",
+      "groupIds": [
+        "data"
+      ],
+      "codeROME": null,
+      "motsCles": "data engineer",
+      "observedTotal": 375,
+      "pages": 3,
+      "status": "complete"
+    },
+    {
+      "queryId": "6fcafff4147f5ae8",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1805",
+      "motsCles": "développeuse Android",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "70948ad1daa53756",
+      "kind": "overlap",
+      "groupIds": [
+        "fullstack"
+      ],
+      "codeROME": "M1861",
+      "motsCles": "développeur fullstack",
+      "observedTotal": 2,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "732b3290b4bfcf25",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1805",
+      "motsCles": "développeuse Flutter",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "737473277508d198",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1815",
+      "motsCles": "qa engineer",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "73b57d796b406bf1",
+      "kind": "keyword-only",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": null,
+      "motsCles": "qa automation",
+      "observedTotal": 4,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "74b3a5a490c9e385",
+      "kind": "overlap",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1860",
+      "motsCles": "ingénieure DevOps",
+      "observedTotal": 10,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "75e4ca1e03f15804",
+      "kind": "overlap",
+      "groupIds": [
+        "data"
+      ],
+      "codeROME": "M1851",
+      "motsCles": "data analyst",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "76a0dc7ac2905119",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1820",
+      "motsCles": "testeur logiciel",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "783055613dcd528e",
+      "kind": "overlap",
+      "groupIds": [
+        "fullstack"
+      ],
+      "codeROME": "M1861",
+      "motsCles": "développeur full-stack",
+      "observedTotal": 3,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "7833779b5c6d4639",
+      "kind": "keyword-only",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": null,
+      "motsCles": "analyste SOC",
+      "observedTotal": 19,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "7891cb773146dea6",
+      "kind": "overlap",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1860",
+      "motsCles": "technicien cloud",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "78af1d4546840895",
+      "kind": "occupation-only",
+      "groupIds": [
+        "data"
+      ],
+      "codeROME": "M1811",
+      "motsCles": null,
+      "observedTotal": 334,
+      "pages": 3,
+      "status": "complete"
+    },
+    {
+      "queryId": "7906362740c54999",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1833",
+      "motsCles": "sécurité informatique",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "79a948f8485e908a",
+      "kind": "overlap",
+      "groupIds": [
+        "fullstack"
+      ],
+      "codeROME": "M1861",
+      "motsCles": "développeuse fullstack",
+      "observedTotal": 2,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "7a8e1b1f9bceec2e",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1861",
+      "motsCles": "développeur applications mobiles",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "7b944c1e24715af5",
+      "kind": "keyword-only",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": null,
+      "motsCles": "ingénieure cybersécurité",
+      "observedTotal": 74,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "7bad57e700420cc4",
+      "kind": "overlap",
+      "groupIds": [
+        "backend"
+      ],
+      "codeROME": "M1861",
+      "motsCles": "développeuse API",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "7c14a88f00ee9b90",
+      "kind": "overlap",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1876",
+      "motsCles": "technicienne cloud",
+      "observedTotal": 18,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "7e42438dff86b213",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1842",
+      "motsCles": "ingénieure QA",
+      "observedTotal": 4,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "7ee9e2a3d2dc6a24",
+      "kind": "keyword-only",
+      "groupIds": [
+        "frontend"
+      ],
+      "codeROME": null,
+      "motsCles": "développeur front-end",
+      "observedTotal": 33,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "7f08d2e031324910",
+      "kind": "keyword-only",
+      "groupIds": [
+        "frontend"
+      ],
+      "codeROME": null,
+      "motsCles": "intégrateur web",
+      "observedTotal": 2,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "7fe06d8cfc0b1d10",
+      "kind": "overlap",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1827",
+      "motsCles": "site reliability engineer",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "80df05bb5f75066f",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1815",
+      "motsCles": "qa automation",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "81676a9e4d46e34d",
+      "kind": "keyword-only",
+      "groupIds": [
+        "fullstack"
+      ],
+      "codeROME": null,
+      "motsCles": "développeur full-stack",
+      "observedTotal": 206,
+      "pages": 2,
+      "status": "complete"
+    },
+    {
+      "queryId": "81a1752294579ffd",
+      "kind": "overlap",
+      "groupIds": [
+        "data"
+      ],
+      "codeROME": "M1811",
+      "motsCles": "data analyst",
+      "observedTotal": 4,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "822b3b7dcec2c345",
+      "kind": "overlap",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1827",
+      "motsCles": "ingénieur DevOps",
+      "observedTotal": 276,
+      "pages": 2,
+      "status": "complete"
+    },
+    {
+      "queryId": "82faff7e80477fb8",
+      "kind": "occupation-only",
+      "groupIds": [
+        "backend",
+        "fullstack",
+        "mobile"
+      ],
+      "codeROME": "M1805",
+      "motsCles": null,
+      "observedTotal": 310,
+      "pages": 3,
+      "status": "complete"
+    },
+    {
+      "queryId": "841e6e72611b87d7",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1820",
+      "motsCles": "automaticienne de tests",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "85d4132fdf62fe17",
+      "kind": "keyword-only",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": null,
+      "motsCles": "développeuse Flutter",
+      "observedTotal": 4,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "85e153eed65d8015",
+      "kind": "keyword-only",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": null,
+      "motsCles": "analyste cybersécurité",
+      "observedTotal": 58,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "864c3dbc325b13e9",
+      "kind": "overlap",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1879",
+      "motsCles": "ingénieur cloud",
+      "observedTotal": 27,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "87c5355dea8fd017",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1833",
+      "motsCles": "analyste cybersécurité",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "8894675a4a7d87b1",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1882",
+      "motsCles": "sécurité informatique",
+      "observedTotal": 65,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "893b41d1a2b3e8bb",
+      "kind": "occupation-only",
+      "groupIds": [
+        "data"
+      ],
+      "codeROME": "M1824",
+      "motsCles": null,
+      "observedTotal": 18,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "8a3b04555add87d1",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1819",
+      "motsCles": "sécurité informatique",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "8a4b5971cce708d5",
+      "kind": "keyword-only",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": null,
+      "motsCles": "ingénieur mobile",
+      "observedTotal": 6,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "8b737712524eff7d",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1820",
+      "motsCles": "validation logiciel",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "8cbbefc4c10a0da1",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1861",
+      "motsCles": "ingénieur mobile",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "8ccca9e985fdd905",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1861",
+      "motsCles": "développeuse application mobile",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "8cfd0f2f6cb010ea",
+      "kind": "overlap",
+      "groupIds": [
+        "fullstack"
+      ],
+      "codeROME": "M1861",
+      "motsCles": "développeur full stack",
+      "observedTotal": 3,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "8d1a6ea61b453a7e",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1817",
+      "motsCles": "ingénieur cybersécurité",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "8e121d39a2ad10fe",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1805",
+      "motsCles": "développeuse application mobile",
+      "observedTotal": 3,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "8f75d966b7a5b979",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1842",
+      "motsCles": "validation logiciel",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "906e6f5a9698f32c",
+      "kind": "overlap",
+      "groupIds": [
+        "fullstack"
+      ],
+      "codeROME": "M1855",
+      "motsCles": "développeur full-stack",
+      "observedTotal": 180,
+      "pages": 2,
+      "status": "complete"
+    },
+    {
+      "queryId": "909fe2940a18fe4c",
+      "kind": "keyword-only",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": null,
+      "motsCles": "ingénieure mobile",
+      "observedTotal": 5,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "912dd346357c04d8",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1805",
+      "motsCles": "ingénieure mobile",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "9171d931d1683de5",
+      "kind": "overlap",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1860",
+      "motsCles": "architecte cloud",
+      "observedTotal": 100,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "9208659de8631f5b",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1842",
+      "motsCles": "automaticienne de tests",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "9241d26dd5ec8a1b",
+      "kind": "overlap",
+      "groupIds": [
+        "fullstack"
+      ],
+      "codeROME": "M1855",
+      "motsCles": "développeuse full stack",
+      "observedTotal": 180,
+      "pages": 2,
+      "status": "complete"
+    },
+    {
+      "queryId": "9333ef176b91d296",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1883",
+      "motsCles": "pentesteuse",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "9369b6d301222d94",
+      "kind": "keyword-only",
+      "groupIds": [
+        "data"
+      ],
+      "codeROME": null,
+      "motsCles": "ingénieur données",
+      "observedTotal": 280,
+      "pages": 2,
+      "status": "complete"
+    },
+    {
+      "queryId": "9380f2f30d794c53",
+      "kind": "overlap",
+      "groupIds": [
+        "fullstack"
+      ],
+      "codeROME": "M1855",
+      "motsCles": "développeuse full-stack",
+      "observedTotal": 180,
+      "pages": 2,
+      "status": "complete"
+    },
+    {
+      "queryId": "9433ba7c568cce8b",
+      "kind": "keyword-only",
+      "groupIds": [
+        "data"
+      ],
+      "codeROME": null,
+      "motsCles": "ingénieure données",
+      "observedTotal": 277,
+      "pages": 2,
+      "status": "complete"
+    },
+    {
+      "queryId": "9467842809c4afd6",
+      "kind": "overlap",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1876",
+      "motsCles": "ingénieure DevOps",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "94d02911f6d688a6",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1832",
+      "motsCles": "ingénieur QA",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "956cd7cde254847f",
+      "kind": "overlap",
+      "groupIds": [
+        "backend"
+      ],
+      "codeROME": "M1805",
+      "motsCles": "développeuse backend",
+      "observedTotal": 3,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "957d7c12787c7684",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1819",
+      "motsCles": "analyste cybersécurité",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "95a4d3faca9bfd01",
+      "kind": "overlap",
+      "groupIds": [
+        "backend"
+      ],
+      "codeROME": "M1805",
+      "motsCles": "développeur back-end",
+      "observedTotal": 2,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "9607031e82cbcc76",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1805",
+      "motsCles": "mobile developer",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "9769c65435ef0fe9",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1817",
+      "motsCles": "pentesteur",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "979920433f97b763",
+      "kind": "keyword-only",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": null,
+      "motsCles": "ingénieur cloud",
+      "observedTotal": 975,
+      "pages": 7,
+      "status": "complete"
+    },
+    {
+      "queryId": "97d564a0e5874522",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1832",
+      "motsCles": "validation logiciel",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "98c62727541a6d37",
+      "kind": "overlap",
+      "groupIds": [
+        "fullstack"
+      ],
+      "codeROME": "M1855",
+      "motsCles": "développeur full stack",
+      "observedTotal": 180,
+      "pages": 2,
+      "status": "complete"
+    },
+    {
+      "queryId": "9a87f4aa0012a37e",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1805",
+      "motsCles": "développement mobile",
+      "observedTotal": 4,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "9ac6b7007586b4cb",
+      "kind": "overlap",
+      "groupIds": [
+        "data"
+      ],
+      "codeROME": "M1824",
+      "motsCles": "développeuse data",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "9adb2badddb07e6b",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1832",
+      "motsCles": "automaticien de tests",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "9c4a93bef7f6bd35",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1820",
+      "motsCles": "testeuse logiciel",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "9d2e0b6e74f2a5e0",
+      "kind": "overlap",
+      "groupIds": [
+        "fullstack"
+      ],
+      "codeROME": "M1805",
+      "motsCles": "développeuse fullstack",
+      "observedTotal": 9,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "9d3c66b5c62049e0",
+      "kind": "keyword-only",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": null,
+      "motsCles": "développement application mobile",
+      "observedTotal": 10,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "9d91029501e75811",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1815",
+      "motsCles": "ingénieur QA",
+      "observedTotal": 3,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "9f688fb06a4c6e93",
+      "kind": "overlap",
+      "groupIds": [
+        "backend"
+      ],
+      "codeROME": "M1861",
+      "motsCles": "développeuse backend",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "9f6ccce1b234f469",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1805",
+      "motsCles": "développeur iOS",
+      "observedTotal": 2,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "a000ff8be0bb6d5d",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1883",
+      "motsCles": "analyste SOC",
+      "observedTotal": 11,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "a1d3302f42a49e49",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1863",
+      "motsCles": "pentesteuse",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "a3ebaf4a9d7dea81",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1805",
+      "motsCles": "mobile engineer",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "a427729748cd7ffb",
+      "kind": "overlap",
+      "groupIds": [
+        "fullstack"
+      ],
+      "codeROME": "M1805",
+      "motsCles": "développeur full-stack",
+      "observedTotal": 11,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "a48faee8b5b6bc9c",
+      "kind": "overlap",
+      "groupIds": [
+        "data"
+      ],
+      "codeROME": "M1811",
+      "motsCles": "développeuse data",
+      "observedTotal": 35,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "a49402f4cd75fc09",
+      "kind": "overlap",
+      "groupIds": [
+        "data"
+      ],
+      "codeROME": "M1824",
+      "motsCles": "data analyst",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "a4bfc1a99f349675",
+      "kind": "overlap",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1879",
+      "motsCles": "technicien cloud",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "a8eea759eb862cc8",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1861",
+      "motsCles": "développeuse Android",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "a95b7f0b58aba9d4",
+      "kind": "occupation-only",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1879",
+      "motsCles": null,
+      "observedTotal": 27,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "a98cdd6ec74fcab3",
+      "kind": "keyword-only",
+      "groupIds": [
+        "backend"
+      ],
+      "codeROME": null,
+      "motsCles": "développeur API",
+      "observedTotal": 12,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "aa07c060b808b63e",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1846",
+      "motsCles": "analyste SOC",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "aa157bc5183247f3",
+      "kind": "keyword-only",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": null,
+      "motsCles": "ingénieur QA",
+      "observedTotal": 26,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "ab407af21822a547",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1805",
+      "motsCles": "développeuse mobile",
+      "observedTotal": 4,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "ab57d59c34fc2361",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1805",
+      "motsCles": "React Native",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "ac5125d8343bfde3",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1866",
+      "motsCles": "ingénieur cybersécurité",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "ac86e9ebbbfdc1ea",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1856",
+      "motsCles": "pentesteur",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "ae25f37ccc961299",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1812",
+      "motsCles": "sécurité informatique",
+      "observedTotal": 81,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "ae47d410d361d831",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1883",
+      "motsCles": "analyste cybersécurité",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "af5530d6bd65d1f4",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1863",
+      "motsCles": "ingénieure cybersécurité",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "afde545e1077f7d3",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1882",
+      "motsCles": "analyste SOC",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "b0142d61c60e951f",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1817",
+      "motsCles": "analyste SOC",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "b0817d2e2d18e7e4",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1832",
+      "motsCles": "ingénieur test logiciel",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "b11f714eb504f3ce",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1815",
+      "motsCles": "testeuse logiciel",
+      "observedTotal": 14,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "b15ced2532b805c2",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1812",
+      "motsCles": "analyste cybersécurité",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "b18b62a644f8003f",
+      "kind": "keyword-only",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": null,
+      "motsCles": "développeuse applications mobiles",
+      "observedTotal": 8,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "b254cb2ed87a5b2d",
+      "kind": "overlap",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1879",
+      "motsCles": "ingénieur DevOps",
+      "observedTotal": 11,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "b2d7f137835a8f7b",
+      "kind": "keyword-only",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": null,
+      "motsCles": "ingénieur test logiciel",
+      "observedTotal": 19,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "b41f104e449c6dd2",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1856",
+      "motsCles": "analyste cybersécurité",
+      "observedTotal": 53,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "b49f45da9e80478f",
+      "kind": "overlap",
+      "groupIds": [
+        "data"
+      ],
+      "codeROME": "M1851",
+      "motsCles": "ingénieure données",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "b58d0134becdb540",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1819",
+      "motsCles": "ingénieure cybersécurité",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "b5d7dff5aacd2c84",
+      "kind": "overlap",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1876",
+      "motsCles": "ingénieur DevOps",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "b64955dce7e103d4",
+      "kind": "overlap",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1876",
+      "motsCles": "ingénieur cloud",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "b65edd555668d08a",
+      "kind": "keyword-only",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": null,
+      "motsCles": "React Native",
+      "observedTotal": 4,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "b6cd7e33a54762e5",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1815",
+      "motsCles": "ingénieure test logiciel",
+      "observedTotal": 6,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "b792a0fb751bc6ab",
+      "kind": "keyword-only",
+      "groupIds": [
+        "backend"
+      ],
+      "codeROME": null,
+      "motsCles": "développeur backend",
+      "observedTotal": 13,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "b82874d39c68a729",
+      "kind": "occupation-only",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1833",
+      "motsCles": null,
+      "observedTotal": 3,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "b94267a3dd9b4cd8",
+      "kind": "keyword-only",
+      "groupIds": [
+        "backend"
+      ],
+      "codeROME": null,
+      "motsCles": "développeuse backend",
+      "observedTotal": 13,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "ba253c45b4bcfff3",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1812",
+      "motsCles": "analyste SOC",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "bbc6c388fe9683cc",
+      "kind": "keyword-only",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": null,
+      "motsCles": "testeur logiciel",
+      "observedTotal": 30,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "bc5b95814d96e540",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1815",
+      "motsCles": "ingénieur test logiciel",
+      "observedTotal": 6,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "bd8d649318297a12",
+      "kind": "keyword-only",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": null,
+      "motsCles": "pentesteuse",
+      "observedTotal": 3,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "be176eef0b7ba8ed",
+      "kind": "keyword-only",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": null,
+      "motsCles": "ingénieure cloud",
+      "observedTotal": 975,
+      "pages": 7,
+      "status": "complete"
+    },
+    {
+      "queryId": "beffc0f1b5be22c5",
+      "kind": "keyword-only",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": null,
+      "motsCles": "site reliability engineer",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "bfdaacc1bed5ec41",
+      "kind": "occupation-only",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1815",
+      "motsCles": null,
+      "observedTotal": 14,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "c05ab14f1867a7d7",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1866",
+      "motsCles": "pentesteur",
+      "observedTotal": 3,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "c0fe0b76f55e4fb8",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1820",
+      "motsCles": "ingénieur QA",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "c1259c869996533d",
+      "kind": "occupation-only",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1846",
+      "motsCles": null,
+      "observedTotal": 8,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "c192ab14c53922d0",
+      "kind": "overlap",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1876",
+      "motsCles": "site reliability engineer",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "c2aadc5fd12801f4",
+      "kind": "overlap",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1827",
+      "motsCles": "ingénieur cloud",
+      "observedTotal": 163,
+      "pages": 2,
+      "status": "complete"
+    },
+    {
+      "queryId": "c2c72579bb38fa33",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1819",
+      "motsCles": "pentesteuse",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "c3abbd8e6db289c1",
+      "kind": "keyword-only",
+      "groupIds": [
+        "backend"
+      ],
+      "codeROME": null,
+      "motsCles": "développeuse back-end",
+      "observedTotal": 76,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "c51d51e32fd23fd0",
+      "kind": "occupation-only",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1860",
+      "motsCles": null,
+      "observedTotal": 100,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "c56c337618d3ce49",
+      "kind": "keyword-only",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": null,
+      "motsCles": "mobile developer",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "c8dce37be3db167f",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1856",
+      "motsCles": "sécurité informatique",
+      "observedTotal": 38,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "c91ec47e14232e9b",
+      "kind": "overlap",
+      "groupIds": [
+        "frontend"
+      ],
+      "codeROME": "M1855",
+      "motsCles": "intégratrice web",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "c924b773edd61ece",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1805",
+      "motsCles": "développement application mobile",
+      "observedTotal": 3,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "c9419c702feb8f81",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1842",
+      "motsCles": "qa engineer",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "cae0cd51c5ae3404",
+      "kind": "occupation-only",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1819",
+      "motsCles": null,
+      "observedTotal": 20,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "ce238a7e42185f79",
+      "kind": "overlap",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1827",
+      "motsCles": "technicienne cloud",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "d08d3a239af7cdc3",
+      "kind": "keyword-only",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": null,
+      "motsCles": "ingénieure test logiciel",
+      "observedTotal": 19,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "d10e06bfd43a9785",
+      "kind": "keyword-only",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": null,
+      "motsCles": "testeuse logiciel",
+      "observedTotal": 30,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "d195b8bba388fa9d",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1817",
+      "motsCles": "analyste cybersécurité",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "d1d8340cdcc27655",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1815",
+      "motsCles": "automaticien de tests",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "d2b77c1b7178dad5",
+      "kind": "keyword-only",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": null,
+      "motsCles": "sécurité informatique",
+      "observedTotal": 475,
+      "pages": 4,
+      "status": "complete"
+    },
+    {
+      "queryId": "d41c84e7d8607950",
+      "kind": "keyword-only",
+      "groupIds": [
+        "frontend"
+      ],
+      "codeROME": null,
+      "motsCles": "développeuse front-end",
+      "observedTotal": 34,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "d55c650d85d202b5",
+      "kind": "overlap",
+      "groupIds": [
+        "data"
+      ],
+      "codeROME": "M1824",
+      "motsCles": "data engineer",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "d5d6590acadd0ee3",
+      "kind": "overlap",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1860",
+      "motsCles": "ingénieur DevOps",
+      "observedTotal": 10,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "d5dd3f630bebc534",
+      "kind": "overlap",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1827",
+      "motsCles": "technicien cloud",
+      "observedTotal": 4,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "d6374e9ab14885eb",
+      "kind": "overlap",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1879",
+      "motsCles": "technicienne cloud",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "d6bc48eb40434028",
+      "kind": "keyword-only",
+      "groupIds": [
+        "frontend"
+      ],
+      "codeROME": null,
+      "motsCles": "développeur frontend",
+      "observedTotal": 10,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "d746a62895231bea",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1820",
+      "motsCles": "qa automation",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "d82e169322181c50",
+      "kind": "overlap",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1860",
+      "motsCles": "ingénieur cloud",
+      "observedTotal": 23,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "d845d672e93c90e9",
+      "kind": "keyword-only",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": null,
+      "motsCles": "développeuse mobile",
+      "observedTotal": 29,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "d8819d4b1c9dfcb1",
+      "kind": "overlap",
+      "groupIds": [
+        "fullstack"
+      ],
+      "codeROME": "M1861",
+      "motsCles": "développeuse full-stack",
+      "observedTotal": 3,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "d91c0cdbcf8da5ee",
+      "kind": "overlap",
+      "groupIds": [
+        "backend"
+      ],
+      "codeROME": "M1861",
+      "motsCles": "développeur API",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "d9b7acc19562e1a7",
+      "kind": "keyword-only",
+      "groupIds": [
+        "data"
+      ],
+      "codeROME": null,
+      "motsCles": "développeuse data",
+      "observedTotal": 54,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "dbbe5e79dbf952dd",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1812",
+      "motsCles": "ingénieur cybersécurité",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "dc0fd9d5f92596c8",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1832",
+      "motsCles": "testeur logiciel",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "dcf234304eb9d2bc",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1861",
+      "motsCles": "développement application mobile",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "ddcdb77aab9098f7",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1832",
+      "motsCles": "automaticienne de tests",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "de1cced120fe2a07",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1842",
+      "motsCles": "automaticien de tests",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "e180b99afd36a72e",
+      "kind": "overlap",
+      "groupIds": [
+        "fullstack"
+      ],
+      "codeROME": "M1855",
+      "motsCles": "développeuse fullstack",
+      "observedTotal": 87,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "e1c37f0e796dfae3",
+      "kind": "overlap",
+      "groupIds": [
+        "backend"
+      ],
+      "codeROME": "M1861",
+      "motsCles": "développeur back-end",
+      "observedTotal": 2,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "e27f4a14f2a1e875",
+      "kind": "keyword-only",
+      "groupIds": [
+        "fullstack"
+      ],
+      "codeROME": null,
+      "motsCles": "développeur full stack",
+      "observedTotal": 206,
+      "pages": 2,
+      "status": "complete"
+    },
+    {
+      "queryId": "e56aad60e8de1b79",
+      "kind": "overlap",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1860",
+      "motsCles": "technicienne cloud",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "e5d902b2514e1d99",
+      "kind": "overlap",
+      "groupIds": [
+        "fullstack"
+      ],
+      "codeROME": "M1861",
+      "motsCles": "développeuse full stack",
+      "observedTotal": 3,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "e6c7801588123a48",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1882",
+      "motsCles": "ingénieur cybersécurité",
+      "observedTotal": 7,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "e6fa6792a0c04eb0",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1861",
+      "motsCles": "développeur Android",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "e9732f40c0938b0a",
+      "kind": "keyword-only",
+      "groupIds": [
+        "backend"
+      ],
+      "codeROME": null,
+      "motsCles": "développeur back-end",
+      "observedTotal": 76,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "e9fcb78a011fcf31",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1861",
+      "motsCles": "mobile engineer",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "ea70c8f862e54ec8",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1817",
+      "motsCles": "sécurité informatique",
+      "observedTotal": 10,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "ea9badc39827aeab",
+      "kind": "overlap",
+      "groupIds": [
+        "frontend"
+      ],
+      "codeROME": "M1855",
+      "motsCles": "développeuse frontend",
+      "observedTotal": 8,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "eb7deec8cf3a3a4b",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1863",
+      "motsCles": "sécurité informatique",
+      "observedTotal": 66,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "ecb1273f5246a5ef",
+      "kind": "occupation-only",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1820",
+      "motsCles": null,
+      "observedTotal": 21,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "ed3c9a0b7b525e54",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1846",
+      "motsCles": "pentesteur",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "ef26c262c66d1d81",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1866",
+      "motsCles": "pentesteuse",
+      "observedTotal": 3,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "ef3d8ff7c217afd0",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1861",
+      "motsCles": "ingénieure mobile",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "f0cf494bb42a7c4c",
+      "kind": "occupation-only",
+      "groupIds": [
+        "frontend",
+        "fullstack"
+      ],
+      "codeROME": "M1855",
+      "motsCles": null,
+      "observedTotal": 498,
+      "pages": 4,
+      "status": "complete"
+    },
+    {
+      "queryId": "f1d21710f0792942",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1817",
+      "motsCles": "pentesteuse",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "f295de7bc47bd629",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1861",
+      "motsCles": "développeuse mobile",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "f31a72a78a7fac0e",
+      "kind": "keyword-only",
+      "groupIds": [
+        "frontend"
+      ],
+      "codeROME": null,
+      "motsCles": "développeur web",
+      "observedTotal": 508,
+      "pages": 4,
+      "status": "complete"
+    },
+    {
+      "queryId": "f3b8d6f3b39a2a1a",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1805",
+      "motsCles": "développeur mobile",
+      "observedTotal": 4,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "f547b8e544a28298",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1805",
+      "motsCles": "développeuse iOS",
+      "observedTotal": 2,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "f6524cc46990baf1",
+      "kind": "occupation-only",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1832",
+      "motsCles": null,
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "f69fbabce695386c",
+      "kind": "keyword-only",
+      "groupIds": [
+        "data"
+      ],
+      "codeROME": null,
+      "motsCles": "développeur data",
+      "observedTotal": 54,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "f78b40f155a801f0",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1846",
+      "motsCles": "analyste cybersécurité",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "fa97399b70171f43",
+      "kind": "overlap",
+      "groupIds": [
+        "devops-cloud"
+      ],
+      "codeROME": "M1827",
+      "motsCles": "ingénieure DevOps",
+      "observedTotal": 276,
+      "pages": 2,
+      "status": "complete"
+    },
+    {
+      "queryId": "fbba5f61654c6ed2",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1833",
+      "motsCles": "pentesteuse",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "fc9900b5485fef1e",
+      "kind": "overlap",
+      "groupIds": [
+        "backend"
+      ],
+      "codeROME": "M1861",
+      "motsCles": "développeur backend",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "fcc32dd966b63095",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1819",
+      "motsCles": "ingénieur cybersécurité",
+      "observedTotal": 1,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "fd28cd908b928169",
+      "kind": "overlap",
+      "groupIds": [
+        "qa-test"
+      ],
+      "codeROME": "M1820",
+      "motsCles": "ingénieure test logiciel",
+      "observedTotal": 0,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "fe07b1e742810a09",
+      "kind": "overlap",
+      "groupIds": [
+        "mobile"
+      ],
+      "codeROME": "M1805",
+      "motsCles": "développeur application mobile",
+      "observedTotal": 3,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "ff67cba8863e548b",
+      "kind": "overlap",
+      "groupIds": [
+        "data"
+      ],
+      "codeROME": "M1811",
+      "motsCles": "développeur data",
+      "observedTotal": 35,
+      "pages": 1,
+      "status": "complete"
+    },
+    {
+      "queryId": "ffcbc2ba2778d006",
+      "kind": "overlap",
+      "groupIds": [
+        "cybersecurity"
+      ],
+      "codeROME": "M1863",
+      "motsCles": "analyste cybersécurité",
+      "observedTotal": 2,
+      "pages": 1,
+      "status": "complete"
+    }
+  ],
+  "provenance": {
+    "nodeVersion": "v24.19.0",
+    "files": {
+      "scripts/collect-query-set-validation.ts": "e17b94666699ac1fb7e02568f98a08a617f6c354b4ab24142abdcd44a9c02503",
+      "scripts/merge-query-set-reference.ts": "f1d81059a2f73e8a8877b0db83fc3c0c920df05a4ae7f29b46173f8fd3bb5dc9",
+      "scripts/evaluate-query-set-reference.ts": "7cf3d61975fe42c7f865ea34c6e9933b63fcc0b5f33ab8423cfe79a94dfe5208",
+      "docs/reference/query-set.observed-v2-draft.json": "f49ca8656d40f0e0afb82c09b5a57323d79ed91c1ac84a34220055aa1bd78042",
+      "docs/reference/query-set-annotation-protocol.md": "e4b60cf70ca964fe9abcead7b379a4ee4456cf026be7ac067501623973625018",
+      "pnpm-lock.yaml": "687bb4cb730a3a20ea5ae936f7f5d5cb65f5777271f3621305b6e8ffc5388a63"
+    }
+  },
+  "notes": [
+    "Les textes et annotations détaillées restent locaux.",
+    "La précision de pertinence est la part pertinente parmi les paires récupérées et résolues.",
+    "L'échantillon de pertinence et les requêtes croisées ne mesurent pas la prévalence du marché.",
+    "Une métrique non évaluable bloque l'activation."
+  ]
+}

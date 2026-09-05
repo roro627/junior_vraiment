@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "documentVersion": "1.0.0",
+  "status": "draft-disabled-pending-relevance-validation",
+  "querySetVersion": "queries-1.0.0-observed-draft",
+  "source": "france-travail",
+  "sourceContractObservedAt": "2026-09-03",
+  "sourceApiVersion": "2.01",
+  "sourceParameterMapping": {
+    "occupationReferences": "codeROME",
+    "keywords": "motsCles",
+    "territory": ["region", "departement", "commune", "distance"],
+    "pagination": "range",
+    "sort": "sort"
+  },
+  "requestRules": {
+    "maxRequestsPerSecondInitial": 5,
+    "maxResultsPerRange": 150,
+    "maxStartIndex": 3000,
+    "maxEndIndex": 3149,
+    "keywordListOperator": "and",
+    "keywordsAnyExpansion": "one-source-request-per-keyword"
+  },
+  "groups": [
+    {
+      "id": "frontend",
+      "enabled": false,
+      "jobFamilies": ["frontend"],
+      "occupationReferences": ["M1805", "M1855", "M1861"],
+      "keywordsAny": ["frontend", "front-end", "intégrateur web"]
+    },
+    {
+      "id": "backend",
+      "enabled": false,
+      "jobFamilies": ["backend"],
+      "occupationReferences": ["M1805", "M1861"],
+      "keywordsAny": ["backend", "back-end", "développeur API"]
+    },
+    {
+      "id": "fullstack",
+      "enabled": false,
+      "jobFamilies": ["fullstack"],
+      "occupationReferences": ["M1805", "M1855", "M1861"],
+      "keywordsAny": ["fullstack", "full-stack", "full stack"]
+    },
+    {
+      "id": "mobile",
+      "enabled": false,
+      "jobFamilies": ["mobile"],
+      "occupationReferences": ["M1805", "M1861"],
+      "keywordsAny": ["développeur mobile", "développeuse mobile", "application mobile"]
+    },
+    {
+      "id": "data",
+      "enabled": false,
+      "jobFamilies": ["data"],
+      "occupationReferences": ["M1811", "M1824", "M1851", "M1872"],
+      "keywordsAny": ["data engineer", "data analyst", "ingénieur données"]
+    },
+    {
+      "id": "devops-cloud",
+      "enabled": false,
+      "jobFamilies": ["devops-cloud"],
+      "occupationReferences": ["M1827", "M1860", "M1876", "M1879"],
+      "keywordsAny": ["devops", "site reliability engineer", "cloud engineer"]
+    },
+    {
+      "id": "cybersecurity",
+      "enabled": false,
+      "jobFamilies": ["cybersecurity"],
+      "occupationReferences": ["M1812", "M1817", "M1819", "M1833", "M1846", "M1856", "M1863", "M1866", "M1882", "M1883", "M1884"],
+      "keywordsAny": ["cybersécurité", "sécurité informatique", "analyste SOC"]
+    },
+    {
+      "id": "qa-test",
+      "enabled": false,
+      "jobFamilies": ["qa-test"],
+      "occupationReferences": ["M1815", "M1820", "M1832", "M1842"],
+      "keywordsAny": ["test logiciel", "qa engineer", "automaticien de tests"]
+    }
+  ],
+  "activationGate": [
+    "measure relevance and false positives on a labelled real sample",
+    "measure overlap between occupation and keyword requests",
+    "confirm pagination completeness under the 3150-result API ceiling",
+    "record expected volume ranges per request",
+    "keep every group disabled until review"
+  ]
+}

@@ -1,0 +1,29 @@
+name: Scheduled production health
+
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      PRODUCTION_URL: ${{ vars.PRODUCTION_URL }}
+    steps:
+      - name: Require the production URL
+        run: test -n "$PRODUCTION_URL"
+      - name: Check public pages and API
+        run: |
+          set -euo pipefail
+          origin="${PRODUCTION_URL%/}"
+          curl --fail --silent --show-error --max-time 20 "$origin/" >/dev/null
+          curl --fail --silent --show-error --max-time 20 "$origin/methodologie" >/dev/null
+          curl --fail --silent --show-error --max-time 20 "$origin/statut-donnees" >/dev/null
+          curl --fail --silent --show-error --max-time 20 \
+            -H "Accept: application/json" \
+            "$origin/api/v1/data-status" >/dev/null

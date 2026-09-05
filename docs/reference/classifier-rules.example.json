@@ -1,0 +1,308 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "documentVersion": "1.2.0",
+  "status": "example-baseline-to-implement-and-validate",
+  "classifierVersion": "classifier-1.0.0-draft",
+  "methodologyVersion": "methodology-1.0.0",
+  "language": "fr-FR",
+  "resultContract": {
+    "status": [
+      "classified",
+      "ambiguous",
+      "unclassified"
+    ],
+    "nullableBooleanFields": [
+      "claimsJunior",
+      "beginnerFriendly",
+      "contradictoryJunior"
+    ],
+    "nullableNumericFields": [
+      "minimumExperienceMonths"
+    ],
+    "requiredCollections": [
+      "evidence",
+      "ruleIds",
+      "warnings"
+    ],
+    "note": "Les segments d'interface sont dérivés de ces champs. Ils ne remplacent pas le résultat normatif."
+  },
+  "derivedSegments": {
+    "contradictory": "status == 'classified' && contradictoryJunior == true",
+    "beginner_friendly": "status == 'classified' && beginnerFriendly == true",
+    "junior_unresolved": "status == 'classified' && claimsJunior == true && (beginnerFriendly == null || contradictoryJunior == null)",
+    "other_junior": "status == 'classified' && claimsJunior == true && contradictoryJunior == false && beginnerFriendly == false",
+    "not_explicitly_junior": "status == 'classified' && claimsJunior == false",
+    "ambiguous": "status == 'ambiguous'",
+    "unknown": "status == 'unclassified'"
+  },
+  "normalization": {
+    "unicode": "NFKC",
+    "caseFolding": true,
+    "collapseWhitespace": true,
+    "normalizeApostrophes": true,
+    "preserveOffsetsAgainst": "normalized_text_with_source_map"
+  },
+  "evidenceKinds": [
+    "junior_claim",
+    "required_experience",
+    "desired_experience",
+    "salary",
+    "remote",
+    "technology",
+    "job_family",
+    "conflict",
+    "exclusion",
+    "ambiguity",
+    "other"
+  ],
+  "rules": [
+    {
+      "id": "JUNIOR_EXPLICIT_TITLE",
+      "kind": "junior_claim",
+      "priority": 100,
+      "fields": [
+        "title"
+      ],
+      "patterns": [
+        "\\bjunior\\b",
+        "\\bd[ée]butant(?:e)?\\b",
+        "\\bgraduate\\b",
+        "\\bjeune dipl[oô]m[ée](?:e)?\\b",
+        "\\bpremier emploi\\b"
+      ],
+      "effect": {
+        "claimsJunior": true
+      },
+      "requiresEvidence": true
+    },
+    {
+      "id": "JUNIOR_EXPLICIT_BODY",
+      "kind": "junior_claim",
+      "priority": 90,
+      "fields": [
+        "description",
+        "experienceLabel"
+      ],
+      "patterns": [
+        "\\bprofil junior\\b",
+        "\\bd[ée]butant(?:e)?(?:s)? (?:accept[ée](?:e)?s?|bienvenu(?:e)?s?)\\b",
+        "\\baucune exp[ée]rience (?:n['’]est )?requise\\b",
+        "\\bpremi[èe]re exp[ée]rience non exig[ée]e\\b"
+      ],
+      "effect": {
+        "claimsJunior": true,
+        "explicitBeginnerAccepted": true
+      },
+      "requiresEvidence": true
+    },
+    {
+      "id": "NEGATED_JUNIOR",
+      "kind": "exclusion",
+      "priority": 200,
+      "fields": [
+        "title",
+        "description"
+      ],
+      "patterns": [
+        "\\bpas (?:un |une )?(?:profil )?junior\\b",
+        "\\bprofil non junior\\b",
+        "\\bjunior s['’]abstenir\\b"
+      ],
+      "effect": {
+        "excludeJuniorClaimWithinCharacters": 80,
+        "claimsJuniorWhenUnambiguous": false
+      },
+      "requiresEvidence": true
+    },
+    {
+      "id": "EXP_SOURCE_STRUCTURED",
+      "kind": "required_experience",
+      "priority": 300,
+      "fields": [
+        "sourceExperienceRequiredMonths"
+      ],
+      "parser": "integer_months",
+      "effect": {
+        "setRequiredMinimumMonths": "parsedValue"
+      },
+      "requiresEvidence": true
+    },
+    {
+      "id": "EXP_REQUIRED_YEARS_MINIMUM",
+      "kind": "required_experience",
+      "priority": 250,
+      "fields": [
+        "description",
+        "experienceLabel",
+        "title"
+      ],
+      "patterns": [
+        "(?:au moins|minimum|min\\.?|exig[ée]e?|requis(?:e)?|imp[ée]rativement)\\s*(\\d{1,2})\\s*(?:ans?|ann[ée]es?)",
+        "(\\d{1,2})\\s*(?:ans?|ann[ée]es?)\\s*(?:minimum|min\\.?|d['’]exp[ée]rience requise|d['’]exp[ée]rience exig[ée]e)"
+      ],
+      "parser": "captured_years_to_months",
+      "effect": {
+        "setRequiredMinimumMonths": "max"
+      },
+      "requiresEvidence": true
+    },
+    {
+      "id": "EXP_REQUIRED_RANGE",
+      "kind": "required_experience",
+      "priority": 240,
+      "fields": [
+        "description",
+        "experienceLabel"
+      ],
+      "patterns": [
+        "(?:exp[ée]rience(?: professionnelle)?(?: de)?\\s*)?(\\d{1,2})\\s*(?:à|a|–|-)\\s*(\\d{1,2})\\s*ans?"
+      ],
+      "parser": "range_lower_bound_years_to_months",
+      "effect": {
+        "setRequiredMinimumMonths": "max"
+      },
+      "requiresEvidence": true
+    },
+    {
+      "id": "EXP_REQUIRED_PLUS",
+      "kind": "required_experience",
+      "priority": 230,
+      "fields": [
+        "description",
+        "experienceLabel"
+      ],
+      "patterns": [
+        "\\b(\\d{1,2})\\s*\\+\\s*ans?\\b",
+        "\\b(\\d{1,2})\\s*ans?\\s+et plus\\b"
+      ],
+      "parser": "captured_years_to_months",
+      "effect": {
+        "setRequiredMinimumMonths": "max"
+      },
+      "requiresEvidence": true
+    },
+    {
+      "id": "EXP_DESIRED_ONLY",
+      "kind": "desired_experience",
+      "priority": 220,
+      "fields": [
+        "description"
+      ],
+      "patterns": [
+        "(?:id[ée]alement|serait un plus|souhait[ée]e|appr[ée]ci[ée]e).{0,60}?(\\d{1,2})\\s*ans?",
+        "(\\d{1,2})\\s*ans?.{0,60}?(?:serait un plus|souhait[ée]e|appr[ée]ci[ée]e)"
+      ],
+      "parser": "captured_years_to_months",
+      "effect": {
+        "recordDesiredMonthsOnly": true
+      },
+      "requiresEvidence": true
+    },
+    {
+      "id": "EXP_NON_PROFESSIONAL_FALSE_POSITIVE",
+      "kind": "exclusion",
+      "priority": 400,
+      "fields": [
+        "description"
+      ],
+      "patterns": [
+        "\\bbac\\s*\\+\\s*[2-8]\\b",
+        "\\bformation en \\d{1,2} ans?\\b",
+        "\\bcontrat de \\d{1,2} ans?\\b",
+        "\\bprojet de \\d{1,2} ans?\\b",
+        "\\béquipe de \\d{1,2} (?:personnes|développeurs|collaborateurs)\\b"
+      ],
+      "effect": {
+        "excludeExperienceMatchWithinCharacters": 100
+      },
+      "requiresEvidence": false
+    },
+    {
+      "id": "BEGINNER_ACCEPTED_STRUCTURED",
+      "kind": "junior_claim",
+      "priority": 310,
+      "fields": [
+        "sourceExperienceCode"
+      ],
+      "acceptedValues": [
+        "D",
+        "BEGINNER_ACCEPTED"
+      ],
+      "effect": {
+        "claimsJunior": true,
+        "explicitBeginnerAccepted": true,
+        "setRequiredMinimumMonths": 0
+      },
+      "requiresEvidence": true,
+      "implementationNote": "Les codes source sont des exemples. L'adaptateur France Travail doit les confirmer sur le contrat actif."
+    },
+    {
+      "id": "BLOCKING_CONFLICT_DECISION",
+      "kind": "decision",
+      "priority": 1000,
+      "condition": "blockingAmbiguity == true || requiredStructuredFieldConflictsWithText == true",
+      "effect": {
+        "status": "ambiguous",
+        "setAffectedDerivedFieldsToNull": true,
+        "addEvidenceKind": "ambiguity"
+      }
+    },
+    {
+      "id": "CLASSIFIED_DECISION",
+      "kind": "decision",
+      "priority": 1010,
+      "condition": "status == null && hasAnyResolvedClassificationSignal == true",
+      "effect": {
+        "status": "classified"
+      }
+    },
+    {
+      "id": "UNCLASSIFIED_DECISION",
+      "kind": "decision",
+      "priority": 1020,
+      "condition": "status == null",
+      "effect": {
+        "status": "unclassified",
+        "claimsJunior": null,
+        "beginnerFriendly": null,
+        "contradictoryJunior": null
+      }
+    },
+    {
+      "id": "BEGINNER_FRIENDLY_DERIVATION",
+      "kind": "derivation",
+      "priority": 1100,
+      "condition": "status == 'classified'",
+      "effect": {
+        "beginnerFriendlyExpression": "hardContradiction == true ? null : explicitBeginnerAccepted == true ? true : requiredMinimumMonths != null ? requiredMinimumMonths <= 12 : null",
+        "accessibilityResolvableExpression": "hardContradiction == false && (explicitBeginnerAccepted == true || requiredMinimumMonths != null)"
+      }
+    },
+    {
+      "id": "CONTRADICTORY_JUNIOR_DERIVATION",
+      "kind": "derivation",
+      "priority": 1110,
+      "condition": "status == 'classified'",
+      "effect": {
+        "contradictoryJuniorExpression": "claimsJunior == null ? null : claimsJunior == false ? false : requiredMinimumMonths == null ? null : requiredMinimumMonths >= 24",
+        "thresholdResolvableExpression": "claimsJunior == true && requiredMinimumMonths != null"
+      }
+    }
+  ],
+  "decisionInvariants": [
+    "Le résultat contient un status et des booléens indépendants; il ne contient pas un label final exclusif.",
+    "Une preuve est attachée à tout claimsJunior non nul et à tout minimumExperienceMonths non nul.",
+    "Une exigence explicitement souhaitée ne devient jamais automatiquement obligatoire.",
+    "Une donnée structurée contradictoire avec le texte produit status='ambiguous' avant revue.",
+    "Le seuil de contradiction du MVP est de 24 mois et ne change pas sans nouvelle version de métrique.",
+    "Une offre sans information exploitable produit beginnerFriendly=null, jamais false par défaut.",
+    "Pour une offre junior, contradictoryJunior=false n'est produit que si minimumExperienceMonths est résolu et inférieur à 24.",
+    "contradictoryJunior=true implique claimsJunior=true, minimumExperienceMonths>=24 et status='classified'.",
+    "thresholdResolvable=true implique claimsJunior=true, minimumExperienceMonths non nul et status='classified'."
+  ],
+  "publicationThresholds": {
+    "hiddenBelowSampleSize": 20,
+    "cautionBelowSampleSize": 50,
+    "standardFromSampleSize": 50
+  }
+}

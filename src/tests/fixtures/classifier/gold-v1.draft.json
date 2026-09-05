@@ -1,0 +1,366 @@
+[
+  {
+    "fixtureId": "junior-required-2y",
+    "title": "Développeur React junior",
+    "description": "Vous justifiez d'au moins 2 ans d'expérience.",
+    "experienceRequired": true,
+    "experienceLabel": "2 ans exigés",
+    "expected": {
+      "status": "classified",
+      "claimsJunior": true,
+      "minimumExperienceMonths": 24,
+      "beginnerFriendly": false,
+      "contradictoryJunior": true
+    }
+  },
+  {
+    "fixtureId": "beginner-body",
+    "title": "Développeuse web",
+    "description": "Débutante acceptée, accompagnement prévu.",
+    "experienceRequired": false,
+    "experienceLabel": "Débutant accepté",
+    "expected": {
+      "status": "classified",
+      "claimsJunior": true,
+      "minimumExperienceMonths": 0,
+      "beginnerFriendly": true,
+      "contradictoryJunior": false
+    }
+  },
+  {
+    "fixtureId": "structured-beginner",
+    "title": "Technicien support",
+    "description": "Formation interne prévue.",
+    "experienceRequired": false,
+    "experienceLabel": "Débutant accepté",
+    "expected": {
+      "status": "classified",
+      "claimsJunior": true,
+      "minimumExperienceMonths": 0,
+      "beginnerFriendly": true,
+      "contradictoryJunior": false
+    }
+  },
+  {
+    "fixtureId": "desired-only",
+    "title": "Développeur junior",
+    "description": "Idéalement, 5 ans d'expérience seraient appréciés.",
+    "experienceRequired": null,
+    "experienceLabel": null,
+    "expected": {
+      "status": "classified",
+      "claimsJunior": true,
+      "minimumExperienceMonths": null,
+      "beginnerFriendly": null,
+      "contradictoryJunior": null
+    }
+  },
+  {
+    "fixtureId": "negated-junior",
+    "title": "Développeur",
+    "description": "Ce n'est pas un poste junior.",
+    "experienceRequired": null,
+    "experienceLabel": null,
+    "expected": {
+      "status": "classified",
+      "claimsJunior": false,
+      "minimumExperienceMonths": null,
+      "beginnerFriendly": null,
+      "contradictoryJunior": false
+    }
+  },
+  {
+    "fixtureId": "junior-colleagues",
+    "title": "Lead developer",
+    "description": "Vous encadrez une équipe de développeurs juniors.",
+    "experienceRequired": null,
+    "experienceLabel": null,
+    "expected": {
+      "status": "unclassified",
+      "claimsJunior": null,
+      "minimumExperienceMonths": null,
+      "beginnerFriendly": null,
+      "contradictoryJunior": null
+    }
+  },
+  {
+    "fixtureId": "senior-required",
+    "title": "Développeur senior",
+    "description": "5 ans d'expérience minimum.",
+    "experienceRequired": true,
+    "experienceLabel": "5 ans exigés",
+    "expected": {
+      "status": "classified",
+      "claimsJunior": null,
+      "minimumExperienceMonths": 60,
+      "beginnerFriendly": false,
+      "contradictoryJunior": null
+    }
+  },
+  {
+    "fixtureId": "months-minimum",
+    "title": "Intégrateur",
+    "description": "6 mois minimum d'expérience professionnelle.",
+    "experienceRequired": true,
+    "experienceLabel": null,
+    "expected": {
+      "status": "classified",
+      "claimsJunior": null,
+      "minimumExperienceMonths": 6,
+      "beginnerFriendly": true,
+      "contradictoryJunior": null
+    }
+  },
+  {
+    "fixtureId": "range",
+    "title": "Développeur",
+    "description": "Une expérience professionnelle de 1 à 2 ans est requise.",
+    "experienceRequired": true,
+    "experienceLabel": null,
+    "expected": {
+      "status": "classified",
+      "claimsJunior": null,
+      "minimumExperienceMonths": 12,
+      "beginnerFriendly": true,
+      "contradictoryJunior": null
+    }
+  },
+  {
+    "fixtureId": "written-number",
+    "title": "Développeuse junior",
+    "description": "Au moins trois ans d'expérience sont exigés.",
+    "experienceRequired": true,
+    "experienceLabel": null,
+    "expected": {
+      "status": "classified",
+      "claimsJunior": true,
+      "minimumExperienceMonths": 36,
+      "beginnerFriendly": false,
+      "contradictoryJunior": true
+    }
+  },
+  {
+    "fixtureId": "education-duration",
+    "title": "Développeur",
+    "description": "Formation en 3 ans ou bac + 5.",
+    "experienceRequired": null,
+    "experienceLabel": null,
+    "expected": {
+      "status": "unclassified",
+      "claimsJunior": null,
+      "minimumExperienceMonths": null,
+      "beginnerFriendly": null,
+      "contradictoryJunior": null
+    }
+  },
+  {
+    "fixtureId": "project-duration",
+    "title": "Développeur",
+    "description": "Vous rejoignez un projet de 2 ans.",
+    "experienceRequired": null,
+    "experienceLabel": null,
+    "expected": {
+      "status": "unclassified",
+      "claimsJunior": null,
+      "minimumExperienceMonths": null,
+      "beginnerFriendly": null,
+      "contradictoryJunior": null
+    }
+  },
+  {
+    "fixtureId": "structured-conflict",
+    "title": "Développeur junior",
+    "description": "Deux ans d'expérience sont exigés.",
+    "experienceRequired": false,
+    "experienceLabel": "Débutant accepté",
+    "expected": {
+      "status": "ambiguous",
+      "claimsJunior": true,
+      "minimumExperienceMonths": 24,
+      "beginnerFriendly": null,
+      "contradictoryJunior": null
+    }
+  },
+  {
+    "fixtureId": "title-level-conflict",
+    "title": "Développeur senior junior",
+    "description": "Rejoignez l'équipe.",
+    "experienceRequired": null,
+    "experienceLabel": null,
+    "expected": {
+      "status": "ambiguous",
+      "claimsJunior": true,
+      "minimumExperienceMonths": null,
+      "beginnerFriendly": null,
+      "contradictoryJunior": null
+    }
+  },
+  {
+    "fixtureId": "unknown",
+    "title": "Développeur logiciel",
+    "description": "Rejoignez notre équipe produit.",
+    "experienceRequired": null,
+    "experienceLabel": null,
+    "expected": {
+      "status": "unclassified",
+      "claimsJunior": null,
+      "minimumExperienceMonths": null,
+      "beginnerFriendly": null,
+      "contradictoryJunior": null
+    }
+  },
+  {
+    "fixtureId": "experience-label",
+    "title": "Administrateur système",
+    "description": "Poste à pourvoir.",
+    "experienceRequired": true,
+    "experienceLabel": "2 ans d'expérience exigés",
+    "expected": {
+      "status": "classified",
+      "claimsJunior": null,
+      "minimumExperienceMonths": 24,
+      "beginnerFriendly": false,
+      "contradictoryJunior": null
+    }
+  },
+  {
+    "fixtureId": "contract-duration",
+    "title": "Développeur",
+    "description": "Contrat de 12 mois renouvelable.",
+    "experienceRequired": null,
+    "experienceLabel": null,
+    "expected": {
+      "status": "unclassified",
+      "claimsJunior": null,
+      "minimumExperienceMonths": null,
+      "beginnerFriendly": null,
+      "contradictoryJunior": null
+    }
+  },
+  {
+    "fixtureId": "first-job",
+    "title": "Premier emploi développeur",
+    "description": "Un accompagnement est prévu.",
+    "experienceRequired": null,
+    "experienceLabel": null,
+    "expected": {
+      "status": "classified",
+      "claimsJunior": true,
+      "minimumExperienceMonths": null,
+      "beginnerFriendly": null,
+      "contradictoryJunior": null
+    }
+  },
+  {
+    "fixtureId": "structured-duration-conflict",
+    "title": "Développeur junior",
+    "description": "Vous justifiez d'au moins 5 ans d'expérience professionnelle.",
+    "experienceRequired": true,
+    "experienceLabel": "2 ans exigés",
+    "expected": {
+      "status": "ambiguous",
+      "claimsJunior": true,
+      "minimumExperienceMonths": 60,
+      "beginnerFriendly": null,
+      "contradictoryJunior": null
+    }
+  },
+  {
+    "fixtureId": "required-before-ideally",
+    "title": "Développeuse junior",
+    "description": "Au moins 3 ans d'expérience sont requis. Idéalement, vous connaissez React.",
+    "experienceRequired": true,
+    "experienceLabel": null,
+    "expected": {
+      "status": "classified",
+      "claimsJunior": true,
+      "minimumExperienceMonths": 36,
+      "beginnerFriendly": false,
+      "contradictoryJunior": true
+    }
+  },
+  {
+    "fixtureId": "more-than-years",
+    "title": "Ingénieur junior",
+    "description": "Plus de 5 années d'expérience sont requises.",
+    "experienceRequired": true,
+    "experienceLabel": null,
+    "expected": {
+      "status": "classified",
+      "claimsJunior": true,
+      "minimumExperienceMonths": 60,
+      "beginnerFriendly": false,
+      "contradictoryJunior": true
+    }
+  },
+  {
+    "fixtureId": "xp-range",
+    "title": "Développeur junior",
+    "description": "Une expérience de 1-3 ans d'XP en développement web est requise.",
+    "experienceRequired": true,
+    "experienceLabel": null,
+    "expected": {
+      "status": "classified",
+      "claimsJunior": true,
+      "minimumExperienceMonths": 12,
+      "beginnerFriendly": true,
+      "contradictoryJunior": false
+    }
+  },
+  {
+    "fixtureId": "company-history-duration",
+    "title": "Développeur junior",
+    "description": "Forts de 30 ans d'expérience, nous recrutons. Le poste exige 3 ans d'expérience professionnelle.",
+    "experienceRequired": true,
+    "experienceLabel": null,
+    "expected": {
+      "status": "classified",
+      "claimsJunior": true,
+      "minimumExperienceMonths": 36,
+      "beginnerFriendly": false,
+      "contradictoryJunior": true
+    }
+  },
+  {
+    "fixtureId": "no-experience-required",
+    "title": "Développeur web",
+    "description": "Aucune expérience n'est requise pour ce poste.",
+    "experienceRequired": false,
+    "experienceLabel": "Débutant accepté",
+    "expected": {
+      "status": "classified",
+      "claimsJunior": true,
+      "minimumExperienceMonths": 0,
+      "beginnerFriendly": true,
+      "contradictoryJunior": false
+    }
+  },
+  {
+    "fixtureId": "junior-profile-does-not-resolve-experience",
+    "title": "Développeur web",
+    "description": "Nous recherchons un profil junior pour rejoindre l'équipe.",
+    "experienceRequired": null,
+    "experienceLabel": null,
+    "expected": {
+      "status": "classified",
+      "claimsJunior": true,
+      "minimumExperienceMonths": null,
+      "beginnerFriendly": null,
+      "contradictoryJunior": null
+    }
+  },
+  {
+    "fixtureId": "graduate-does-not-resolve-experience",
+    "title": "Ingénieure logiciel",
+    "description": "Les jeunes diplômées sont les bienvenues.",
+    "experienceRequired": null,
+    "experienceLabel": null,
+    "expected": {
+      "status": "classified",
+      "claimsJunior": true,
+      "minimumExperienceMonths": null,
+      "beginnerFriendly": null,
+      "contradictoryJunior": null
+    }
+  }
+]

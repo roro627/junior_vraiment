@@ -1,0 +1,3 @@
+ALTER TABLE "ingestion_runs" DROP CONSTRAINT "ingestion_runs_counts_check";--> statement-breakpoint
+ALTER TABLE "ingestion_runs" ADD COLUMN "offers_closed" integer;--> statement-breakpoint
+ALTER TABLE "ingestion_runs" ADD CONSTRAINT "ingestion_runs_counts_check" CHECK ("ingestion_runs"."requests_count" >= 0 and "ingestion_runs"."offers_received" >= 0 and "ingestion_runs"."offers_valid" >= 0 and "ingestion_runs"."offers_quarantined" >= 0 and "ingestion_runs"."offers_new" >= 0 and "ingestion_runs"."offers_updated" >= 0 and "ingestion_runs"."offers_marked_missing" >= 0 and ("ingestion_runs"."offers_closed" is null or "ingestion_runs"."offers_closed" >= 0));

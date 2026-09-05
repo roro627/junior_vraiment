@@ -1,0 +1,2 @@
+ALTER TABLE "offer_snapshots" DROP CONSTRAINT "offer_snapshots_offer_hash_unique";--> statement-breakpoint
+CREATE INDEX "offer_snapshots_offer_hash_idx" ON "offer_snapshots" USING btree ("offer_id","content_hash");

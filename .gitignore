@@ -1,0 +1,28 @@
+id_france_travail.json
+/Set up Neon.txt
+
+# Secrets et configuration locale
+.env*
+!.env.example
+
+# Dépendances et sorties de build
+node_modules/
+.next/
+out/
+storybook-static/
+coverage/
+playwright-report/
+test-results/
+.lighthouseci/
+.turbo/
+*.tsbuildinfo
+
+# Outils et fournisseurs locaux
+.vercel/
+.neon
+.trigger/
+.local/
+
+# Journaux
+*.log
+pnpm-debug.log*
