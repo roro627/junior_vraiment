@@ -68,6 +68,8 @@
 - le code du panneau de preuve est chargé au clic, sans modifier son rendu ; le bouton donne
   immédiatement l’état « Ouverture… », puis rétablit son libellé. Un échec de chargement affiche
   un statut réessayable. Le focus initial et son retour restent explicites et testés.
+- les classes du bouton d’ouverture sont résolues côté serveur depuis les mêmes variantes du
+  design system ; ni les tokens ni le rendu ne changent.
 
 - les couleurs sont centralisées en OKLCH dans `src/styles/tokens.css`; le contrôle Axe automatisé
   ne relève aucune violation sérieuse ou critique sur l'accueil ;
