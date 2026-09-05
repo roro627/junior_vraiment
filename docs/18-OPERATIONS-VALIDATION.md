@@ -148,9 +148,13 @@ Les classes de son bouton sont calculées côté serveur depuis les variantes ex
 navigateur ne charge plus le moteur de fusion des classes pour cette interaction.
 
 Le commit applicatif `d164f76` a été déployé en production puis validé par le workflow
-`End-to-end` `33993045248` : 80 parcours Playwright et les neuf mesures Lighthouse ont passé
-les seuils inchangés. Les workflows `Quality` `33992980271` et `Security` `33992980282` sont
+`End-to-end` `33993045248` : 79 parcours Playwright ont réussi au premier essai, un après
+réessai, et les neuf mesures Lighthouse ont passé les seuils inchangés. Le test mobile concerné
+sondait la présence des filtres avant la fin du streaming ; il attend désormais explicitement
+leur visibilité. Les workflows `Quality` `33992980271` et `Security` `33992980282` sont
 également verts, y compris lint, format, typecheck, tests, contrats, build web et Storybook.
+Après correction de cette attente, le scénario a passé vingt exécutions contre la production
+(cinq par navigateur/profil), sans réessai.
 
 Le prochain raccordement exige une session PostHog EU : le 5 septembre 2026, aucun identifiant
 PostHog n’est configuré dans l’environnement local ni dans Vercel Production, aucun connecteur

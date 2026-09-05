@@ -19,6 +19,7 @@ test("the home page publishes the verified current dataset", async ({
 
 test("filters are represented by the URL and restored on render", async ({
   page,
+  isMobile,
 }) => {
   await page.goto("/?job=frontend&period=current");
   await expect(
@@ -28,7 +29,11 @@ test("filters are represented by the URL and restored on render", async ({
     }),
   ).toBeVisible();
   const mobileFilters = page.locator(".filter-form--mobile > summary");
-  if (await mobileFilters.isVisible()) await mobileFilters.click();
+  if (isMobile) {
+    // The heading can arrive before the streamed filter form.
+    await expect(mobileFilters).toBeVisible();
+    await mobileFilters.click();
+  }
 
   await expect(page.locator('select[name="job"]:visible')).toHaveValue(
     "frontend",
