@@ -825,6 +825,15 @@ Signaler :
 
 - volume global ±40 % ;
 - volume d'une partition ±60 % ;
+
+Depuis `ingestion-quality-1.1.0` (6 septembre 2026), une hausse de partition inférieure à
+cinq offres reste signalée et conservée dans `quality_summary.volumeWarnings`, mais ne bloque
+pas à elle seule la publication. Le seuil relatif de 60 % continue de détecter ces variations.
+Ce plancher absolu est un garde-fou opérationnel contre les ratios instables (par exemple 1 → 2),
+pas une estimation de confiance statistique. Toutes les baisses dépassant 60 %, les hausses
+d’au moins cinq offres dépassant 60 %, et les variations globales dépassant 40 % restent
+bloquantes. Aucun seuil de KPI, aucune preuve ni classification ne sont modifiés.
+La règle s’applique aux nouvelles évaluations ; les anciens résumés qualité restent conservés.
 - taux junior variant de plus de 15 points en un jour ;
 - ambiguïté doublée ;
 - plus de 2 % de payloads invalides ;

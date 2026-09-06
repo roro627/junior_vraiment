@@ -66,7 +66,9 @@ test("the evidence panel is keyboard accessible", async ({ page }) => {
 test("@a11y the explorer and evidence panel have no serious automated violations", async ({
   page,
 }) => {
-  await page.goto("/explorer");
+  // The dialog below is the readiness signal; background resources must not
+  // hold up this accessibility check after the document is usable.
+  await page.goto("/explorer", { waitUntil: "domcontentloaded" });
   await page.getByRole("button", { name: "Voir la preuve" }).first().click();
   await expect(page.getByRole("dialog")).toBeVisible();
 

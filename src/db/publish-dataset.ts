@@ -34,6 +34,7 @@ export async function publishDataset({
       update published_datasets
       set is_current = false
       where is_current = true
+        and id <> ${datasetId}
         and exists (select 1 from target)
       returning id
     ), published as (

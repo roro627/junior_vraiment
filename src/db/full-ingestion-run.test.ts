@@ -27,6 +27,7 @@ describe("readFullIngestionQualityFacts", () => {
             positiveClassifications: 5,
             positiveClassificationsWithEvidence: 5,
             volumeAnomalyDetected: false,
+            partitionVolumes: [],
           },
         ];
       });

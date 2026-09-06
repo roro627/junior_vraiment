@@ -23,6 +23,25 @@ function qualityInput(
 }
 
 describe("evaluateCompleteIngestionQuality", () => {
+  it("persists small-volume warnings without overriding integrity blockers", () => {
+    const volumeWarnings = [{ queryId: "fixture", previous: 1, current: 2 }];
+    const result = evaluateCompleteIngestionQuality(
+      qualityInput({ volumeWarnings }),
+    );
+    expect(result.decision).toBe("publish");
+    expect(result.volumeWarnings).toEqual(volumeWarnings);
+    expect(result.qualityVersion).toBe("ingestion-quality-1.1.0");
+    expect(
+      evaluateCompleteIngestionQuality(
+        qualityInput({ volumeWarnings, volumeAnomalyDetected: true }),
+      ).decision,
+    ).toBe("block");
+    expect(
+      evaluateCompleteIngestionQuality(
+        qualityInput({ volumeWarnings, paginationComplete: false }),
+      ).decision,
+    ).toBe("block");
+  });
   it("publishes a complete run at the 98% validation threshold", () => {
     const result = evaluateCompleteIngestionQuality(
       qualityInput({ offersValid: 98, offersQuarantined: 2 }),

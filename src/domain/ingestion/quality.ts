@@ -1,4 +1,6 @@
-export const INGESTION_QUALITY_VERSION = "ingestion-quality-1.0.0";
+import type { PartitionVolume } from "./volume-policy";
+
+export const INGESTION_QUALITY_VERSION = "ingestion-quality-1.1.0";
 
 export type IngestionQualityDecision = "publish" | "publish_partial" | "block";
 
@@ -20,6 +22,7 @@ export type CompleteIngestionQualityInput = Readonly<{
   positiveClassifications: number;
   positiveClassificationsWithEvidence: number;
   volumeAnomalyDetected: boolean;
+  volumeWarnings?: readonly PartitionVolume[];
 }>;
 
 export type CompleteIngestionQuality = Readonly<{
@@ -30,6 +33,7 @@ export type CompleteIngestionQuality = Readonly<{
   evidenceCoverage: number | null;
   closureEligible: boolean;
   reasons: readonly IngestionQualityReason[];
+  volumeWarnings?: readonly PartitionVolume[];
 }>;
 
 const PUBLISH_VALIDATION_RATE = 0.98;
@@ -130,5 +134,8 @@ export function evaluateCompleteIngestionQuality(
     evidenceCoverage,
     closureEligible: decision === "publish",
     reasons,
+    ...(input.volumeWarnings?.length
+      ? { volumeWarnings: input.volumeWarnings }
+      : {}),
   };
 }

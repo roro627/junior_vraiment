@@ -188,6 +188,8 @@ Cette correction locale ne constitue pas une résolution de l’échec d’inges
 Le workflow `Scheduled production health` ne vérifie actuellement que les réponses HTTP ;
 son succès ne prouve donc pas la réussite des collectes. Son contrôle sémantique reste à compléter.
 
+Ce contrôle est complété plus bas par la vérification sémantique du 6 septembre.
+
 ### Cause SQL identifiée avec la CLI
 
 Le MCP en lecture seule fourni par la CLI Trigger.dev a permis de lire le run de production
@@ -208,3 +210,48 @@ Le formatage, lint, typecheck, 192 tests unitaires et le build Next.js passent l
 Les 80 parcours E2E ont donné 76 succès et quatre échecs dus à l’ancienne assertion imposant
 des données fraîches sur l’accueil. Après correction du test pour comparer le badge à l’API
 réelle, les seize parcours accueil (quatre profils) passent, y compris a11y et reduced motion.
+
+### Reprise autonome et contrôle des petits volumes
+
+Le propriétaire a confié le choix de résolution à l’agent. L’ADR 0011 et la méthodologie
+documentent la politique `ingestion-quality-1.1.0` : les hausses de partition de moins de cinq
+offres restent des avertissements audités ; pertes de couverture et autres seuils restent bloquants.
+
+La version Trigger.dev `20260906.2` a repris le run du 6 septembre avec succès
+(`run_06g7bgb77uhf3hvi9ft7lsd401`). Les pages déjà collectées ont été réutilisées. Le dataset
+publié contient 1 324 membres ; 1 234 offres distinctes étaient présentes dans cette collecte.
+Ces populations ne sont pas interchangeables : les règles d’absence conservent encore certaines
+offres antérieures. Les huit avertissements sont persistés dans le résumé qualité du dataset.
+
+### Défaut de republication découvert et résolu
+
+Le test réel de rejouabilité (`run_06g7bh18hbnlvv6cavu9m1vt01`) a découvert un défaut : la CTE
+de désactivation modifiait aussi la cible déjà courante, ensuite modifiée à nouveau dans la même
+instruction. Le résultat ne conservait plus de dataset courant. Le dataset validé a été rétabli
+et la cible exclue explicitement de la désactivation. Deux publications directes consécutives
+ont conservé le même statut et la même date ; aucune classification ni preuve n’a été supprimée.
+Un incident public résolu `PUBLICATION_REPLAY_RECOVERED` conserve la trace de cette indisponibilité.
+
+Le worker corrigé `20260906.3` a ensuite rejoué avec succès la même journée
+(`run_06g7bi4nok90mj3cc71et58901`), en conservant le même dataset et sa publication du
+6 septembre à 08:06:51.897 UTC. La lecture PostgreSQL confirme un dataset courant unique,
+1 324 membres et trois métriques. Cette reprise manuelle ne constitue pas sept succès planifiés.
+
+### Santé sémantique
+
+`scripts/check-production-health.ts` vérifie le statut, la dernière collecte réussie, la fraîcheur
+effective (30 h), la récence de la réponse (10 min), les partitions incomplètes et la validation
+à 98 %. Il échoue de façon fermée sur une réponse malformée et ne journalise que des codes.
+Le workflow planifié appelle ce script sans dépendance supplémentaire. Sept tests couvrent
+notamment un HTTP 200 avec collecte échouée et un faux libellé de fraîcheur. Son exécution locale
+contre la production est réussie après rétablissement. La réception d’une notification par e-mail
+n’est pas démontrée par ce seul contrôle.
+
+### Contrôles locaux finaux du lot
+
+Formatage, lint, typecheck, 218 tests unitaires et build réussis ; 22 tests live non activés
+restent explicitement ignorés. Après stabilisation du dataset, la suite E2E complète a passé
+79 parcours sur 80 ; le dernier a expiré dans Firefox en attendant `load` malgré un DOM rendu.
+Le test a été corrigé pour attendre le document puis le dialogue effectivement contrôlé :
+cinq exécutions Firefox consécutives ont réussi. Les essais E2E pendant les publications et
+l’incident ne sont pas comptés comme une validation réussie.

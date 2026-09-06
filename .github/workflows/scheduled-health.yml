@@ -15,6 +15,10 @@ jobs:
     env:
       PRODUCTION_URL: ${{ vars.PRODUCTION_URL }}
     steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24.20.0
       - name: Require the production URL
         run: test -n "$PRODUCTION_URL"
       - name: Check public pages and API
@@ -27,3 +31,5 @@ jobs:
           curl --fail --silent --show-error --max-time 20 \
             -H "Accept: application/json" \
             "$origin/api/v1/data-status" >/dev/null
+      - name: Check collection integrity and freshness
+        run: node scripts/check-production-health.ts "$PRODUCTION_URL"

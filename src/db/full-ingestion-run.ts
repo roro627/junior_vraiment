@@ -1,5 +1,9 @@
 import type { NeonQueryFunction } from "@neondatabase/serverless";
 import { z } from "zod";
+import {
+  assessPartitionVolumes,
+  type PartitionVolume,
+} from "@/domain/ingestion/volume-policy";
 
 const checkpointSchema = z
   .strictObject({
@@ -318,6 +322,7 @@ export type FullIngestionQualityFacts = {
   positiveClassifications: number;
   positiveClassificationsWithEvidence: number;
   volumeAnomalyDetected: boolean;
+  volumeWarnings: PartitionVolume[];
 };
 
 export async function markFullQueryRunning(input: {
@@ -637,15 +642,14 @@ export async function readFullIngestionQualityFacts(input: {
           join ingestion_run_offer_sightings sighting
             on sighting.ingestion_run_query_id = query.id) as previous_count,
         (select count(*)::integer from current_sighting_flags) as current_count,
-        exists (
-          select 1
+        (select coalesce(jsonb_agg(jsonb_build_object(
+          'queryId', current_count.source_query_id,
+          'previous', previous_count.count, 'current', current_count.count
+        ) order by current_count.source_query_id), '[]'::jsonb)
           from current_query_counts current_count
           join previous_query_counts previous_count
             on previous_count.source_query_id = current_count.source_query_id
-          where previous_count.count > 0
-            and abs(current_count.count - previous_count.count)::numeric
-              / previous_count.count > 0.60
-        ) as partition_anomaly
+        ) as partition_volumes
     )
     select
       count(current_query.id) > 0
@@ -683,7 +687,8 @@ export async function readFullIngestionQualityFacts(input: {
           and abs(volume_state.current_count - volume_state.previous_count)::numeric
             / volume_state.previous_count > 0.40,
         false
-      ) or volume_state.partition_anomaly as "volumeAnomalyDetected"
+      ) as "volumeAnomalyDetected",
+      volume_state.partition_volumes as "partitionVolumes"
     from current_run
     cross join volume_state
     left join current_queries current_query on true
@@ -692,7 +697,7 @@ export async function readFullIngestionQualityFacts(input: {
       current_run.offers_quarantined, current_run.offers_marked_missing,
       current_run.offers_closed,
       volume_state.previous_count,
-      volume_state.current_count, volume_state.partition_anomaly
+      volume_state.current_count, volume_state.partition_volumes
   `;
   const row = rows.at(0);
   if (!row) {
@@ -707,6 +712,16 @@ export async function readFullIngestionQualityFacts(input: {
     return value;
   };
 
+  const partitions = z
+    .array(
+      z.object({
+        queryId: z.string(),
+        previous: z.number().int().nonnegative(),
+        current: z.number().int().nonnegative(),
+      }),
+    )
+    .parse(row["partitionVolumes"]);
+  const volumeAssessment = assessPartitionVolumes(partitions);
   return {
     paginationComplete: booleanField("paginationComplete"),
     sourceCapReached: booleanField("sourceCapReached"),
@@ -728,7 +743,9 @@ export async function readFullIngestionQualityFacts(input: {
       row,
       "positiveClassificationsWithEvidence",
     ),
-    volumeAnomalyDetected: booleanField("volumeAnomalyDetected"),
+    volumeAnomalyDetected:
+      booleanField("volumeAnomalyDetected") || volumeAssessment.blocking,
+    volumeWarnings: volumeAssessment.warnings,
   };
 }
 

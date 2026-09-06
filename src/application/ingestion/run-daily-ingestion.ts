@@ -409,6 +409,7 @@ export async function runFullFranceTravailIngestion({
       positiveClassificationsWithEvidence:
         facts.positiveClassificationsWithEvidence,
       volumeAnomalyDetected: facts.volumeAnomalyDetected,
+      volumeWarnings: facts.volumeWarnings,
     });
 
     if (run.status !== "succeeded" && run.status !== "partial") {
