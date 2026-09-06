@@ -62,7 +62,7 @@ describe("trend perimeter boundaries", () => {
         "?",
       );
       expect(sqlText).toContain('query_set_version as "querySetVersion"');
-      expect(sqlText).toContain("matched.matched_job_families");
+      expect(sqlText).toContain("membership.job_families");
     },
   );
 });

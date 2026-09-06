@@ -745,6 +745,7 @@ export const publishedDatasetOffers = pgTable(
     classificationId: uuid("classification_id")
       .notNull()
       .references(() => classifications.id, { onDelete: "restrict" }),
+    jobFamilies: text("job_families").array().notNull().default(emptyTextArray),
   },
   (table) => [
     primaryKey({ columns: [table.datasetId, table.offerId] }),

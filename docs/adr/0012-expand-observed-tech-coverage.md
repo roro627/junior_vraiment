@@ -31,6 +31,11 @@ Une requête source partagée conserve les seules familles dont le filtre d'inti
 pour l'offre, via `offer_query_matches.matched_job_families`. Les anciens liens sans cette
 information restent lisibles sans réécriture. La migration additive précède le nouveau worker.
 
+Les familles sont également figées dans `published_dataset_offers.job_families`. Les lectures
+publiques n'utilisent pas les correspondances évolutives pour filtrer un ancien dataset. Le
+rattrapage initial conserve les associations jusque-là lues ; les futurs gels capturent les leurs
+une seule fois, sans modification lors des rejeux.
+
 ## Conséquences
 
 - Les chiffres avant/après ne constituent pas une évolution du marché à périmètre constant.

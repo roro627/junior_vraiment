@@ -189,10 +189,21 @@ export async function freezeDatasetMembership(input: {
   if (existingCount === 0) {
     await input.sql`
       insert into published_dataset_offers (
-        dataset_id, offer_id, snapshot_id, classification_id
+        dataset_id, offer_id, snapshot_id, classification_id, job_families
       )
       select distinct on (offer.id)
-        dataset.id, offer.id, snapshot.id, classification.id
+        dataset.id, offer.id, snapshot.id, classification.id,
+        array(
+          select distinct family.key
+          from offer_query_matches matched
+          join source_queries query on query.id = matched.source_query_id
+          cross join lateral unnest(coalesce(matched.matched_job_families, query.job_families)) family(key)
+          where matched.offer_id = offer.id
+            and query.source_id = dataset.source_id
+            and query.query_set_version = dataset.query_set_version
+            and query.enabled = true and query.valid_to is null
+          order by family.key
+        )
       from published_datasets dataset
       join offers offer
         on offer.source_id = dataset.source_id

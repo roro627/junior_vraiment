@@ -296,3 +296,35 @@ Contrôles locaux : formatage, lint, typecheck, 238 tests unitaires, 24 tests de
 de lecture réels sur Neon et builds Next.js/Storybook réussis. Les 22 tests live non activés
 restent signalés comme ignorés. La suite E2E locale a donné 79 succès et un délai Axe Firefox
 dépassé sous charge ; ce résultat n'est pas présenté comme un succès complet.
+
+### Publication réelle du périmètre 3.0
+
+Le worker `20260906.4` a terminé la collecte `run_06g7fksgndl2dhiv5r3uj10h01` le 6 septembre
+à 17:59:54 UTC : 566 requêtes complètes, 660 appels, 22 747 résultats reçus et validés,
+aucune quarantaine ni partition partielle. Le dataset `a1dc0442-d0f9-4531-a1e3-aedc244f2c68`
+publie 1 810 offres distinctes contre 1 324 auparavant, soit +486 (+36,7 %).
+Les 1 828 offres du candidat correspondent à une collecte antérieure, pas au volume publié.
+
+La comparaison des ensembles donne 1 217 offres communes, 593 nouvelles dans le périmètre
+publié et 107 présentes seulement dans l'ancien dataset, qui reste conservé. Les 577 créations
+de lignes d'offres pendant cette collecte ne sont donc pas le gain net du dataset public.
+Aucune offre n'a été fermée par cette exécution. Le rejeu `run_06g7fogf2e569sfcnapgp6i401`
+a réussi sans changer le dataset, ses 1 810 membres ni sa date de publication.
+
+Sur le commit `f1d0fdc`, les workflows Quality `34049591000`, Security `34049591025` et
+Database migration check `34049591021` ont réussi, ainsi que le déploiement Vercel. Après
+publication, End-to-end `34050368996` a passé les 80 parcours et les budgets Lighthouse ;
+Scheduled production health `34050370770` a également réussi.
+
+### Stabilité des familles métier historiques
+
+La migration additive `20260906180442_yellow_mysterio.sql` fige les familles dans chaque
+appartenance au dataset. Son application réelle à Neon conserve exactement les associations
+précédemment lues : 5 646 appartenances vérifiées, aucun écart, mêmes volumes par famille
+pour le dataset courant. Les lectures publiques ne dépendent plus des associations modifiables
+lors d'une future collecte. Un rejeu ne réécrit pas les appartenances déjà figées.
+
+Contrôles locaux de ce complément : formatage, lint, typecheck, 240 tests unitaires, 24 tests
+de schéma, 11 tests de lecture réels sur Neon et build Next.js réussis. Les 22 tests live
+non activés dans la suite générale restent explicitement ignorés. Le worker `20260906.5`
+a été déployé avec succès ; cette migration ne modifie aucune classification ni métrique.

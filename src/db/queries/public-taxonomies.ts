@@ -90,11 +90,8 @@ export async function getPublicTaxonomies({
           family.key,
           count(distinct membership.offer_id)::integer as count
         from published_dataset_offers membership
-        join offer_query_matches matched on matched.offer_id = membership.offer_id
-        join source_queries source_query on source_query.id = matched.source_query_id
-        cross join lateral unnest(coalesce(matched.matched_job_families, source_query.job_families)) family(key)
+        cross join lateral unnest(membership.job_families) family(key)
         where membership.dataset_id = ${dataset.datasetId}
-          and source_query.query_set_version = ${dataset.querySetVersion}
         group by family.key
       `,
       sql`

@@ -29,6 +29,13 @@ familles effectivement admises par le titre de chaque offre, et non l'union des 
 requête partagée. `NULL` identifie les anciens liens ; leur lecture conserve le comportement
 historique. L'ajout est une migration additive, sans réécriture des classifications.
 
+Ces associations sont ensuite copiées, dédupliquées et triées dans
+`published_dataset_offers.job_families` au gel du dataset. Tous les filtres métier publics lisent
+cette copie immuable : une modification future du titre ou de ses correspondances ne change pas
+une ancienne photographie. La migration initialise les datasets existants à partir des
+associations utilisées jusque-là par leurs lectures, sans modifier les références aux snapshots,
+classifications ou métriques. Un rejeu ne recopie pas les familles.
+
 ### Run d'ingestion
 
 Représente une exécution et sa qualité.
