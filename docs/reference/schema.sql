@@ -125,6 +125,7 @@ CREATE INDEX offers_closed_idx
 CREATE TABLE offer_query_matches (
   offer_id uuid NOT NULL REFERENCES offers(id) ON DELETE CASCADE,
   source_query_id uuid NOT NULL REFERENCES source_queries(id) ON DELETE CASCADE,
+  matched_job_families text[], -- NULL: historical matches before queries-3.0.0
   first_matched_at timestamptz NOT NULL,
   last_matched_at timestamptz NOT NULL,
   PRIMARY KEY (offer_id, source_query_id),

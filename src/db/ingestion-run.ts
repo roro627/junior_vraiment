@@ -206,15 +206,19 @@ export async function storeOfferQueryMatch(input: {
   offerId: string;
   sourceQueryId: string;
   observedAt: Date;
+  matchedJobFamilies?: string[];
 }): Promise<void> {
+  if (input.matchedJobFamilies?.length === 0)
+    throw new Error("Une correspondance doit contenir une famille admise.");
   await input.sql`
     insert into offer_query_matches (
-      offer_id, source_query_id, first_matched_at, last_matched_at
+      offer_id, source_query_id, first_matched_at, last_matched_at, matched_job_families
     ) values (
-      ${input.offerId}, ${input.sourceQueryId}, ${input.observedAt}, ${input.observedAt}
+      ${input.offerId}, ${input.sourceQueryId}, ${input.observedAt}, ${input.observedAt}, ${input.matchedJobFamilies ?? null}::text[]
     )
     on conflict (offer_id, source_query_id) do update set
-      last_matched_at = excluded.last_matched_at
+      last_matched_at = excluded.last_matched_at,
+      matched_job_families = excluded.matched_job_families
   `;
 }
 

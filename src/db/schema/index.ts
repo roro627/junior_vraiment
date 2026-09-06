@@ -322,6 +322,7 @@ export const offerQueryMatches = pgTable(
     sourceQueryId: uuid("source_query_id")
       .notNull()
       .references(() => sourceQueries.id, { onDelete: "cascade" }),
+    matchedJobFamilies: text("matched_job_families").array(),
     firstMatchedAt: timestamp("first_matched_at", {
       withTimezone: true,
     }).notNull(),

@@ -24,6 +24,11 @@ Décrit un fournisseur de données et son attribution.
 
 Décrit un fragment du périmètre de collecte. Une offre peut être trouvée par plusieurs requêtes.
 
+Depuis l'extension de couverture 3.0, `offer_query_matches.matched_job_families` conserve les
+familles effectivement admises par le titre de chaque offre, et non l'union des familles de la
+requête partagée. `NULL` identifie les anciens liens ; leur lecture conserve le comportement
+historique. L'ajout est une migration additive, sans réécriture des classifications.
+
 ### Run d'ingestion
 
 Représente une exécution et sa qualité.

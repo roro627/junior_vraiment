@@ -33,6 +33,34 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Serie: Story = {};
+export const ChangementDePerimetre: Story = {
+  args: {
+    points: [
+      {
+        ...basePoint,
+        date: "2026-09-04",
+        value: 0.2,
+        datasetVersion: "fixture-old",
+      },
+      {
+        ...basePoint,
+        date: "2026-09-06",
+        value: 0.3,
+        datasetVersion: "fixture-new",
+        annotation: {
+          kind: "source_change",
+          label: "Périmètre de collecte élargi — comparaison non directe",
+        },
+      },
+      {
+        ...basePoint,
+        date: "2026-09-07",
+        value: 0.31,
+        datasetVersion: "fixture-new-next",
+      },
+    ],
+  },
+};
 export const HistoriqueInsuffisant: Story = {
   args: {
     points: [

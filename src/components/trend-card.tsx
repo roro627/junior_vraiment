@@ -14,13 +14,18 @@ function pointPositions(points: TrendCardProps["points"]) {
   const maximum = Math.max(...values);
   const range = maximum - minimum || 1;
 
-  return points.flatMap(({ value }, index) =>
+  return points.flatMap(({ value, annotation }, index) =>
     value === null
       ? []
       : [
           {
             x: (index / Math.max(1, points.length - 1)) * 100,
             y: 92 - ((value - minimum) / range) * 76,
+            breakBefore:
+              index === 0 ||
+              points[index - 1]?.value === null ||
+              annotation !== null ||
+              points[index - 1]?.annotation?.kind === "partial_day",
           },
         ],
   );
@@ -29,7 +34,7 @@ function pointPositions(points: TrendCardProps["points"]) {
 export function TrendCard({ points }: TrendCardProps) {
   const positions = pointPositions(points);
   const path = positions
-    .map(({ x, y }, index) => `${index === 0 ? "M" : "L"}${x},${y}`)
+    .map(({ x, y, breakBefore }) => `${breakBefore ? "M" : "L"}${x},${y}`)
     .join(" ");
 
   return (
@@ -43,6 +48,14 @@ export function TrendCard({ points }: TrendCardProps) {
           Voir les données
         </a>
       </header>
+      {points
+        .filter((point) => point.annotation !== null)
+        .map((point) => (
+          <p key={point.datasetVersion}>
+            {formatLongDate(`${point.date}T12:00:00.000Z`)} :{" "}
+            {point.annotation?.label}
+          </p>
+        ))}
       {positions.length < 2 ? (
         <div className="trend-card__empty">
           <strong>Historique en constitution</strong>

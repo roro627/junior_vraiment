@@ -6,7 +6,10 @@ import { z } from "zod";
 import { parseQuerySet } from "./collect-query-set-validation";
 
 const reportSchema = z.object({
-  reportVersion: z.literal("query-set-validation-report-2.0.0"),
+  reportVersion: z.enum([
+    "query-set-validation-report-2.0.0",
+    "query-set-validation-report-3.0.0",
+  ]),
   gateStatus: z.literal("passed"),
   querySetVersion: z.string().min(1),
   reference: z.object({
@@ -29,14 +32,29 @@ const reportSchema = z.object({
       precision: z.object({ status: z.literal("passed") }),
     }),
   ),
+  collectionGates: z.object({
+    paginationComplete: z.object({ status: z.literal("passed") }),
+    quarantineEmpty: z.object({ status: z.literal("passed") }),
+    contractWarningsEmpty: z.object({ status: z.literal("passed") }),
+  }),
 });
 
 function sha256(content: string): string {
   return createHash("sha256").update(content).digest("hex");
 }
 
-const candidatePath = "docs/reference/query-set.observed-v2-draft.json";
-const reportPath = "docs/reference/query-set-v2-validation-report.json";
+const readArgument = (name: string, fallback: string) =>
+  process.argv
+    .find((argument) => argument.startsWith(`${name}=`))
+    ?.slice(name.length + 1) ?? fallback;
+const candidatePath = readArgument(
+  "--query-set",
+  "docs/reference/query-set.observed-v3-draft.json",
+);
+const reportPath = readArgument(
+  "--report",
+  "docs/reference/query-set-v3-validation-report.json",
+);
 const activePath = "docs/reference/query-set.active.json";
 const [candidateContent, reportContent] = await Promise.all([
   readFile(candidatePath, "utf8"),
@@ -54,25 +72,34 @@ if (
 ) {
   throw new Error("Le rapport ne valide pas le candidat courant.");
 }
-if (report.groups.length !== candidate.groups.length) {
+if (
+  new Set(candidate.groups.map((group) => group.id)).size !==
+    candidate.groups.length ||
+  JSON.stringify(report.groups.map((group) => group.groupId).sort()) !==
+    JSON.stringify(candidate.groups.map((group) => group.id).sort())
+) {
   throw new Error("Chaque groupe candidat doit posséder un gate validé.");
 }
 
 const candidateWithoutGate = Object.fromEntries(
   Object.entries(candidateRecord).filter(([key]) => key !== "activationGate"),
 );
+const version = /^queries-(\d+\.\d+\.\d+)-/u.exec(
+  candidate.querySetVersion,
+)?.[1];
+if (!version) throw new Error("Version candidate non promotable.");
 const activeQuerySet = {
   ...candidateWithoutGate,
-  documentVersion: "2.0.0",
+  documentVersion: version,
   status: "active",
-  querySetVersion: "queries-2.0.0",
+  querySetVersion: `queries-${version}`,
   groups: candidate.groups.map((group) => ({ ...group, enabled: true })),
   activation: {
-    activatedAt: "2026-09-04",
+    activatedAt: new Date().toISOString().slice(0, 10),
     activationPolicyVersion: "query-relevance-gate-1.0.0",
     candidateQuerySetVersion: candidate.querySetVersion,
     candidateSha256: sha256(candidateContent),
-    validationReport: "query-set-v2-validation-report.json",
+    validationReport: reportPath.split(/[\\/]/u).at(-1),
     validationReportSha256: sha256(reportContent),
     allowedPromotionChanges: [
       "status",

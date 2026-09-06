@@ -78,9 +78,24 @@ une couverture résolue globale et par groupe d'au moins `0,90`, une précision 
 du plafond et aucune quarantaine. Une métrique non évaluable bloque l'activation.
 
 Le brouillon `queries-1.0.0-observed-draft` a été rejeté le 4 septembre 2026 : sa précision de
-pertinence observée est de `139 / 239`, soit `58,2 %`. Le candidat 2.0 reste désactivé et ajoute un
-filtre d'intitulé déterministe, versionné dans le registre, afin d'écarter les mentions seulement
-présentes dans les descriptions. Il doit être évalué sur un nouvel échantillon avant activation.
+pertinence observée est de `139 / 239`, soit `58,2 %`. Le candidat 2.0 a ajouté un filtre
+d'intitulé déterministe, puis a été activé après une nouvelle validation à `210 / 239`.
+Son rapport est conservé comme preuve historique, sans prétendre valider les versions suivantes.
+
+Le 6 septembre, le propriétaire demande d'élargir la couverture. `queries-3.0.0` complète les
+intitulés explicites, Data scientist, et les familles `software` et `ai-ml` déjà définies dans
+la taxonomie. La validation réelle a parcouru 566 requêtes complètes, sans plafond atteint ni
+quarantaine, et trouvé 1 828 offres distinctes. La nouvelle passe A de 300 paires donne 278
+pertinentes sur 298 résolues (93,3 %), deux ambiguës, et chaque groupe passe les seuils inchangés.
+Cette estimation LLM ne mesure pas le rappel ni l'exhaustivité de la source.
+Voir l'[ADR 0012](adr/0012-expand-observed-tech-coverage.md), le
+[protocole 2.0](reference/query-set-annotation-protocol-v2.md) et le
+[rapport agrégé](reference/query-set-v3-validation-report.json).
+
+Les familles admises sont conservées par offre et par requête : partager une requête ne suffit
+pas à appartenir à toutes ses familles. Les liens historiques restent inchangés. Les volumes
+avant/après élargissement ne sont pas comparables comme évolution du marché ; l'API annote
+la rupture et le graphique ne relie pas les points concernés.
 
 ---
 

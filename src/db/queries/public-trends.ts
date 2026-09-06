@@ -17,6 +17,7 @@ const trendRowSchema = z
     date: z.iso.date(),
     datasetVersion: z.string(),
     classifierVersion: z.string(),
+    querySetVersion: z.string(),
     metricVersions: stringRecordSchema,
     qualitySummary: z.record(z.string(), z.unknown()),
     sampleSize: z.number().int().nonnegative(),
@@ -125,6 +126,7 @@ export async function getPublicTrends({
         dataset.id as dataset_id,
         dataset.dataset_version,
         dataset.classifier_version,
+        dataset.query_set_version,
         dataset.metric_versions,
         dataset.quality_summary,
         dataset.source_cutoff_at,
@@ -159,7 +161,7 @@ export async function getPublicTrends({
             join source_queries source_query on source_query.id = matched.source_query_id
             where matched.offer_id = membership.offer_id
               and source_query.query_set_version = dataset.query_set_version
-              and ${query.scope.job}::text = any(source_query.job_families)
+              and ${query.scope.job}::text = any(coalesce(matched.matched_job_families, source_query.job_families))
           )
         )
         and (
@@ -204,6 +206,7 @@ export async function getPublicTrends({
         to_char(source_cutoff_at at time zone 'Europe/Paris', 'YYYY-MM-DD') as date,
         dataset_version as "datasetVersion",
         classifier_version as "classifierVersion",
+        query_set_version as "querySetVersion",
         metric_versions as "metricVersions",
         quality_summary as "qualitySummary",
         published_at,
@@ -242,6 +245,7 @@ export async function getPublicTrends({
         dataset_id,
         dataset_version,
         classifier_version,
+        query_set_version,
         metric_versions,
         quality_summary,
         source_cutoff_at,
@@ -256,6 +260,7 @@ export async function getPublicTrends({
       date,
       "datasetVersion",
       "classifierVersion",
+      "querySetVersion",
       "metricVersions",
       "qualitySummary",
       "sampleSize",
@@ -293,16 +298,28 @@ export async function getPublicTrends({
       previous !== undefined &&
       previous.metricVersions[query.metric] !==
         row.metricVersions[query.metric];
+    const perimeterChanged =
+      previous !== undefined &&
+      previous.querySetVersion !== row.querySetVersion;
     const annotation = partial
       ? { kind: "partial_day" as const, label: "Collecte partielle" }
-      : metricChanged
-        ? { kind: "methodology_change" as const, label: "Méthode mise à jour" }
-        : classifierChanged
+      : perimeterChanged
+        ? {
+            kind: "source_change" as const,
+            label:
+              "Périmètre de collecte élargi ou modifié — comparaison non directe",
+          }
+        : metricChanged
           ? {
-              kind: "classifier_change" as const,
-              label: "Classificateur mis à jour",
+              kind: "methodology_change" as const,
+              label: "Méthode mise à jour",
             }
-          : null;
+          : classifierChanged
+            ? {
+                kind: "classifier_change" as const,
+                label: "Classificateur mis à jour",
+              }
+            : null;
 
     return {
       date: row.date,

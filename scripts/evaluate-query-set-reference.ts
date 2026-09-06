@@ -12,6 +12,8 @@ const groupSchema = z.enum([
   "devops-cloud",
   "cybersecurity",
   "qa-test",
+  "software",
+  "ai-ml",
 ]);
 const querySchema = z.object({
   queryId: z.string().min(1),
@@ -70,7 +72,10 @@ const collectionSchema = z.object({
 });
 const referenceSchema = z.object({
   referenceSetVersion: z.string().min(1),
-  annotationProtocolVersion: z.literal("query-relevance-llm-a-1.0.0"),
+  annotationProtocolVersion: z.enum([
+    "query-relevance-llm-a-1.0.0",
+    "query-relevance-llm-a-2.0.0",
+  ]),
   activationPolicyVersion: z.literal("query-relevance-gate-1.0.0"),
   methodology: z.literal("single-blind-llm-pass-a-query-relevance"),
   model: z.string().min(1),
@@ -204,7 +209,10 @@ if (
   );
 }
 
-const groupResults = groupSchema.options.map((groupId) => {
+const candidateGroups = z
+  .object({ groups: z.array(z.object({ id: groupSchema })).min(1) })
+  .parse(JSON.parse(querySetContent) as unknown).groups;
+const groupResults = candidateGroups.map(({ id: groupId }) => {
   const rows = reference.rows.filter((row) => row.groupId === groupId);
   const resolved = rows.filter(
     ({ llmAnnotation }) =>
@@ -379,7 +387,9 @@ const provenancePaths = [
   "scripts/merge-query-set-reference.ts",
   "scripts/evaluate-query-set-reference.ts",
   querySetPath,
-  "docs/reference/query-set-annotation-protocol.md",
+  reference.annotationProtocolVersion === "query-relevance-llm-a-2.0.0"
+    ? "docs/reference/query-set-annotation-protocol-v2.md"
+    : "docs/reference/query-set-annotation-protocol.md",
   "pnpm-lock.yaml",
 ] as const;
 const provenanceContents = await Promise.all(
@@ -390,9 +400,11 @@ const provenanceContents = await Promise.all(
 );
 
 const report = {
-  reportVersion: reference.querySetVersion.startsWith("queries-2.")
-    ? "query-set-validation-report-2.0.0"
-    : "query-set-validation-report-1.0.0",
+  reportVersion: reference.querySetVersion.startsWith("queries-3.")
+    ? "query-set-validation-report-3.0.0"
+    : reference.querySetVersion.startsWith("queries-2.")
+      ? "query-set-validation-report-2.0.0"
+      : "query-set-validation-report-1.0.0",
   evaluatedAt: new Date().toISOString(),
   gateStatus,
   querySetVersion: reference.querySetVersion,

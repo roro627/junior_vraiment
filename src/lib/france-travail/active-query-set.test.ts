@@ -17,8 +17,8 @@ describe("active France Travail query set", () => {
     const querySet = loadActiveFranceTravailQuerySet();
 
     expect(querySet.status).toBe("active");
-    expect(querySet.querySetVersion).toBe("queries-2.0.0");
-    expect(querySet.groups).toHaveLength(8);
+    expect(querySet.querySetVersion).toBe("queries-3.0.0");
+    expect(querySet.groups).toHaveLength(10);
     expect(querySet.groups.every((group) => group.enabled)).toBe(true);
   });
 

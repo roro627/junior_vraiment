@@ -7,9 +7,12 @@ import { parseQuerySet } from "./collect-query-set-validation";
 
 const passedMetricSchema = z.object({ status: z.literal("passed") });
 const reportSchema = z.object({
-  reportVersion: z.literal("query-set-validation-report-2.0.0"),
+  reportVersion: z.enum([
+    "query-set-validation-report-2.0.0",
+    "query-set-validation-report-3.0.0",
+  ]),
   gateStatus: z.literal("passed"),
-  querySetVersion: z.literal("queries-2.0.0-observed-title-filtered-draft"),
+  querySetVersion: z.string().min(1),
   reference: z.object({
     activationPolicyVersion: z.literal("query-relevance-gate-1.0.0"),
     rowCount: z.number().int().min(240),
@@ -32,7 +35,7 @@ const reportSchema = z.object({
         sampleSizeGate: passedMetricSchema,
       }),
     )
-    .length(8),
+    .min(8),
   collectionGates: z.object({
     paginationComplete: passedMetricSchema,
     quarantineEmpty: passedMetricSchema,
@@ -44,14 +47,14 @@ const reportSchema = z.object({
 });
 const activeSchema = z.object({
   status: z.literal("active"),
-  querySetVersion: z.literal("queries-2.0.0"),
+  querySetVersion: z.string().regex(/^queries-\d+\.\d+\.\d+$/u),
   activation: z.object({
     activationPolicyVersion: z.literal("query-relevance-gate-1.0.0"),
-    candidateQuerySetVersion: z.literal(
-      "queries-2.0.0-observed-title-filtered-draft",
-    ),
+    candidateQuerySetVersion: z.string().min(1),
     candidateSha256: z.string().regex(/^[a-f0-9]{64}$/u),
-    validationReport: z.literal("query-set-v2-validation-report.json"),
+    validationReport: z
+      .string()
+      .regex(/^query-set-v\d+-validation-report\.json$/u),
     validationReportSha256: z.string().regex(/^[a-f0-9]{64}$/u),
   }),
 });
@@ -72,19 +75,34 @@ function semanticDefinition(querySet: ReturnType<typeof parseQuerySet>) {
   };
 }
 
-const candidatePath = "docs/reference/query-set.observed-v2-draft.json";
-const reportPath = "docs/reference/query-set-v2-validation-report.json";
 const activePath = "docs/reference/query-set.active.json";
-const [candidateContent, reportContent, activeContent] = await Promise.all([
+const activeContent = await readFile(activePath, "utf8");
+const activeRaw = JSON.parse(activeContent) as unknown;
+const activeMetadata = activeSchema.parse(activeRaw);
+const major = /^queries-(\d+)\./u.exec(activeMetadata.querySetVersion)?.[1];
+const candidatePath = `docs/reference/query-set.observed-v${major}-draft.json`;
+const reportPath = `docs/reference/${activeMetadata.activation.validationReport}`;
+const [candidateContent, reportContent] = await Promise.all([
   readFile(candidatePath, "utf8"),
   readFile(reportPath, "utf8"),
-  readFile(activePath, "utf8"),
 ]);
 const candidate = parseQuerySet(JSON.parse(candidateContent) as unknown);
 const report = reportSchema.parse(JSON.parse(reportContent) as unknown);
-const activeRaw = JSON.parse(activeContent) as unknown;
 const active = parseQuerySet(activeRaw);
-const activeMetadata = activeSchema.parse(activeRaw);
+
+if (
+  report.querySetVersion !== candidate.querySetVersion ||
+  activeMetadata.activation.candidateQuerySetVersion !==
+    candidate.querySetVersion ||
+  new Set(candidate.groups.map((group) => group.id)).size !==
+    candidate.groups.length ||
+  JSON.stringify(report.groups.map((group) => group.groupId).sort()) !==
+    JSON.stringify(candidate.groups.map((group) => group.id).sort())
+) {
+  throw new Error(
+    "Le rapport et les groupes ne correspondent pas au candidat.",
+  );
+}
 
 if (
   report.collection.sourceSha256 !== sha256(candidateContent) ||

@@ -25,7 +25,7 @@
     "test:lighthouse": "lhci autorun",
     "classifier:validate:local": "tsx scripts/merge-agent-review-200.ts && tsx scripts/merge-targeted-reference.ts && tsx scripts/evaluate-classifier-reference.ts && tsx scripts/verify-classifier-validation-report.ts",
     "classifier:report:check": "tsx scripts/verify-classifier-validation-report.ts",
-    "query-set:validate:local": "tsx scripts/merge-query-set-reference.ts --directory=.local/query-set-validation-v2 --query-set=docs/reference/query-set.observed-v2-draft.json && tsx scripts/evaluate-query-set-reference.ts --directory=.local/query-set-validation-v2 --query-set=docs/reference/query-set.observed-v2-draft.json --output=docs/reference/query-set-v2-validation-report.json && tsx scripts/promote-query-set.ts && tsx scripts/verify-query-set-validation-report.ts",
+    "query-set:validate:local": "tsx scripts/merge-query-set-reference.ts --directory=.local/query-set-validation-v3 --query-set=docs/reference/query-set.observed-v3-draft.json && tsx scripts/evaluate-query-set-reference.ts --directory=.local/query-set-validation-v3 --query-set=docs/reference/query-set.observed-v3-draft.json --output=docs/reference/query-set-v3-validation-report.json && tsx scripts/promote-query-set.ts && tsx scripts/verify-query-set-validation-report.ts",
     "query-set:report:check": "tsx scripts/verify-query-set-validation-report.ts",
     "storybook": "storybook dev -p 6006",
     "storybook:build": "storybook build",

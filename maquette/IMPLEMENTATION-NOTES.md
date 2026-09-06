@@ -62,6 +62,9 @@
 - Les liens externes annonceront l'ouverture de l'offre source.
 - Les métriques partielles ne pourront pas être partagées comme un insight normal.
 - Le tableau desktop devient une liste de cartes sémantiques sur mobile.
+- Les changements de périmètre interrompent la ligne de tendance et portent une explication
+  textuelle visible. Une valeur non publiable n'est jamais reliée par interpolation. Le composant
+  reste serveur, avec les tokens existants et sans animation supplémentaire (6 septembre 2026).
 
 ## Validation à faire
 

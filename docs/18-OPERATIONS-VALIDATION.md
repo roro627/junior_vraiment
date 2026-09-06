@@ -270,3 +270,29 @@ son nouveau contrôle, a confirmé une collecte réussie, complète et fraîche 
 Le contrôle planifié toutes les six heures et la collecte quotidienne Trigger.dev restent actifs.
 Ces vérifications ne remplacent ni sept journées consécutives de collectes planifiées réussies,
 ni une preuve de réception des alertes par e-mail, ni les autres critères manuels de lancement.
+
+## Extension de couverture — 6 septembre 2026
+
+L'ADR 0012 répond à la demande de données supplémentaires. Les secrets source, absents de
+`.env.local`, ont été récupérés par la CLI Trigger.dev authentifiée dans un fichier d'environnement
+ignoré distinct, sans écraser la configuration locale ni afficher leurs valeurs. L'authentification,
+le référentiel métiers et les recherches officielles ont réellement fonctionné.
+
+Le candidat 3.0 a collecté 1 828 offres distinctes au travers de 566 requêtes complètes
+(22 995 résultats avec recoupements), sans requête plafonnée ni quarantaine. Les 300 paires ont été
+annotées en une seule passe aveugle Terra medium : 298 résolues, 278 pertinentes, deux ambiguës.
+Un extrait non exact a été corrigé par son annotateur sans changer son jugement ; toutes les
+preuves passent ensuite la vérification source. Les dix groupes passent les seuils inchangés.
+Le rapport conserve les empreintes, les volumes par groupe et les limites de cette référence LLM.
+
+La migration additive `20260906173154_needy_slyde.sql` a été appliquée à Neon et relue dans
+`information_schema`. Le dataset courant reste celui de 1 324 membres avant publication du
+nouveau périmètre. Les liens nouveaux conservent leurs familles effectivement admises, sans
+attribuer toutes les familles des requêtes partagées. Les anciens liens et classifications
+ne sont pas réécrits. L'API annote les changements de registre ; le tracé ne franchit ni ces
+ruptures ni une valeur non publiable.
+
+Contrôles locaux : formatage, lint, typecheck, 238 tests unitaires, 24 tests de schéma, 11 tests
+de lecture réels sur Neon et builds Next.js/Storybook réussis. Les 22 tests live non activés
+restent signalés comme ignorés. La suite E2E locale a donné 79 succès et un délai Axe Firefox
+dépassé sous charge ; ce résultat n'est pas présenté comme un succès complet.

@@ -1,0 +1,1 @@
+ALTER TABLE "offer_query_matches" ADD COLUMN "matched_job_families" text[];

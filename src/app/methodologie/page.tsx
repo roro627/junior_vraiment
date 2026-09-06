@@ -75,6 +75,13 @@ export default async function MethodologyPage() {
           actives&nbsp;: {activeFamilies.map(({ label }) => label).join(", ")}.
           Les requêtes sont conservées et versionnées avec chaque dataset.
         </p>
+        <p>
+          Un changement de périmètre peut augmenter le nombre d’offres sans
+          traduire une hausse des recrutements. Il est signalé dans la tendance
+          ; les points concernés ne sont pas reliés comme une évolution
+          comparable. Le stock du jour reste distinct du cumul des offres
+          observées au fil des jours.
+        </p>
         <a
           className="text-link"
           href="https://www.data.gouv.fr/dataservices/api-offres-demploi"

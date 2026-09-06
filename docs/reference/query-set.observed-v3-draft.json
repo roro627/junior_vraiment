@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "documentVersion": "3.0.0",
-  "status": "active",
-  "querySetVersion": "queries-3.0.0",
+  "status": "draft",
+  "querySetVersion": "queries-3.0.0-coverage-draft",
   "source": "france-travail",
   "sourceContractObservedAt": "2026-09-06",
   "sourceApiVersion": "2.01",
@@ -40,7 +40,7 @@
   "groups": [
     {
       "id": "frontend",
-      "enabled": true,
+      "enabled": false,
       "jobFamilies": [
         "frontend"
       ],
@@ -83,7 +83,7 @@
     },
     {
       "id": "backend",
-      "enabled": true,
+      "enabled": false,
       "jobFamilies": [
         "backend"
       ],
@@ -117,7 +117,7 @@
     },
     {
       "id": "fullstack",
-      "enabled": true,
+      "enabled": false,
       "jobFamilies": [
         "fullstack"
       ],
@@ -146,7 +146,7 @@
     },
     {
       "id": "mobile",
-      "enabled": true,
+      "enabled": false,
       "jobFamilies": [
         "mobile"
       ],
@@ -205,7 +205,7 @@
     },
     {
       "id": "data",
-      "enabled": true,
+      "enabled": false,
       "jobFamilies": [
         "data"
       ],
@@ -252,7 +252,7 @@
     },
     {
       "id": "devops-cloud",
-      "enabled": true,
+      "enabled": false,
       "jobFamilies": [
         "devops-cloud"
       ],
@@ -293,7 +293,7 @@
     },
     {
       "id": "cybersecurity",
-      "enabled": true,
+      "enabled": false,
       "jobFamilies": [
         "cybersecurity"
       ],
@@ -337,7 +337,7 @@
     },
     {
       "id": "qa-test",
-      "enabled": true,
+      "enabled": false,
       "jobFamilies": [
         "qa-test"
       ],
@@ -388,7 +388,7 @@
     },
     {
       "id": "software",
-      "enabled": true,
+      "enabled": false,
       "jobFamilies": [
         "software"
       ],
@@ -462,7 +462,7 @@
     },
     {
       "id": "ai-ml",
-      "enabled": true,
+      "enabled": false,
       "jobFamilies": [
         "ai-ml"
       ],
@@ -487,19 +487,5 @@
         "ingénieure IA"
       ]
     }
-  ],
-  "activation": {
-    "activatedAt": "2026-09-06",
-    "activationPolicyVersion": "query-relevance-gate-1.0.0",
-    "candidateQuerySetVersion": "queries-3.0.0-coverage-draft",
-    "candidateSha256": "900464e9c9bdb0b5df3ef1e54693b8c1732756498d40ed3603b1ab221b28919b",
-    "validationReport": "query-set-v3-validation-report.json",
-    "validationReportSha256": "11f9492623dd48308c6010cfd9a871b0f2a9a92673e9a731573f2238df3085e2",
-    "allowedPromotionChanges": [
-      "status",
-      "querySetVersion",
-      "groups[].enabled",
-      "activation"
-    ]
-  }
+  ]
 }

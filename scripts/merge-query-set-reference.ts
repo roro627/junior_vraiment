@@ -13,6 +13,8 @@ const groupSchema = z.enum([
   "devops-cloud",
   "cybersecurity",
   "qa-test",
+  "software",
+  "ai-ml",
 ]);
 const primaryFamilySchema = z.enum([
   ...groupSchema.options,
@@ -245,10 +247,14 @@ await writeFile(
   `${directory}/reference.json`,
   `${JSON.stringify(
     {
-      referenceSetVersion: source.querySetVersion.startsWith("queries-2.")
-        ? "query-relevance-llm-a-reference-2.0.0"
-        : "query-relevance-llm-a-reference-1.0.0",
-      annotationProtocolVersion: "query-relevance-llm-a-1.0.0",
+      referenceSetVersion: source.querySetVersion.startsWith("queries-3.")
+        ? "query-relevance-llm-a-reference-3.0.0"
+        : source.querySetVersion.startsWith("queries-2.")
+          ? "query-relevance-llm-a-reference-2.0.0"
+          : "query-relevance-llm-a-reference-1.0.0",
+      annotationProtocolVersion: source.querySetVersion.startsWith("queries-3.")
+        ? "query-relevance-llm-a-2.0.0"
+        : "query-relevance-llm-a-1.0.0",
       activationPolicyVersion: "query-relevance-gate-1.0.0",
       methodology: "single-blind-llm-pass-a-query-relevance",
       model: "gpt-5.6-terra",

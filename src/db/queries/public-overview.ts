@@ -182,7 +182,7 @@ export async function getPublicOverview({
             join source_queries source_query on source_query.id = matched.source_query_id
             where matched.offer_id = membership.offer_id
               and source_query.query_set_version = ${dataset.querySetVersion}
-              and ${query.job}::text = any(source_query.job_families)
+              and ${query.job}::text = any(coalesce(matched.matched_job_families, source_query.job_families))
           )
         )
         and (

@@ -211,6 +211,14 @@ async function storeAcceptedPageOffers(input: {
             offerId: stored.offerId,
             sourceQueryId: input.state.sourceQueryId,
             observedAt: input.observedAt,
+            matchedJobFamilies: [
+              ...new Set(
+                filterQueryMembershipsByTitle(
+                  input.query,
+                  sourceOffer.intitule,
+                ).flatMap((membership) => membership.jobFamilies),
+              ),
+            ].sort(),
           });
           await storeClassification({
             sql: input.sql,
