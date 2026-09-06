@@ -1,9 +1,33 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
+import { z } from "zod";
 
 test("the home page publishes the verified current dataset", async ({
   page,
+  request,
 }) => {
+  const statusResponse = await request.get("/api/v1/data-status");
+  const overviewResponse = await request.get("/api/v1/overview");
+  expect(statusResponse.ok()).toBe(true);
+  expect(overviewResponse.ok()).toBe(true);
+  const status = z
+    .object({
+      data: z.object({
+        status: z.enum(["operational", "degraded", "unavailable"]),
+        freshness: z.enum(["fresh", "delayed", "stale", "unavailable"]),
+      }),
+    })
+    .parse(await statusResponse.json());
+  const overview = z
+    .object({ meta: z.object({ quality: z.string() }) })
+    .parse(await overviewResponse.json());
+  const expectedFreshness =
+    overview.meta.quality === "partial"
+      ? "partial"
+      : status.data.status !== "operational" ||
+          status.data.freshness === "unavailable"
+        ? "incident"
+        : status.data.freshness;
   await page.goto("/");
 
   await expect(
@@ -14,7 +38,9 @@ test("the home page publishes the verified current dataset", async ({
   ).toBeVisible();
   await expect(page.locator(".kpi-hero__value")).toContainText("%");
   await expect(page.getByText(/offres se présentant comme/u)).toBeVisible();
-  await expect(page.getByText(/Données à jour/u)).toBeVisible();
+  await expect(
+    page.locator(`.freshness-badge[data-freshness="${expectedFreshness}"]`),
+  ).toBeVisible();
 });
 
 test("filters are represented by the URL and restored on render", async ({

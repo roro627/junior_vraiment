@@ -150,7 +150,10 @@ export async function getDataStatus({
     (incident) => incident.resolvedAt === null,
   );
   const degraded =
-    freshness !== "fresh" || latestRun?.status === "partial" || hasOpenIncident;
+    freshness !== "fresh" ||
+    latestRun?.status === "partial" ||
+    latestRun?.status === "failed" ||
+    hasOpenIncident;
   const warnings: ResponseMeta["warnings"] = [];
 
   if (freshness !== "fresh") {

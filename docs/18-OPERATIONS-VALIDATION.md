@@ -85,8 +85,7 @@ paramètres fournisseur de consentement, traitement de l’IP et conservation.
 - la rotation des identifiants Neon est différée à la demande du propriétaire ; elle ne doit pas
   être considérée comme effectuée ;
 - les preuves de sept ingestions quotidiennes consécutives nécessitent sept exécutions planifiées ;
-- PostHog reste désactivé tant que ses vraies variables et sa configuration de confidentialité
-  ne sont pas vérifiées ;
+- PostHog est reporté hors lancement MVP par l’ADR 0010 et reste désactivé ;
 - les mentions légales et les paramètres réels de conservation restent à valider par le
   propriétaire.
 
@@ -156,7 +155,56 @@ leur visibilité. Les workflows `Quality` `33992980271` et `Security` `339929802
 Après correction de cette attente, le scénario a passé vingt exécutions contre la production
 (cinq par navigateur/profil), sans réessai.
 
-Le prochain raccordement exige une session PostHog EU : le 5 septembre 2026, aucun identifiant
+À cette étape, le raccordement exigeait une session PostHog EU : le 5 septembre 2026, aucun identifiant
 PostHog n’est configuré dans l’environnement local ni dans Vercel Production, aucun connecteur
 dédié n’est disponible et le navigateur affiche le formulaire de connexion EU. La collecte
 analytics reste désactivée ; le compte et ses paramètres réels ne sont pas supposés existants.
+
+### PostHog reporté — 6 septembre 2026
+
+La connexion Chrome a ensuite permis de terminer l’assistant du projet EU `267342`.
+Autocapture, heatmaps et collecte automatique des performances ont été désactivées ; le replay
+a été refusé. L’option de suppression des IP est cochée. Aucun événement n’était reçu et aucun
+DPA n’était enregistré. Aucun accord n’a été signé par l’agent.
+
+Le propriétaire a explicitement reporté PostHog : voir [ADR 0010](adr/0010-defer-product-analytics.md).
+La liste réelle des variables Vercel Production ne contient ni `ANALYTICS_ENABLED` ni clé
+PostHog ; le lecteur de configuration retourne `enabled: false` par défaut. Aucun raccordement
+n’est déclaré validé. La suite du lancement concerne les contrôles restants indépendants de
+l’analytics, notamment les sept collectes quotidiennes et les alertes opérationnelles.
+
+## Diagnostic des collectes — 6 septembre 2026
+
+La lecture réelle de PostgreSQL confirme deux collectes complètes planifiées en échec les
+5 et 6 septembre, avec le code expurgé `unexpected_error`. Le dernier run complet réussi
+s’est terminé le 4 septembre à 13:55:26 UTC. Les sept succès quotidiens ne sont donc pas acquis.
+Le rapport CLI Trigger.dev signale une télémétrie ancienne et ne permet pas d’attribuer la cause.
+
+L’API publique annonçait encore `fresh` et `operational` : les seuils par défaut du code étaient
+72/168 heures, contrairement aux 30/72 heures de SPEC §9 et de `.env.example`. Les défauts
+sont corrigés ; un run en échec dégrade désormais aussi le statut, même si le dataset reste frais.
+Cette correction locale ne constitue pas une résolution de l’échec d’ingestion.
+
+Le workflow `Scheduled production health` ne vérifie actuellement que les réponses HTTP ;
+son succès ne prouve donc pas la réussite des collectes. Son contrôle sémantique reste à compléter.
+
+### Cause SQL identifiée avec la CLI
+
+Le MCP en lecture seule fourni par la CLI Trigger.dev a permis de lire le run de production
+du 6 septembre sans navigateur ni nouveau secret : `NeonDbError: column current_run.offers_closed
+does not exist`. La requête a été reproduite en lecture seule sur le run réel. La colonne physique
+existe ; seule sa projection dans la CTE `current_run` manquait. Cette projection a été corrigée,
+avec trois tests couvrant `null`, zéro et une valeur positive.
+
+Après correction, la lecture réelle renvoie 1 234 offres uniques, une pagination complète et
+1 197 classifications positives avec autant de preuves. Elle révèle un verrou qualité distinct :
+huit partitions sont passées de une à deux offres et dépassent ainsi le seuil relatif de 60 %.
+Le code conserve le blocage `volume_anomaly_detected`. Aucun seuil n’a été relevé et aucune
+publication forcée n’a été effectuée. La résolution SQL ne vaut donc pas réussite de collecte.
+
+Le worker corrigé a été construit et déployé avec succès sur Trigger.dev Production sous
+la version `20260906.1`, en conservant les variables distantes (`--skip-sync-env-vars`).
+Le formatage, lint, typecheck, 192 tests unitaires et le build Next.js passent localement.
+Les 80 parcours E2E ont donné 76 succès et quatre échecs dus à l’ancienne assertion imposant
+des données fraîches sur l’accueil. Après correction du test pour comparer le badge à l’API
+réelle, les seize parcours accueil (quatre profils) passent, y compris a11y et reduced motion.

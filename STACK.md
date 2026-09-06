@@ -560,6 +560,10 @@ Interdiction d'envoyer les descriptions complètes d'offres ou les secrets.
 
 ## 7.3 PostHog EU
 
+**Report approuvé le 6 septembre 2026 :** activation hors lancement MVP, sans remplacement.
+Voir [ADR 0010](docs/adr/0010-defer-product-analytics.md). Les exigences ci-dessous restent
+applicables à une activation future.
+
 Usage minimal :
 
 - région UE ;

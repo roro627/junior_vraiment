@@ -57,6 +57,10 @@ Le lancement n'est autorisé que lorsque chaque bloc obligatoire est validé. Le
 
 ## Sécurité et vie privée
 
+PostHog est différé hors MVP par [ADR 0010](../adr/0010-defer-product-analytics.md).
+Pour ce lancement, vérifier son inactivité ; les contrôles de consentement et de collecte
+PostHog seront requis avant toute activation. Les autres contrôles restent obligatoires.
+
 - [ ] Le modèle de menace a été relu.
 - [ ] La CSP et les en-têtes de sécurité sont actifs en production.
 - [ ] Les secrets sont exclusivement dans le gestionnaire d'environnement.

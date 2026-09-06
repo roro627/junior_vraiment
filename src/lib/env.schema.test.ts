@@ -24,8 +24,8 @@ describe("environment validation", () => {
     expect(readBaseServerEnvironment({ NODE_ENV: "test" })).toEqual({
       APP_ENV: "development",
       LOG_LEVEL: "info",
-      DATASET_STALE_AFTER_HOURS: 72,
-      DATASET_CRITICAL_AFTER_HOURS: 168,
+      DATASET_STALE_AFTER_HOURS: 30,
+      DATASET_CRITICAL_AFTER_HOURS: 72,
       RAW_PAYLOAD_RETENTION_DAYS: 30,
     });
   });

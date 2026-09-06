@@ -567,7 +567,7 @@ export async function readFullIngestionQualityFacts(input: {
     with current_run as (
       select id, source_id, query_set_version, created_at,
         requests_count, offers_received, offers_valid, offers_quarantined,
-        offers_marked_missing
+        offers_marked_missing, offers_closed
       from ingestion_runs
       where id = ${input.ingestionRunId}
         and mode = 'full'

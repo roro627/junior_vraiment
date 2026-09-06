@@ -18,8 +18,8 @@ const baseServerEnvironmentSchema = z.object({
     .enum(["development", "test", "preview", "production"])
     .default("development"),
   LOG_LEVEL: z.enum(["debug", "info", "warn", "error"]).default("info"),
-  DATASET_STALE_AFTER_HOURS: z.coerce.number().int().positive().default(72),
-  DATASET_CRITICAL_AFTER_HOURS: z.coerce.number().int().positive().default(168),
+  DATASET_STALE_AFTER_HOURS: z.coerce.number().int().positive().default(30),
+  DATASET_CRITICAL_AFTER_HOURS: z.coerce.number().int().positive().default(72),
   RAW_PAYLOAD_RETENTION_DAYS: z.coerce.number().int().positive().default(30),
 });
 

@@ -1,6 +1,8 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
+import { z } from "zod";
+
 const trustPages = [
   ["/methodologie", "Notre méthodologie, en toute transparence"],
   ["/statut-donnees", "État des données"],
@@ -24,10 +26,28 @@ test("all trust pages publish useful server-rendered content", async ({
 
 test("the data status exposes verified run facts without infrastructure details", async ({
   page,
+  request,
 }) => {
+  const response = await request.get("/api/v1/data-status");
+  expect(response.ok()).toBe(true);
+  const status = z
+    .object({
+      data: z.object({
+        status: z.enum(["operational", "degraded", "unavailable"]),
+      }),
+    })
+    .parse(await response.json());
   await page.goto("/statut-donnees");
 
-  await expect(page.getByText("Toutes les données sont à jour")).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name:
+        status.data.status === "operational"
+          ? "Toutes les données sont à jour"
+          : "La publication demande de la prudence",
+      exact: true,
+    }),
+  ).toBeVisible();
   await expect(page.getByText("Offres reçues", { exact: true })).toBeVisible();
   await expect(
     page.getByText("Taux de validation", { exact: true }),

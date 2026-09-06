@@ -38,6 +38,40 @@ const dataset = {
 };
 
 describe("getDataStatus", () => {
+  it("does not report operational after a failed run even while data is fresh", async () => {
+    const sql = sqlWithResults(
+      [dataset],
+      [
+        {
+          status: "failed",
+          startedAt: "2026-09-04T13:56:00.000Z",
+          finishedAt: "2026-09-04T13:59:00.000Z",
+          requests: 1,
+          queries: 1,
+          partialQueries: 0,
+          received: 0,
+          valid: 0,
+          offersNew: 0,
+          offersUpdated: 0,
+          quarantined: 0,
+          markedMissing: 0,
+          closed: null,
+        },
+      ],
+      [{ ambiguousCount: 5 }],
+      [],
+    );
+    const result = await getDataStatus({
+      sql,
+      now: new Date("2026-09-04T14:00:00.000Z"),
+      staleAfterHours: 30,
+      criticalAfterHours: 72,
+    });
+    expect(result.data.freshness).toBe("fresh");
+    expect(result.data.status).toBe("degraded");
+    expect(result.meta.quality).toBe("limited");
+  });
+
   it("derives a public operational status without leaking internal identifiers", async () => {
     const sql = sqlWithResults(
       [dataset],
