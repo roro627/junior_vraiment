@@ -255,3 +255,18 @@ restent explicitement ignorés. Après stabilisation du dataset, la suite E2E co
 Le test a été corrigé pour attendre le document puis le dialogue effectivement contrôlé :
 cinq exécutions Firefox consécutives ont réussi. Les essais E2E pendant les publications et
 l’incident ne sont pas comptés comme une validation réussie.
+
+### Validation distante du lot
+
+Le commit applicatif `4754f53` est déployé avec succès sur Vercel. Le workflow `End-to-end`
+`34021561483` a terminé le 6 septembre 2026 à 08:24 UTC : les 80 parcours Playwright ont
+réussi sans réessai, puis les neuf mesures Lighthouse sur l’accueil, Explorer et la méthodologie
+ont passé les budgets inchangés. Les workflows `Quality` `34021552242`, `Security`
+`34021552194` et `Database migration check` `34021552196` ont également réussi ; cela inclut
+le build Storybook et les contrôles sous Node.js 24.20.0.
+
+Le workflow `Scheduled production health` `34021559882`, déclenché manuellement pour valider
+son nouveau contrôle, a confirmé une collecte réussie, complète et fraîche à 08:20:24 UTC.
+Le contrôle planifié toutes les six heures et la collecte quotidienne Trigger.dev restent actifs.
+Ces vérifications ne remplacent ni sept journées consécutives de collectes planifiées réussies,
+ni une preuve de réception des alertes par e-mail, ni les autres critères manuels de lancement.
