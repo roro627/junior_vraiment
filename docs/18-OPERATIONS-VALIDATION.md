@@ -335,3 +335,49 @@ confirme toujours 1 810 membres et la publication inchangée à 17:59:53.798 UTC
 migration check `34050943264` et Scheduled production health `34051019927` ont réussi.
 End-to-end `34051018222` a terminé avec succès à 18:18 UTC : 80 parcours sans réessai,
 puis neuf mesures Lighthouse sur trois pages conformes aux budgets existants.
+
+## Finalisation technique — 6 septembre 2026
+
+Le contrôle de santé quotidien et la maintenance de rétention ont été ajoutés conformément au
+runbook, sans nouvelle dépendance. Les tests de purge et de réconciliation d'incidents ont été
+exécutés sur la branche Neon dédiée `dev-hardening-20260906`, avec connexion distincte et
+expiration automatique au 7 septembre à 20:00 UTC. Deux tests d'intégration réels réussissent :
+purge bornée et rejouable, audit sans doublon, preuves/métriques/appartenances conservées,
+lecture des journées comparables, ouverture puis résolution d'un incident.
+
+La session Chrome authentifiée a permis de constater que Trigger.dev Production ne possède
+encore aucune alerte. Une demande d'autorisation d'abonnement et de test e-mail a été présentée
+au propriétaire ; ce constat n'est pas remplacé par un test simulé de notification.
+
+Après son accord explicite, le canal e-mail a été créé puis relu comme **Enabled**, environnement
+Production, types **Task run failure** et **Deployment failure**, vers le compte du propriétaire.
+L'alerte inclut les tâches de collecte, de santé et de maintenance sans supplément de plan.
+La réception dans la boîte du destinataire reste une preuve distincte.
+
+Le run manuel `run_06g7gd4fcs9mtgj9vtdbhd8201` a produit l'échec terminal volontaire
+`TEST_ALERTE_JUNIOR_VRAIMENT` à 19:31:47 UTC, sans accès aux données. Le propriétaire a
+ensuite explicitement confirmé **« Oui, e-mail reçu »**. Le déclenchement et la réception du
+canal sont donc vérifiés. Aucun échec de déploiement réel n'a été provoqué pour ce test.
+
+La section confidentialité réutilise la page À propos et le pied de page. `PRIVACY.md` décrit
+l'état technique réel et distingue les validations juridiques encore nécessaires. Deux nouveaux
+parcours couvrent le reflow à 320 px et l'accès aux preuves au clavier.
+
+La première exécution du contrôle de santé a échoué sur la présence d'un identifiant de dataset
+dans l'objet d'agrégats : la validation a été corrigée pour ne vérifier que les trois compteurs
+attendus, avec régression unitaire et test d'intégration de la chaîne applicative. Le worker
+`20260906.7` a ensuite exécuté `check-data-health` avec succès (`run_06g7gd3nct8eb8gmok9i1o6d01`),
+sans anomalie ni journée comparable inventée. La maintenance réelle `run_06g7gc0ivg09dkuadkfc7uss01`
+a également réussi : aucun payload n'était expiré, donc aucune donnée de production supprimée.
+
+Les tests 320 px ont découvert un débordement de 14 px de la page de statut, dû aux libellés de
+métriques non sécables. Les items de grille peuvent désormais rétrécir et les libellés longs se
+replient sans troncature. Les seuils de tests n'ont pas été relâchés.
+
+Le rejeu de collecte `run_06g7gd5mecr4s6h9s96bhhvg01` a réussi et déclenché son contrôle de
+santé enfant, également terminé avec succès. Le dataset et sa publication restent inchangés.
+La validation locale finale passe : formatage, lint, typecheck, 257 tests unitaires, 24 tests
+de schéma, deux tests réels de maintenance sur Neon, build Next.js et 88 parcours E2E sur
+Chromium, Firefox, WebKit et Chromium mobile. Les 24 tests live non activés dans la suite
+générale restent explicitement ignorés. La stabilité sur sept collectes planifiées et les
+vérifications humaines de lancement ne sont pas déduites de ces tests.

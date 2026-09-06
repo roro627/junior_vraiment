@@ -13,6 +13,7 @@ export function SiteFooter() {
         <Link href="/statut-donnees">État des données</Link>
         <Link href="/limites">Limites</Link>
         <Link href="/a-propos">À propos</Link>
+        <Link href="/a-propos#confidentialite">Confidentialité</Link>
         <Link href="/signaler">Signaler une erreur</Link>
       </nav>
     </footer>

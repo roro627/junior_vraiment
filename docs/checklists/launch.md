@@ -19,7 +19,7 @@ Le lancement n'est autorisé que lorsque chaque bloc obligatoire est validé. Le
 - [ ] La licence et les conditions de réutilisation ont été relues à la date du lancement.
 - [ ] La source et la date de mise à jour sont visibles à proximité des chiffres.
 - [ ] La méthodologie publique correspond exactement au code déployé.
-- [ ] Le classificateur est figé dans une version `classifier-1.0.0`.
+- [ ] Le classificateur est figé dans une version évaluée et documentée (actuellement `classifier-1.2.0`).
 - [ ] Un jeu annoté de référence et ses résultats sont conservés.
 - [ ] La passe LLM A de référence permet d'évaluer et d'atteindre les seuils retenus.
 - [ ] Au moins sept collectes quotidiennes cohérentes ont validé la chaîne complète.

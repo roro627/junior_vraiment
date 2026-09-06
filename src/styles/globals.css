@@ -1245,6 +1245,7 @@ p {
 .status-metric-grid div,
 .license-notice {
   display: grid;
+  min-width: 0;
   align-content: start;
   gap: var(--space-2);
   border: 1px solid var(--border);
@@ -1256,6 +1257,7 @@ p {
 .definition-grid dt,
 .version-list dt,
 .status-metric-grid dt {
+  overflow-wrap: anywhere;
   font-size: var(--text-caption);
   font-weight: 720;
 }

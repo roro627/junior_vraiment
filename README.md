@@ -18,11 +18,11 @@ Le produit ne cherche pas à devenir un nouveau site d'emploi. Il mesure les con
 |---|---|
 | Version de la documentation | `1.0.0` |
 | Date de référence technique | `2 septembre 2026` |
-| État | Prêt pour conception détaillée et implémentation |
+| État | MVP implémenté ; validation du lancement public en cours — voir `docs/18-OPERATIONS-VALIDATION.md` |
 | Langue du produit | Français |
 | Zone couverte au lancement | France métropolitaine et DROM lorsque la source le permet |
 | Source principale prévue | API Offres d'emploi de France Travail |
-| Maquette | À déposer dans [`/maquette`](./maquette/README.md) |
+| Maquette | Références intégrées, inventoriées dans [`/maquette`](./maquette/INVENTORY.md) |
 
 Cette archive contient les spécifications produit, techniques, UX, données, sécurité, tests, exploitation et diffusion nécessaires pour qu'un développeur puisse construire le MVP sans devoir réinventer les décisions importantes.
 

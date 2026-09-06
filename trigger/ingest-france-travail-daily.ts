@@ -1,4 +1,4 @@
-import { AbortTaskRunError, logger, schedules } from "@trigger.dev/sdk";
+import { AbortTaskRunError, logger, schedules, tasks } from "@trigger.dev/sdk";
 
 import {
   IngestionQualityBlockedError,
@@ -36,6 +36,16 @@ export const ingestFranceTravailDailyTask = schedules.task({
     factor: 2,
     randomize: true,
   },
+  onSuccess: async () => {
+    await tasks.trigger("check-data-health", {
+      timestamp: new Date().toISOString(),
+    });
+  },
+  onFailure: async () => {
+    await tasks.trigger("check-data-health", {
+      timestamp: new Date().toISOString(),
+    });
+  },
   run: async (payload, { ctx, signal }) => {
     try {
       const summary = await runDailyFranceTravailIngestion({
@@ -66,7 +76,9 @@ export const ingestFranceTravailDailyTask = schedules.task({
       ) {
         throw new AbortTaskRunError(error.message);
       }
-      throw error;
+      throw new Error(
+        "INGESTION_FAILED: consulter le résumé expurgé du run et le runbook.",
+      );
     }
   },
 });

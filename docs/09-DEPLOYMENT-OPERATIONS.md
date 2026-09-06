@@ -460,6 +460,57 @@ En cas d'échec P0, rollback.
 
 ## 21. Checklist release
 
+### Tâches de maintenance implémentées
+
+`check-data-health` contrôle la base à 12:30 Europe/Paris et est déclenché après succès ou
+échec terminal de la collecte. Il vérifie fraîcheur, validation et complétude, puis compare le
+volume et l'ambiguïté entre datasets figés de mêmes versions de requêtes et classificateur.
+La durée n'est comparée à la médiane qu'avec sept journées antérieures distinctes disponibles.
+Un changement de périmètre ne produit donc pas une fausse anomalie temporelle.
+
+Les incidents de données sont ouverts/résolus dans `data_quality_events` avec messages fixes,
+sans offre ni secret. Un incident déjà ouvert n'est pas dupliqué. Le contrôle ne se base pas sur
+son propre incident pour décider du rétablissement. Le dépassement de durée reste interne.
+L'échec final de la tâche est le signal pour les alertes natives Trigger.dev ; la présence du
+code ne prouve pas l'abonnement e-mail ni la réception effective d'une notification.
+
+`maintain-data-retention` s'exécute le dimanche à 04:30 Europe/Paris dans une file séparée.
+Chaque lot efface au plus 500 charges brutes arrivées à l'échéance déjà enregistrée et 500
+diagnostics de quarantaine de plus de 30 jours, seulement sur des collectes terminées.
+Les verrous `SKIP LOCKED` évitent d'attendre une ligne occupée. Un audit agrégé est écrit dans
+la même instruction SQL. Aucun snapshot, preuve, métrique ni appartenance au dataset n'est
+supprimé. L'exécution est bornée à 100 lots et échoue s'il reste des données éligibles : relancer
+la tâche après diagnostic, sans modifier les échéances pour faire disparaître l'alerte.
+
+Les journaux gérés par les fournisseurs ne sont pas stockés dans ces tables : leur rétention
+doit être contrôlée chez chaque fournisseur, pas simulée par une purge locale.
+
+### Exercice de notification
+
+Le canal Trigger.dev de production doit être activé pour les échecs de tâches et de déploiements,
+avec le compte du mainteneur comme destinataire. Les succès ne sont pas envoyés par e-mail.
+La configuration suit les [alertes natives documentées](https://trigger.dev/docs/troubleshooting-alerts).
+
+`verify-alert-delivery` est une tâche manuelle sans cron, sans connexion base ni appel source.
+Son payload `{ "confirmation": "SEND_IDENTIFIED_TEST_ALERT" }` produit volontairement un échec
+terminal `TEST_ALERTE_JUNIOR_VRAIMENT`, sans réessai. Sans cette confirmation, aucun échec de
+test n'est produit. Vérifier ensuite le run **et** la réception du message dans la boîte du
+destinataire. Un run échoué confirme le signal, pas la livraison de l'e-mail. Ne pas provoquer
+une panne de la vraie ingestion ni modifier un dataset pour tester les notifications.
+
+Pour tester la purge et les incidents, créer une branche Neon jetable avec une copie contrôlée,
+configurer uniquement sa connexion dans `ROLLBACK_GAME_DAY_DATABASE_URL`, puis exécuter :
+
+```powershell
+$env:RUN_DATASET_ROLLBACK_GAME_DAY = '1'
+pnpm exec vitest run src/db/maintenance.live.test.ts
+```
+
+Ne jamais utiliser la connexion de production pour ce test : il modifie les échéances de deux
+charges brutes et injecte un diagnostic de test. La tâche normale ne fait pas ces modifications.
+
+### Portes de release
+
 - [ ] migrations compatibles ;
 - [ ] secrets présents ;
 - [ ] schedule correct ;

@@ -1,5 +1,10 @@
 # Validation du dossier de spécification
 
+> Ce document conserve la validation initiale du 2 septembre, avant développement. L'état réel
+> de l'application et des services est consigné dans
+> [la validation opérationnelle](docs/18-OPERATIONS-VALIDATION.md) ; les points ci-dessous ne
+> constituent pas une liste actuelle de fonctionnalités manquantes.
+
 ## Statut
 
 | Élément | Résultat |

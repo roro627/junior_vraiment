@@ -58,6 +58,11 @@
 
 ## Écarts intentionnels déjà identifiés
 
+- La confidentialité est une section textuelle de la page À propos, accessible depuis le pied
+  de page. Elle réutilise `TrustPage` et les tokens existants, sans nouvel écran ni animation.
+- À 320 px, les identifiants de métriques peuvent être plus larges que leur carte : les libellés
+  longs se replient et les items de grille peuvent rétrécir, sans cacher ni tronquer la valeur.
+
 - Les états à faible échantillon afficheront « Pas assez de données » et jamais `0 %`.
 - Les liens externes annonceront l'ouverture de l'offre source.
 - Les métriques partielles ne pourront pas être partagées comme un insight normal.

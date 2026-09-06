@@ -21,6 +21,7 @@ export default function AboutPage() {
         { href: "#mission", label: "Mission" },
         { href: "#independance", label: "Indépendance" },
         { href: "#ouverture", label: "Code et données" },
+        { href: "#confidentialite", label: "Confidentialité" },
         { href: "#contact", label: "Contact" },
       ]}
     >
@@ -74,6 +75,29 @@ export default function AboutPage() {
             cette licence.
           </p>
         </div>
+      </section>
+
+      <section id="confidentialite">
+        <p className="section-label">Données et confidentialité</p>
+        <h2>Pas de profil candidat ni de suivi d’audience activé</h2>
+        <p>
+          Le site ne collecte ni CV ni candidature et ne demande pas de compte.
+          La mesure d’audience PostHog est désactivée pour cette première
+          version, sans enregistrement de session.
+        </p>
+        <p>
+          Vercel héberge le site, Neon conserve les données de l’observatoire et
+          Trigger.dev exécute les collectes. Sentry aide à diagnostiquer les
+          erreurs techniques, avec filtrage des textes d’offres, coordonnées et
+          secrets avant envoi. Ces services peuvent traiter des données
+          techniques nécessaires au fonctionnement du site.
+        </p>
+        <a
+          className="text-link"
+          href="https://github.com/roro627/junior_vraiment/blob/main/PRIVACY.md"
+        >
+          Lire les détails de conservation et de confidentialité
+        </a>
       </section>
 
       <section id="contact">

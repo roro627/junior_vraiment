@@ -72,7 +72,8 @@ test("@a11y insight index and detail have no serious automated violations", asyn
   page,
 }) => {
   for (const path of ["/insights", `/insights/${insightSlugs[0]}`]) {
-    await page.goto(path);
+    await page.goto(path, { waitUntil: "domcontentloaded" });
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
     const results = await new AxeBuilder({ page }).analyze();
     const blockingViolations = results.violations.filter(
       ({ impact }) => impact === "critical" || impact === "serious",
