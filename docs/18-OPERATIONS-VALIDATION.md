@@ -328,3 +328,10 @@ Contrôles locaux de ce complément : formatage, lint, typecheck, 240 tests unit
 de schéma, 11 tests de lecture réels sur Neon et build Next.js réussis. Les 22 tests live
 non activés dans la suite générale restent explicitement ignorés. Le worker `20260906.5`
 a été déployé avec succès ; cette migration ne modifie aucune classification ni métrique.
+
+Le rejeu `run_06g7fqosn23r68qggqkjhtji01` sur ce worker a réussi à 18:11:40 UTC. La relecture
+confirme toujours 1 810 membres et la publication inchangée à 17:59:53.798 UTC. Le commit
+`90ed3da` est déployé sur Vercel ; Quality `34050943269`, Security `34050943272`, Database
+migration check `34050943264` et Scheduled production health `34051019927` ont réussi.
+End-to-end `34051018222` a terminé avec succès à 18:18 UTC : 80 parcours sans réessai,
+puis neuf mesures Lighthouse sur trois pages conformes aux budgets existants.
