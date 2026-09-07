@@ -849,6 +849,13 @@ pas une estimation de confiance statistique. Toutes les baisses dépassant 60 %,
 d’au moins cinq offres dépassant 60 %, et les variations globales dépassant 40 % restent
 bloquantes. Aucun seuil de KPI, aucune preuve ni classification ne sont modifiés.
 La règle s’applique aux nouvelles évaluations ; les anciens résumés qualité restent conservés.
+
+Depuis `ingestion-quality-1.2.0` (7 septembre 2026), ce même plancher de cinq offres s'applique
+également aux baisses : par exemple 1 → 0 est un avertissement tracé, tandis que 5 → 0 reste
+bloquant. Cette correction opérationnelle est motivée et bornée dans l'[ADR 0013](adr/0013-small-partition-volume-losses.md).
+Les seuils globaux, les autres contrôles d'intégrité et la règle des deux absences pour clôturer
+une offre restent inchangés. Ce n'est ni une modification du classificateur ni du calcul des KPI.
+
 - taux junior variant de plus de 15 points en un jour ;
 - ambiguïté doublée ;
 - plus de 2 % de payloads invalides ;

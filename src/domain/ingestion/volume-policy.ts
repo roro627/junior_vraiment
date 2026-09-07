@@ -5,7 +5,7 @@ export type PartitionVolume = Readonly<{
 }>;
 
 // An engineering noise floor, not a statistical confidence threshold.
-const MINIMUM_BLOCKING_INCREASE = 5;
+const MINIMUM_BLOCKING_CHANGE = 5;
 
 export function assessPartitionVolumes(partitions: readonly PartitionVolume[]) {
   const warnings: PartitionVolume[] = [];
@@ -23,7 +23,7 @@ export function assessPartitionVolumes(partitions: readonly PartitionVolume[]) {
     }
     const delta = current - previous;
     if (previous === 0 || Math.abs(delta) * 100 <= previous * 60) continue;
-    if (delta > 0 && delta < MINIMUM_BLOCKING_INCREASE) {
+    if (Math.abs(delta) < MINIMUM_BLOCKING_CHANGE) {
       warnings.push(partition);
     } else {
       blocking = true;

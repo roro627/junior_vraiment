@@ -1,6 +1,6 @@
 import type { PartitionVolume } from "./volume-policy";
 
-export const INGESTION_QUALITY_VERSION = "ingestion-quality-1.1.0";
+export const INGESTION_QUALITY_VERSION = "ingestion-quality-1.2.0";
 
 export type IngestionQualityDecision = "publish" | "publish_partial" | "block";
 

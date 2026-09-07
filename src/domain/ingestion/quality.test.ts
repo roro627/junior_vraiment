@@ -30,7 +30,7 @@ describe("evaluateCompleteIngestionQuality", () => {
     );
     expect(result.decision).toBe("publish");
     expect(result.volumeWarnings).toEqual(volumeWarnings);
-    expect(result.qualityVersion).toBe("ingestion-quality-1.1.0");
+    expect(result.qualityVersion).toBe("ingestion-quality-1.2.0");
     expect(
       evaluateCompleteIngestionQuality(
         qualityInput({ volumeWarnings, volumeAnomalyDetected: true }),
@@ -41,6 +41,42 @@ describe("evaluateCompleteIngestionQuality", () => {
         qualityInput({ volumeWarnings, paginationComplete: false }),
       ).decision,
     ).toBe("block");
+  });
+  it("audits the observed one-to-zero partition without bypassing other gates", () => {
+    const volumeWarnings = [
+      {
+        queryId: "rome=M1405&keyword=consultant%20BI",
+        previous: 1,
+        current: 0,
+      },
+    ];
+    const input = qualityInput({
+      offersReceived: 22538,
+      offersValid: 22538,
+      positiveClassifications: 1734,
+      positiveClassificationsWithEvidence: 1734,
+      volumeWarnings,
+    });
+    expect(evaluateCompleteIngestionQuality(input)).toMatchObject({
+      decision: "publish",
+      volumeWarnings,
+      qualityVersion: "ingestion-quality-1.2.0",
+    });
+    for (const blocker of [
+      { paginationComplete: false },
+      { sourceCapReached: true },
+      { volumeAnomalyDetected: true },
+      { positiveClassificationsWithEvidence: 1733 },
+      { offersValid: 20000, offersQuarantined: 2538 },
+    ]) {
+      expect(
+        evaluateCompleteIngestionQuality({ ...input, ...blocker }),
+      ).toMatchObject({
+        decision: "block",
+        closureEligible: false,
+        volumeWarnings,
+      });
+    }
   });
   it("publishes a complete run at the 98% validation threshold", () => {
     const result = evaluateCompleteIngestionQuality(

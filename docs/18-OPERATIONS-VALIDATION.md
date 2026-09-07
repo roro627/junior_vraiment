@@ -381,3 +381,22 @@ de schéma, deux tests réels de maintenance sur Neon, build Next.js et 88 parco
 Chromium, Firefox, WebKit et Chromium mobile. Les 24 tests live non activés dans la suite
 générale restent explicitement ignorés. La stabilité sur sept collectes planifiées et les
 vérifications humaines de lancement ne sont pas déduites de ces tests.
+
+## Incident du 7 septembre — partition passée de une offre à zéro
+
+Le run planifié `run_06g7iv8i2rimas7ab1bmt3r801` a été bloqué à 01:44 UTC par
+`volume_anomaly_detected`, pas par un défaut d'accès source. Les 566 requêtes et 660 appels
+sont complets : 22 538 résultats validés, zéro quarantaine, 1 790 offres distinctes observées
+et 1 734 classifications positives toutes accompagnées de preuves. Le dernier dataset valide
+de 1 810 membres est resté public pendant l'incident.
+
+Une seule partition dépassait le seuil : `rome=M1405&keyword=consultant%20BI`, de 1 à 0.
+Un nouvel appel officiel authentifié le 7 septembre confirme zéro résultat, sans pagination
+supplémentaire ni quarantaine. L'ADR 0013 étend le plancher de cinq offres aux petites baisses,
+version `ingestion-quality-1.2.0`, sans changer les protections globales ni le classificateur.
+La réévaluation en lecture seule des faits réels produit `publish` et conserve l'avertissement.
+
+Avant reprise, un événement interne `SMALL_PARTITION_RECOVERY_REVIEW` a conservé le résumé
+qualité bloqué, le code d'erreur, l'identifiant Trigger et la date de fin originaux. Aucun incident
+public n'a été supprimé ni fermé manuellement. Les tests locaux de formatage, lint, typecheck
+et les 263 tests unitaires passent ; les 24 tests live désactivés restent explicitement ignorés.
