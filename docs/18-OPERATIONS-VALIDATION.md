@@ -412,3 +412,19 @@ Le gel d'un nouveau dataset utilise désormais le maximum des dates de pages ré
 enregistrées, exige une date disponible et ne prend jamais l'heure de calcul comme repli.
 Le suffixe de publication `__source-pages-1` permet une nouvelle version immuable ; les anciennes
 versions, leurs appartenances et leurs métriques ne sont pas modifiées.
+
+Le worker `20260907.2`, run `run_06g7l8j4mtiiel0q245gmrp901`, a publié le dataset corrigé
+`07e68b32-6091-44b7-9b64-382d9249ae2b` à 06:51:05 UTC. Son `source_cutoff_at` vaut
+01:44:40.343 UTC, exactement la dernière page enregistrée. La comparaison SQL confirme
+les mêmes 1 813 appartenances (offre, snapshot et classification) et zéro différence de
+métriques. La première version du 7 septembre reste conservée, non courante.
+Les 264 tests unitaires et le build passent ; le test complet d'ingestion sur la branche Neon
+isolée vérifie également l'horodatage, la rejouabilité des pages et la clôture après deux absences.
+
+Le rejeu `run_06g7l8ppg2vnvo9lq520p1h001` conserve le même dataset, les mêmes appartenances,
+métriques et dates de source/publication. Sur le commit applicatif `0e011c0`, Vercel est déployé
+et les workflows Quality `34092669604`, Security `34092669468`, Database migration check
+`34092669495` et Scheduled production health `34092781061` ont réussi. Les 88 parcours E2E
+ont de nouveau réussi contre la production corrigée. L'incident initial reste dans l'historique
+public avec son horodatage de résolution ; les reprises ne sont pas comptées comme des journées
+supplémentaires de stabilité planifiée.
