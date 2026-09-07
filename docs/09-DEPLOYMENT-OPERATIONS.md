@@ -112,6 +112,11 @@ Le timezone IANA doit être explicitement `Europe/Paris` afin de gérer automati
 
 La date métier d'un run vient du timestamp planifié, pas de l'heure de fin.
 
+La fraîcheur d'un nouveau dataset vient de la dernière page source enregistrée
+(`ingestion_query_pages.committed_at`), jamais de l'heure d'une reprise de publication.
+Le format de publication `__source-pages-1` distingue ces datasets des versions historiques
+sans réécrire celles-ci. Une reprise sans nouvel appel source ne rajeunit donc pas la donnée.
+
 ---
 
 ## 6. Configuration

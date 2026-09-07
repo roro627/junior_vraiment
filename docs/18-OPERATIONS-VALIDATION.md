@@ -400,3 +400,15 @@ Avant reprise, un événement interne `SMALL_PARTITION_RECOVERY_REVIEW` a conser
 qualité bloqué, le code d'erreur, l'identifiant Trigger et la date de fin originaux. Aucun incident
 public n'a été supprimé ni fermé manuellement. Les tests locaux de formatage, lint, typecheck
 et les 263 tests unitaires passent ; les 24 tests live désactivés restent explicitement ignorés.
+
+Le worker `20260907.1` a repris les pages existantes via `run_06g7l75maubeco88bm1ta8i601` :
+publication réussie, 1 813 membres, 23 absences signalées et aucune clôture. Le contrôle de santé
+enfant a résolu automatiquement l'incident à 06:44:56 UTC ; l'API le conserve avec `resolvedAt`.
+Les 88 parcours E2E contre la production ont réussi après cette reprise.
+
+Cette vérification a découvert un défaut distinct de la reprise : `source_cutoff_at` utilisait
+la fin du traitement (06:44 UTC), alors que les pages dataient de la collecte nocturne.
+Le gel d'un nouveau dataset utilise désormais le maximum des dates de pages réellement
+enregistrées, exige une date disponible et ne prend jamais l'heure de calcul comme repli.
+Le suffixe de publication `__source-pages-1` permet une nouvelle version immuable ; les anciennes
+versions, leurs appartenances et leurs métriques ne sont pas modifiées.

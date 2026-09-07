@@ -332,7 +332,8 @@ function createDatasetVersion(input: {
   startedAt: Date;
   querySetVersion: string;
 }): string {
-  return `${input.startedAt.toISOString()}__${CLASSIFIER_VERSION}__${input.querySetVersion}`;
+  // A new publication format preserves older datasets while correcting replay freshness.
+  return `${input.startedAt.toISOString()}__${CLASSIFIER_VERSION}__${input.querySetVersion}__source-pages-1`;
 }
 
 export async function runFullFranceTravailIngestion({

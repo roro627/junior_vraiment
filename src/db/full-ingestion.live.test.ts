@@ -288,6 +288,13 @@ describe.runIf(liveTestsEnabled)("durable full ingestion on Neon", () => {
         computedAt: new Date("2098-01-01T04:00:00Z"),
       });
       datasetId = dataset.datasetId;
+      const [sourceClock] = await sql`
+        select source_cutoff_at as "sourceCutoffAt" from published_datasets
+        where id = ${datasetId}
+      `;
+      expect(new Date(String(sourceClock?.["sourceCutoffAt"]))).toEqual(
+        baseTime,
+      );
       expect(await freezeDatasetMembership({ sql, datasetId })).toMatchObject({
         memberCount: 1,
         missingClassificationCount: 0,

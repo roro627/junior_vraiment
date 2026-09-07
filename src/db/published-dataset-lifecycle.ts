@@ -118,13 +118,21 @@ export async function createOrResumeDraftDataset(
     select
       ${input.datasetVersion}, run.source_id, run.id, ${input.classifierVersion},
       ${metricVersions}::jsonb, run.query_set_version, ${taxonomyVersions}::jsonb,
-      run.finished_at, ${input.computedAt},
+      source_pages.cutoff_at, ${input.computedAt},
       'draft', false, ${qualitySummary}::jsonb
     from ingestion_runs run
+    cross join lateral (
+      select max(page.committed_at) as cutoff_at
+      from ingestion_run_queries query
+      join ingestion_query_pages page on page.ingestion_run_query_id = query.id
+      where query.ingestion_run_id = run.id
+    ) source_pages
     where run.id = ${input.ingestionRunId}
       and run.mode = 'full'
       and run.status in ('succeeded', 'partial')
       and run.finished_at is not null
+      and source_pages.cutoff_at is not null
+      and source_pages.cutoff_at <= run.finished_at
     on conflict (dataset_version) do nothing
   `;
 
