@@ -603,6 +603,23 @@ components:
           type: [boolean, "null"]
         contradictoryJunior:
           type: [boolean, "null"]
+        juniorObservation:
+          description: Axe du KPI v2 uniquement ; null ou absent sur les datasets v1. Ne remplace pas le statut global ni l'accessibilité.
+          anyOf:
+            - type: "null"
+            - type: object
+              additionalProperties: false
+              required: [version, status, contradictory]
+              properties:
+                version:
+                  type: string
+                  const: junior-observation-2.0.0
+                status:
+                  type: string
+                  enum: [resolved, unknown, ambiguous]
+                contradictory:
+                  type: [boolean, "null"]
+                  description: Booléen seulement si status vaut resolved ; null sinon. Les preuves restent dans evidence.
         classifierVersion:
           type: string
         warnings:

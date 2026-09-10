@@ -428,3 +428,21 @@ et les workflows Quality `34092669604`, Security `34092669468`, Database migrati
 ont de nouveau réussi contre la production corrigée. L'incident initial reste dans l'historique
 public avec son horodatage de résolution ; les reprises ne sont pas comptées comme des journées
 supplémentaires de stabilité planifiée.
+
+## 10 septembre 2026 — release orange et méthode v2
+
+Web promu : dpl_JCReGvFtdzqtCphM2TsNEVzRJsnY ; worker 20260910.2.
+Les dix migrations sont appliquées en production et QA. Republication corrigée réussie
+run_06g8mog128tp6vv5tkq40inl01, enfant de santé terminé ; dataset
+e5158590-ed31-44d1-a827-4b6ab39ce76e, 1 820 membres, cutoff source conservé
+2026-09-10T01:46:13.541Z. API publique 30 jours : 59/407 (14,5 %), 50 ambigus exclus.
+
+La première publication avait un identifiant de 101 caractères contre 100 autorisés.
+Rollback réel run_06g8mmquumittlcik7kj1d5301 ; dataset retiré conservé.
+Incident public résolu 13281582-8932-460e-a3ef-64334532bd19, horodatages provenant de la base :
+12:45:36.397–12:46:56.835 UTC. Suffixe raccourci et gardes pré-écriture/SQL testées avant
+republication réussie. Aucun seuil statistique ni contrat API assoupli.
+
+Contrôles : 341 tests unitaires réussis (25 live opt-in ignorés), deux tests PostgreSQL QA réussis,
+113 E2E locaux réussis (3 ignorés), builds Next/Storybook réussis, neuf audits Lighthouse réussis,
+audit production sans vulnérabilité connue. Résultat final public et CI : voir le handoff courant.

@@ -28,6 +28,7 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm test
       - run: pnpm classifier:report:check
+      - run: pnpm observation:report:check
       - run: pnpm query-set:report:check
       - run: pnpm test:schemas
       - run: pnpm build

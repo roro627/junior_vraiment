@@ -6,6 +6,17 @@ Le format suit l'esprit de *Keep a Changelog*. Le versionnement du produit, de l
 
 ## [Unreleased]
 
+### Release web du 10 septembre 2026
+
+- Identité orange commune à l'accueil, Explorer, pages de confiance et insights ; preuves préservées.
+- Titres stables pendant le chargement, police facultative, budgets Lighthouse respectés sur neuf audits.
+- 113 parcours locaux réussis, trois répétitions responsive ignorées ; base QA réellement vérifiée.
+- Guide des services et handoff pour une reprise sans historique de conversation.
+- Méthode v2 publiée après validation indépendante : observation junior/exigence séparée de
+  l'accessibilité, preuves conservées, historique v1 inchangé et rupture de série explicite.
+- Identifiants de publication validés avant écriture et bascule ; incident de release résolu
+  et conservé dans l'historique public (voir docs/21).
+
 ### Added
 
 - Connexions réelles vérifiées avec France Travail, Neon, Trigger.dev et Vercel.

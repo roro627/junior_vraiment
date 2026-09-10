@@ -5,6 +5,7 @@ import { offersSearchParamsSchema } from "@/application/queries/contracts";
 import { AppHeader } from "@/components/app-header";
 import { ExplorerDashboard } from "@/components/explorer-dashboard";
 import { ExplorerSkeleton } from "@/components/explorer-skeleton";
+import { ExplorerIntroduction } from "@/components/explorer-introduction";
 import { SiteFooter } from "@/components/site-footer";
 import { isExternalDataBuildSkipped } from "@/lib/env";
 import { buildStaticPageMetadata } from "@/lib/seo/static-metadata";
@@ -63,13 +64,16 @@ export default function ExplorerPage({
         Aller au contenu
       </a>
       <AppHeader />
-      {skipExternalData ? (
-        <ExplorerSkeleton />
-      ) : (
-        <Suspense fallback={<ExplorerSkeleton />}>
-          <ExplorerContent searchParams={searchParams} />
-        </Suspense>
-      )}
+      <main className="explorer" id="contenu">
+        <ExplorerIntroduction />
+        {skipExternalData ? (
+          <ExplorerSkeleton />
+        ) : (
+          <Suspense fallback={<ExplorerSkeleton />}>
+            <ExplorerContent searchParams={searchParams} />
+          </Suspense>
+        )}
+      </main>
       <SiteFooter />
     </div>
   );

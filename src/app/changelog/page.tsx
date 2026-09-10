@@ -17,6 +17,30 @@ export default function ChangelogPage() {
       lead="Les évolutions du produit, de la méthode et de la chaîne de données sont consignées séparément lorsqu’elles n’ont pas le même impact."
     >
       <section>
+        <p className="section-label">
+          10 septembre 2026 · Interface et fiabilité
+        </p>
+        <h2>Une lecture plus cohérente, des preuves toujours accessibles</h2>
+        <ul>
+          <li>
+            Nouvelle identité orange déployée sur l’observatoire, Explorer et
+            les pages de confiance.
+          </li>
+          <li>
+            Filtres partageables, navigation clavier, petits écrans et mouvement
+            réduit vérifiés.
+          </li>
+          <li>
+            Historique et versions de calcul conservés : une refonte visuelle ne
+            change pas les chiffres.
+          </li>
+          <li>
+            Collecte complète du 10 septembre confirmée ; incidents antérieurs
+            conservés avec leur résolution.
+          </li>
+        </ul>
+      </section>
+      <section>
         <p className="section-label">4 septembre 2026 · En préparation</p>
         <h2>Première chaîne vérifiable de bout en bout</h2>
         <ul>

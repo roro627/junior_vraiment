@@ -1,0 +1,3261 @@
+{
+  "id": "210441cb-5d7a-441f-8492-02bef5bd4746",
+  "prevId": "fe9ac554-5e4f-4989-8fc8-50157b6f33f8",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.classification_evidence": {
+      "name": "classification_evidence",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "classification_id": {
+          "name": "classification_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "evidence_kind": {
+          "name": "evidence_kind",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "rule_id": {
+          "name": "rule_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "source_field": {
+          "name": "source_field",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "excerpt": {
+          "name": "excerpt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "start_offset": {
+          "name": "start_offset",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "end_offset": {
+          "name": "end_offset",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "normalized_value": {
+          "name": "normalized_value",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "metadata": {
+          "name": "metadata",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'{}'::jsonb"
+        },
+        "ordinal": {
+          "name": "ordinal",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        }
+      },
+      "indexes": {
+        "classification_evidence_classification_idx": {
+          "name": "classification_evidence_classification_idx",
+          "columns": [
+            {
+              "expression": "classification_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "ordinal",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "classification_evidence_classification_id_classifications_id_fk": {
+          "name": "classification_evidence_classification_id_classifications_id_fk",
+          "tableFrom": "classification_evidence",
+          "tableTo": "classifications",
+          "columnsFrom": ["classification_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "classification_evidence_kind_check": {
+          "name": "classification_evidence_kind_check",
+          "value": "\"classification_evidence\".\"evidence_kind\" in ('junior_claim', 'required_experience', 'desired_experience', 'salary', 'remote', 'technology', 'job_family', 'conflict', 'exclusion', 'ambiguity', 'other')"
+        },
+        "classification_evidence_offsets_check": {
+          "name": "classification_evidence_offsets_check",
+          "value": "\"classification_evidence\".\"start_offset\" is null or \"classification_evidence\".\"end_offset\" is null or (\"classification_evidence\".\"start_offset\" >= 0 and \"classification_evidence\".\"end_offset\" >= \"classification_evidence\".\"start_offset\")"
+        },
+        "classification_evidence_metadata_check": {
+          "name": "classification_evidence_metadata_check",
+          "value": "jsonb_typeof(\"classification_evidence\".\"metadata\") = 'object'"
+        },
+        "classification_evidence_ordinal_check": {
+          "name": "classification_evidence_ordinal_check",
+          "value": "\"classification_evidence\".\"ordinal\" >= 0"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.classifications": {
+      "name": "classifications",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "snapshot_id": {
+          "name": "snapshot_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "classifier_version": {
+          "name": "classifier_version",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "taxonomy_jobs_version": {
+          "name": "taxonomy_jobs_version",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "taxonomy_technologies_version": {
+          "name": "taxonomy_technologies_version",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "claims_junior": {
+          "name": "claims_junior",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "beginner_friendly": {
+          "name": "beginner_friendly",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "contradictory_junior": {
+          "name": "contradictory_junior",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "junior_observation_version": {
+          "name": "junior_observation_version",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "junior_observation_status": {
+          "name": "junior_observation_status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "junior_observation_contradictory": {
+          "name": "junior_observation_contradictory",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "minimum_experience_months": {
+          "name": "minimum_experience_months",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "salary_transparent": {
+          "name": "salary_transparent",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "remote_mode": {
+          "name": "remote_mode",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'unknown'"
+        },
+        "job_family": {
+          "name": "job_family",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "secondary_job_families": {
+          "name": "secondary_job_families",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'{}'::text[]"
+        },
+        "rule_ids": {
+          "name": "rule_ids",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'{}'::text[]"
+        },
+        "warnings": {
+          "name": "warnings",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'[]'::jsonb"
+        },
+        "result_hash": {
+          "name": "result_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "classified_at": {
+          "name": "classified_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "classifications_contradiction_idx": {
+          "name": "classifications_contradiction_idx",
+          "columns": [
+            {
+              "expression": "classifier_version",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "contradictory_junior",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "where": "\"classifications\".\"contradictory_junior\" is not null",
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "classifications_junior_idx": {
+          "name": "classifications_junior_idx",
+          "columns": [
+            {
+              "expression": "classifier_version",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "claims_junior",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "classifications_experience_idx": {
+          "name": "classifications_experience_idx",
+          "columns": [
+            {
+              "expression": "classifier_version",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "minimum_experience_months",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "classifications_family_idx": {
+          "name": "classifications_family_idx",
+          "columns": [
+            {
+              "expression": "classifier_version",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "job_family",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "classifications_snapshot_id_offer_snapshots_id_fk": {
+          "name": "classifications_snapshot_id_offer_snapshots_id_fk",
+          "tableFrom": "classifications",
+          "tableTo": "offer_snapshots",
+          "columnsFrom": ["snapshot_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "classifications_snapshot_version_unique": {
+          "name": "classifications_snapshot_version_unique",
+          "nullsNotDistinct": false,
+          "columns": ["snapshot_id", "classifier_version"]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "classifications_junior_observation_check": {
+          "name": "classifications_junior_observation_check",
+          "value": "\n      (\"classifications\".\"junior_observation_version\" is null and \"classifications\".\"junior_observation_status\" is null and \"classifications\".\"junior_observation_contradictory\" is null)\n      or (\"classifications\".\"junior_observation_version\" is not null and length(\"classifications\".\"junior_observation_version\") > 0\n        and \"classifications\".\"junior_observation_status\" is not null and \"classifications\".\"junior_observation_status\" in ('resolved', 'unknown', 'ambiguous')\n        and ((\"classifications\".\"junior_observation_status\" = 'resolved' and \"classifications\".\"junior_observation_contradictory\" is not null\n          and \"classifications\".\"claims_junior\" is true and \"classifications\".\"minimum_experience_months\" is not null\n          and ((\"classifications\".\"junior_observation_contradictory\" is true and \"classifications\".\"minimum_experience_months\" >= 24)\n            or (\"classifications\".\"junior_observation_contradictory\" is false and \"classifications\".\"minimum_experience_months\" < 24)))\n          or (\"classifications\".\"junior_observation_status\" <> 'resolved' and \"classifications\".\"junior_observation_contradictory\" is null)))\n    "
+        },
+        "classifications_status_check": {
+          "name": "classifications_status_check",
+          "value": "\"classifications\".\"status\" in ('classified', 'ambiguous', 'unclassified')"
+        },
+        "classifications_experience_check": {
+          "name": "classifications_experience_check",
+          "value": "\"classifications\".\"minimum_experience_months\" is null or \"classifications\".\"minimum_experience_months\" >= 0"
+        },
+        "classifications_remote_check": {
+          "name": "classifications_remote_check",
+          "value": "\"classifications\".\"remote_mode\" in ('remote', 'hybrid', 'onsite', 'unknown')"
+        },
+        "classifications_warnings_array_check": {
+          "name": "classifications_warnings_array_check",
+          "value": "jsonb_typeof(\"classifications\".\"warnings\") = 'array'"
+        },
+        "classifications_beginner_check": {
+          "name": "classifications_beginner_check",
+          "value": "\"classifications\".\"beginner_friendly\" is null or (\"classifications\".\"status\" = 'classified' and \"classifications\".\"minimum_experience_months\" is not null and ((\"classifications\".\"beginner_friendly\" = true and \"classifications\".\"minimum_experience_months\" <= 12) or (\"classifications\".\"beginner_friendly\" = false and \"classifications\".\"minimum_experience_months\" > 12)))"
+        },
+        "classifications_contradiction_status_check": {
+          "name": "classifications_contradiction_status_check",
+          "value": "\"classifications\".\"contradictory_junior\" is null or \"classifications\".\"status\" = 'classified'"
+        },
+        "classifications_contradiction_true_check": {
+          "name": "classifications_contradiction_true_check",
+          "value": "\"classifications\".\"contradictory_junior\" is distinct from true or (\"classifications\".\"claims_junior\" = true and \"classifications\".\"minimum_experience_months\" >= 24 and \"classifications\".\"status\" = 'classified')"
+        },
+        "classifications_contradiction_false_check": {
+          "name": "classifications_contradiction_false_check",
+          "value": "\"classifications\".\"contradictory_junior\" is distinct from false or (\"classifications\".\"claims_junior\" = false or (\"classifications\".\"claims_junior\" = true and \"classifications\".\"minimum_experience_months\" is not null and \"classifications\".\"minimum_experience_months\" < 24))"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.daily_metrics": {
+      "name": "daily_metrics",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "dataset_id": {
+          "name": "dataset_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "metric_key": {
+          "name": "metric_key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "metric_version": {
+          "name": "metric_version",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "period_start": {
+          "name": "period_start",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "period_end": {
+          "name": "period_end",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "job_family": {
+          "name": "job_family",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "technology_slug": {
+          "name": "technology_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "region_code": {
+          "name": "region_code",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "department_code": {
+          "name": "department_code",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "commune_code": {
+          "name": "commune_code",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "contract_kind": {
+          "name": "contract_kind",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "remote_mode": {
+          "name": "remote_mode",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "dimensions": {
+          "name": "dimensions",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'{}'::jsonb"
+        },
+        "dimension_hash": {
+          "name": "dimension_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "numerator": {
+          "name": "numerator",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "denominator": {
+          "name": "denominator",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "population_count": {
+          "name": "population_count",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "unknown_count": {
+          "name": "unknown_count",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "ambiguous_count": {
+          "name": "ambiguous_count",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "value_numeric": {
+          "name": "value_numeric",
+          "type": "numeric(12, 8)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "coverage_numeric": {
+          "name": "coverage_numeric",
+          "type": "numeric(12, 8)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sample_quality": {
+          "name": "sample_quality",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'normal'"
+        },
+        "metadata": {
+          "name": "metadata",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'{}'::jsonb"
+        },
+        "computed_at": {
+          "name": "computed_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "daily_metrics_lookup_idx": {
+          "name": "daily_metrics_lookup_idx",
+          "columns": [
+            {
+              "expression": "dataset_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "metric_key",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "metric_version",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "job_family",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "technology_slug",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "region_code",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "department_code",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "commune_code",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "daily_metrics_period_idx": {
+          "name": "daily_metrics_period_idx",
+          "columns": [
+            {
+              "expression": "metric_key",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "period_end",
+              "isExpression": false,
+              "asc": false,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "daily_metrics_dataset_id_published_datasets_id_fk": {
+          "name": "daily_metrics_dataset_id_published_datasets_id_fk",
+          "tableFrom": "daily_metrics",
+          "tableTo": "published_datasets",
+          "columnsFrom": ["dataset_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "daily_metrics_dataset_metric_period_dimension_unique": {
+          "name": "daily_metrics_dataset_metric_period_dimension_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "dataset_id",
+            "metric_key",
+            "metric_version",
+            "period_start",
+            "period_end",
+            "dimension_hash"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "daily_metrics_period_check": {
+          "name": "daily_metrics_period_check",
+          "value": "\"daily_metrics\".\"period_end\" >= \"daily_metrics\".\"period_start\""
+        },
+        "daily_metrics_json_check": {
+          "name": "daily_metrics_json_check",
+          "value": "jsonb_typeof(\"daily_metrics\".\"dimensions\") = 'object' and jsonb_typeof(\"daily_metrics\".\"metadata\") = 'object'"
+        },
+        "daily_metrics_counts_check": {
+          "name": "daily_metrics_counts_check",
+          "value": "\"daily_metrics\".\"numerator\" >= 0 and \"daily_metrics\".\"denominator\" >= 0 and \"daily_metrics\".\"population_count\" >= 0 and \"daily_metrics\".\"unknown_count\" >= 0 and \"daily_metrics\".\"ambiguous_count\" >= 0 and \"daily_metrics\".\"numerator\" <= \"daily_metrics\".\"denominator\" and \"daily_metrics\".\"denominator\" <= \"daily_metrics\".\"population_count\" and \"daily_metrics\".\"population_count\" = \"daily_metrics\".\"denominator\" + \"daily_metrics\".\"unknown_count\" + \"daily_metrics\".\"ambiguous_count\""
+        },
+        "daily_metrics_value_check": {
+          "name": "daily_metrics_value_check",
+          "value": "((\"daily_metrics\".\"denominator\" = 0 or \"daily_metrics\".\"sample_quality\" = 'insufficient') and \"daily_metrics\".\"value_numeric\" is null) or (\"daily_metrics\".\"denominator\" > 0 and \"daily_metrics\".\"sample_quality\" in ('normal', 'caution') and \"daily_metrics\".\"value_numeric\" is not null)"
+        },
+        "daily_metrics_value_range_check": {
+          "name": "daily_metrics_value_range_check",
+          "value": "\"daily_metrics\".\"value_numeric\" is null or \"daily_metrics\".\"value_numeric\" between 0 and 1"
+        },
+        "daily_metrics_coverage_check": {
+          "name": "daily_metrics_coverage_check",
+          "value": "(\"daily_metrics\".\"population_count\" = 0 and \"daily_metrics\".\"coverage_numeric\" is null) or (\"daily_metrics\".\"population_count\" > 0 and \"daily_metrics\".\"coverage_numeric\" is not null)"
+        },
+        "daily_metrics_coverage_range_check": {
+          "name": "daily_metrics_coverage_range_check",
+          "value": "\"daily_metrics\".\"coverage_numeric\" is null or \"daily_metrics\".\"coverage_numeric\" between 0 and 1"
+        },
+        "daily_metrics_sample_quality_check": {
+          "name": "daily_metrics_sample_quality_check",
+          "value": "\"daily_metrics\".\"sample_quality\" in ('normal', 'caution', 'insufficient')"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.data_quality_events": {
+      "name": "data_quality_events",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "ingestion_run_id": {
+          "name": "ingestion_run_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "dataset_id": {
+          "name": "dataset_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "severity": {
+          "name": "severity",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "event_code": {
+          "name": "event_code",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "scope": {
+          "name": "scope",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "message": {
+          "name": "message",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "details": {
+          "name": "details",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'{}'::jsonb"
+        },
+        "is_public": {
+          "name": "is_public",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "resolved_at": {
+          "name": "resolved_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "data_quality_events_open_idx": {
+          "name": "data_quality_events_open_idx",
+          "columns": [
+            {
+              "expression": "severity",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": false,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "where": "\"data_quality_events\".\"resolved_at\" is null",
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "data_quality_events_ingestion_run_id_ingestion_runs_id_fk": {
+          "name": "data_quality_events_ingestion_run_id_ingestion_runs_id_fk",
+          "tableFrom": "data_quality_events",
+          "tableTo": "ingestion_runs",
+          "columnsFrom": ["ingestion_run_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "data_quality_events_dataset_id_published_datasets_id_fk": {
+          "name": "data_quality_events_dataset_id_published_datasets_id_fk",
+          "tableFrom": "data_quality_events",
+          "tableTo": "published_datasets",
+          "columnsFrom": ["dataset_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "data_quality_events_severity_check": {
+          "name": "data_quality_events_severity_check",
+          "value": "\"data_quality_events\".\"severity\" in ('info', 'warning', 'error', 'blocking')"
+        },
+        "data_quality_events_details_check": {
+          "name": "data_quality_events_details_check",
+          "value": "jsonb_typeof(\"data_quality_events\".\"details\") = 'object'"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.ingestion_quarantine_entries": {
+      "name": "ingestion_quarantine_entries",
+      "schema": "",
+      "columns": {
+        "ingestion_run_query_id": {
+          "name": "ingestion_run_query_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "range_start": {
+          "name": "range_start",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "item_ordinal": {
+          "name": "item_ordinal",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "issues": {
+          "name": "issues",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "ingestion_quarantine_entries_ingestion_run_query_id_ingestion_run_queries_id_fk": {
+          "name": "ingestion_quarantine_entries_ingestion_run_query_id_ingestion_run_queries_id_fk",
+          "tableFrom": "ingestion_quarantine_entries",
+          "tableTo": "ingestion_run_queries",
+          "columnsFrom": ["ingestion_run_query_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "ingestion_quarantine_entries_ingestion_run_query_id_range_start_item_ordinal_pk": {
+          "name": "ingestion_quarantine_entries_ingestion_run_query_id_range_start_item_ordinal_pk",
+          "columns": ["ingestion_run_query_id", "range_start", "item_ordinal"]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "ingestion_quarantine_entries_ordinal_check": {
+          "name": "ingestion_quarantine_entries_ordinal_check",
+          "value": "\"ingestion_quarantine_entries\".\"item_ordinal\" >= 0"
+        },
+        "ingestion_quarantine_entries_issues_check": {
+          "name": "ingestion_quarantine_entries_issues_check",
+          "value": "jsonb_typeof(\"ingestion_quarantine_entries\".\"issues\") = 'array'"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.ingestion_query_pages": {
+      "name": "ingestion_query_pages",
+      "schema": "",
+      "columns": {
+        "ingestion_run_query_id": {
+          "name": "ingestion_run_query_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "range_start": {
+          "name": "range_start",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "next_range_start": {
+          "name": "next_range_start",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_terminal": {
+          "name": "is_terminal",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "source_total": {
+          "name": "source_total",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "received_count": {
+          "name": "received_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "valid_count": {
+          "name": "valid_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "quarantined_count": {
+          "name": "quarantined_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "in_perimeter_count": {
+          "name": "in_perimeter_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "warning_count": {
+          "name": "warning_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "committed_at": {
+          "name": "committed_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "ingestion_query_pages_ingestion_run_query_id_ingestion_run_queries_id_fk": {
+          "name": "ingestion_query_pages_ingestion_run_query_id_ingestion_run_queries_id_fk",
+          "tableFrom": "ingestion_query_pages",
+          "tableTo": "ingestion_run_queries",
+          "columnsFrom": ["ingestion_run_query_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "ingestion_query_pages_ingestion_run_query_id_range_start_pk": {
+          "name": "ingestion_query_pages_ingestion_run_query_id_range_start_pk",
+          "columns": ["ingestion_run_query_id", "range_start"]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "ingestion_query_pages_range_check": {
+          "name": "ingestion_query_pages_range_check",
+          "value": "\"ingestion_query_pages\".\"range_start\" >= 0"
+        },
+        "ingestion_query_pages_next_range_check": {
+          "name": "ingestion_query_pages_next_range_check",
+          "value": "\"ingestion_query_pages\".\"next_range_start\" is null or \"ingestion_query_pages\".\"next_range_start\" > \"ingestion_query_pages\".\"range_start\""
+        },
+        "ingestion_query_pages_counts_check": {
+          "name": "ingestion_query_pages_counts_check",
+          "value": "\"ingestion_query_pages\".\"received_count\" >= 0 and \"ingestion_query_pages\".\"valid_count\" >= 0 and \"ingestion_query_pages\".\"quarantined_count\" >= 0 and \"ingestion_query_pages\".\"in_perimeter_count\" >= 0 and \"ingestion_query_pages\".\"in_perimeter_count\" <= \"ingestion_query_pages\".\"valid_count\" and \"ingestion_query_pages\".\"warning_count\" >= 0 and \"ingestion_query_pages\".\"received_count\" = \"ingestion_query_pages\".\"valid_count\" + \"ingestion_query_pages\".\"quarantined_count\""
+        },
+        "ingestion_query_pages_terminal_check": {
+          "name": "ingestion_query_pages_terminal_check",
+          "value": "\"ingestion_query_pages\".\"is_terminal\" = true or \"ingestion_query_pages\".\"next_range_start\" is not null"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.ingestion_run_offer_sightings": {
+      "name": "ingestion_run_offer_sightings",
+      "schema": "",
+      "columns": {
+        "ingestion_run_query_id": {
+          "name": "ingestion_run_query_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "offer_id": {
+          "name": "offer_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "snapshot_id": {
+          "name": "snapshot_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "observed_at": {
+          "name": "observed_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "offer_created": {
+          "name": "offer_created",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "snapshot_created": {
+          "name": "snapshot_created",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "ingestion_sightings_offer_idx": {
+          "name": "ingestion_sightings_offer_idx",
+          "columns": [
+            {
+              "expression": "offer_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "ingestion_run_query_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "ingestion_run_offer_sightings_ingestion_run_query_id_ingestion_run_queries_id_fk": {
+          "name": "ingestion_run_offer_sightings_ingestion_run_query_id_ingestion_run_queries_id_fk",
+          "tableFrom": "ingestion_run_offer_sightings",
+          "tableTo": "ingestion_run_queries",
+          "columnsFrom": ["ingestion_run_query_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "ingestion_run_offer_sightings_offer_id_offers_id_fk": {
+          "name": "ingestion_run_offer_sightings_offer_id_offers_id_fk",
+          "tableFrom": "ingestion_run_offer_sightings",
+          "tableTo": "offers",
+          "columnsFrom": ["offer_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "ingestion_run_offer_sightings_snapshot_id_offer_snapshots_id_fk": {
+          "name": "ingestion_run_offer_sightings_snapshot_id_offer_snapshots_id_fk",
+          "tableFrom": "ingestion_run_offer_sightings",
+          "tableTo": "offer_snapshots",
+          "columnsFrom": ["snapshot_id"],
+          "columnsTo": ["id"],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "ingestion_run_offer_sightings_ingestion_run_query_id_offer_id_pk": {
+          "name": "ingestion_run_offer_sightings_ingestion_run_query_id_offer_id_pk",
+          "columns": ["ingestion_run_query_id", "offer_id"]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.ingestion_run_queries": {
+      "name": "ingestion_run_queries",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "ingestion_run_id": {
+          "name": "ingestion_run_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "source_query_id": {
+          "name": "source_query_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'queued'"
+        },
+        "pages_received": {
+          "name": "pages_received",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "offers_received": {
+          "name": "offers_received",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "request_count": {
+          "name": "request_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "checkpoint": {
+          "name": "checkpoint",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'{}'::jsonb"
+        },
+        "error_summary": {
+          "name": "error_summary",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'{}'::jsonb"
+        },
+        "started_at": {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "finished_at": {
+          "name": "finished_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "ingestion_run_queries_ingestion_run_id_ingestion_runs_id_fk": {
+          "name": "ingestion_run_queries_ingestion_run_id_ingestion_runs_id_fk",
+          "tableFrom": "ingestion_run_queries",
+          "tableTo": "ingestion_runs",
+          "columnsFrom": ["ingestion_run_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "ingestion_run_queries_source_query_id_source_queries_id_fk": {
+          "name": "ingestion_run_queries_source_query_id_source_queries_id_fk",
+          "tableFrom": "ingestion_run_queries",
+          "tableTo": "source_queries",
+          "columnsFrom": ["source_query_id"],
+          "columnsTo": ["id"],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "ingestion_run_queries_run_query_unique": {
+          "name": "ingestion_run_queries_run_query_unique",
+          "nullsNotDistinct": false,
+          "columns": ["ingestion_run_id", "source_query_id"]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "ingestion_run_queries_status_check": {
+          "name": "ingestion_run_queries_status_check",
+          "value": "\"ingestion_run_queries\".\"status\" in ('queued', 'running', 'succeeded', 'partial', 'failed', 'skipped')"
+        },
+        "ingestion_run_queries_counts_check": {
+          "name": "ingestion_run_queries_counts_check",
+          "value": "\"ingestion_run_queries\".\"pages_received\" >= 0 and \"ingestion_run_queries\".\"offers_received\" >= 0 and \"ingestion_run_queries\".\"request_count\" >= 0"
+        },
+        "ingestion_run_queries_json_check": {
+          "name": "ingestion_run_queries_json_check",
+          "value": "jsonb_typeof(\"ingestion_run_queries\".\"checkpoint\") = 'object' and jsonb_typeof(\"ingestion_run_queries\".\"error_summary\") = 'object'"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.ingestion_runs": {
+      "name": "ingestion_runs",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "source_id": {
+          "name": "source_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "business_date": {
+          "name": "business_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "query_set_version": {
+          "name": "query_set_version",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "mode": {
+          "name": "mode",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'full'"
+        },
+        "attempt": {
+          "name": "attempt",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 1
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'queued'"
+        },
+        "trigger_run_id": {
+          "name": "trigger_run_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "started_at": {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "finished_at": {
+          "name": "finished_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "requests_count": {
+          "name": "requests_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "offers_received": {
+          "name": "offers_received",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "offers_valid": {
+          "name": "offers_valid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "offers_quarantined": {
+          "name": "offers_quarantined",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "offers_new": {
+          "name": "offers_new",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "offers_updated": {
+          "name": "offers_updated",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "offers_marked_missing": {
+          "name": "offers_marked_missing",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "offers_closed": {
+          "name": "offers_closed",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "quality_summary": {
+          "name": "quality_summary",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'{}'::jsonb"
+        },
+        "error_summary": {
+          "name": "error_summary",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'{}'::jsonb"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "ingestion_runs_source_date_idx": {
+          "name": "ingestion_runs_source_date_idx",
+          "columns": [
+            {
+              "expression": "source_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "business_date",
+              "isExpression": false,
+              "asc": false,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "ingestion_runs_trigger_run_unique_idx": {
+          "name": "ingestion_runs_trigger_run_unique_idx",
+          "columns": [
+            {
+              "expression": "trigger_run_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "where": "\"ingestion_runs\".\"trigger_run_id\" is not null",
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "ingestion_runs_status_idx": {
+          "name": "ingestion_runs_status_idx",
+          "columns": [
+            {
+              "expression": "status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": false,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "ingestion_runs_one_active_scope_idx": {
+          "name": "ingestion_runs_one_active_scope_idx",
+          "columns": [
+            {
+              "expression": "source_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "business_date",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "query_set_version",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "mode",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "where": "\"ingestion_runs\".\"status\" in ('queued', 'running', 'validating', 'aggregating', 'publishing')",
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "ingestion_runs_source_id_sources_id_fk": {
+          "name": "ingestion_runs_source_id_sources_id_fk",
+          "tableFrom": "ingestion_runs",
+          "tableTo": "sources",
+          "columnsFrom": ["source_id"],
+          "columnsTo": ["id"],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "ingestion_runs_scope_attempt_unique": {
+          "name": "ingestion_runs_scope_attempt_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "source_id",
+            "business_date",
+            "query_set_version",
+            "mode",
+            "attempt"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "ingestion_runs_mode_check": {
+          "name": "ingestion_runs_mode_check",
+          "value": "\"ingestion_runs\".\"mode\" in ('full', 'limited', 'reclassify', 'health')"
+        },
+        "ingestion_runs_status_check": {
+          "name": "ingestion_runs_status_check",
+          "value": "\"ingestion_runs\".\"status\" in ('queued', 'running', 'validating', 'aggregating', 'publishing', 'succeeded', 'partial', 'failed', 'cancelled')"
+        },
+        "ingestion_runs_counts_check": {
+          "name": "ingestion_runs_counts_check",
+          "value": "\"ingestion_runs\".\"requests_count\" >= 0 and \"ingestion_runs\".\"offers_received\" >= 0 and \"ingestion_runs\".\"offers_valid\" >= 0 and \"ingestion_runs\".\"offers_quarantined\" >= 0 and \"ingestion_runs\".\"offers_new\" >= 0 and \"ingestion_runs\".\"offers_updated\" >= 0 and \"ingestion_runs\".\"offers_marked_missing\" >= 0 and (\"ingestion_runs\".\"offers_closed\" is null or \"ingestion_runs\".\"offers_closed\" >= 0)"
+        },
+        "ingestion_runs_attempt_check": {
+          "name": "ingestion_runs_attempt_check",
+          "value": "\"ingestion_runs\".\"attempt\" >= 1"
+        },
+        "ingestion_runs_dates_check": {
+          "name": "ingestion_runs_dates_check",
+          "value": "\"ingestion_runs\".\"finished_at\" is null or \"ingestion_runs\".\"started_at\" is null or \"ingestion_runs\".\"finished_at\" >= \"ingestion_runs\".\"started_at\""
+        },
+        "ingestion_runs_json_check": {
+          "name": "ingestion_runs_json_check",
+          "value": "jsonb_typeof(\"ingestion_runs\".\"quality_summary\") = 'object' and jsonb_typeof(\"ingestion_runs\".\"error_summary\") = 'object'"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.insights": {
+      "name": "insights",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "summary": {
+          "name": "summary",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'draft'"
+        },
+        "dataset_id": {
+          "name": "dataset_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "metric_key": {
+          "name": "metric_key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "metric_version": {
+          "name": "metric_version",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "filters": {
+          "name": "filters",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "value_numeric": {
+          "name": "value_numeric",
+          "type": "numeric(12, 8)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "numerator": {
+          "name": "numerator",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "denominator": {
+          "name": "denominator",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "population_count": {
+          "name": "population_count",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "unknown_count": {
+          "name": "unknown_count",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "ambiguous_count": {
+          "name": "ambiguous_count",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "coverage_numeric": {
+          "name": "coverage_numeric",
+          "type": "numeric(12, 8)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sample_quality": {
+          "name": "sample_quality",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "period_start": {
+          "name": "period_start",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "period_end": {
+          "name": "period_end",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "og_alt": {
+          "name": "og_alt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "published_at": {
+          "name": "published_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "corrected_at": {
+          "name": "corrected_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "correction_note": {
+          "name": "correction_note",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "previous_snapshot": {
+          "name": "previous_snapshot",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "insights_status_published_idx": {
+          "name": "insights_status_published_idx",
+          "columns": [
+            {
+              "expression": "status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "published_at",
+              "isExpression": false,
+              "asc": false,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "insights_dataset_id_published_datasets_id_fk": {
+          "name": "insights_dataset_id_published_datasets_id_fk",
+          "tableFrom": "insights",
+          "tableTo": "published_datasets",
+          "columnsFrom": ["dataset_id"],
+          "columnsTo": ["id"],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "insights_slug_unique": {
+          "name": "insights_slug_unique",
+          "nullsNotDistinct": false,
+          "columns": ["slug"]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "insights_status_check": {
+          "name": "insights_status_check",
+          "value": "\"insights\".\"status\" in ('draft', 'published', 'corrected', 'withdrawn')"
+        },
+        "insights_json_check": {
+          "name": "insights_json_check",
+          "value": "jsonb_typeof(\"insights\".\"filters\") = 'object' and (\"insights\".\"previous_snapshot\" is null or jsonb_typeof(\"insights\".\"previous_snapshot\") = 'object')"
+        },
+        "insights_period_check": {
+          "name": "insights_period_check",
+          "value": "\"insights\".\"period_end\" >= \"insights\".\"period_start\""
+        },
+        "insights_counts_check": {
+          "name": "insights_counts_check",
+          "value": "\"insights\".\"numerator\" >= 0 and \"insights\".\"denominator\" >= 0 and \"insights\".\"population_count\" >= 0 and \"insights\".\"unknown_count\" >= 0 and \"insights\".\"ambiguous_count\" >= 0 and \"insights\".\"numerator\" <= \"insights\".\"denominator\" and \"insights\".\"denominator\" <= \"insights\".\"population_count\" and \"insights\".\"population_count\" = \"insights\".\"denominator\" + \"insights\".\"unknown_count\" + \"insights\".\"ambiguous_count\""
+        },
+        "insights_value_check": {
+          "name": "insights_value_check",
+          "value": "((\"insights\".\"denominator\" = 0 or \"insights\".\"sample_quality\" = 'insufficient') and \"insights\".\"value_numeric\" is null) or (\"insights\".\"denominator\" > 0 and \"insights\".\"sample_quality\" in ('normal', 'caution') and \"insights\".\"value_numeric\" is not null)"
+        },
+        "insights_value_range_check": {
+          "name": "insights_value_range_check",
+          "value": "\"insights\".\"value_numeric\" is null or \"insights\".\"value_numeric\" between 0 and 1"
+        },
+        "insights_coverage_check": {
+          "name": "insights_coverage_check",
+          "value": "(\"insights\".\"population_count\" = 0 and \"insights\".\"coverage_numeric\" is null) or (\"insights\".\"population_count\" > 0 and \"insights\".\"coverage_numeric\" is not null)"
+        },
+        "insights_coverage_range_check": {
+          "name": "insights_coverage_range_check",
+          "value": "\"insights\".\"coverage_numeric\" is null or \"insights\".\"coverage_numeric\" between 0 and 1"
+        },
+        "insights_sample_quality_check": {
+          "name": "insights_sample_quality_check",
+          "value": "\"insights\".\"sample_quality\" in ('normal', 'caution', 'insufficient')"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.offer_query_matches": {
+      "name": "offer_query_matches",
+      "schema": "",
+      "columns": {
+        "offer_id": {
+          "name": "offer_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "source_query_id": {
+          "name": "source_query_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "matched_job_families": {
+          "name": "matched_job_families",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "first_matched_at": {
+          "name": "first_matched_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "last_matched_at": {
+          "name": "last_matched_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "offer_query_matches_offer_id_offers_id_fk": {
+          "name": "offer_query_matches_offer_id_offers_id_fk",
+          "tableFrom": "offer_query_matches",
+          "tableTo": "offers",
+          "columnsFrom": ["offer_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "offer_query_matches_source_query_id_source_queries_id_fk": {
+          "name": "offer_query_matches_source_query_id_source_queries_id_fk",
+          "tableFrom": "offer_query_matches",
+          "tableTo": "source_queries",
+          "columnsFrom": ["source_query_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "offer_query_matches_offer_id_source_query_id_pk": {
+          "name": "offer_query_matches_offer_id_source_query_id_pk",
+          "columns": ["offer_id", "source_query_id"]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "offer_query_matches_dates_check": {
+          "name": "offer_query_matches_dates_check",
+          "value": "\"offer_query_matches\".\"last_matched_at\" >= \"offer_query_matches\".\"first_matched_at\""
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.offer_snapshot_technologies": {
+      "name": "offer_snapshot_technologies",
+      "schema": "",
+      "columns": {
+        "snapshot_id": {
+          "name": "snapshot_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "classification_id": {
+          "name": "classification_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "technology_id": {
+          "name": "technology_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "mention_kind": {
+          "name": "mention_kind",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'mentioned'"
+        },
+        "confidence": {
+          "name": "confidence",
+          "type": "numeric(5, 4)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "evidence_id": {
+          "name": "evidence_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "offer_snapshot_technologies_tech_idx": {
+          "name": "offer_snapshot_technologies_tech_idx",
+          "columns": [
+            {
+              "expression": "technology_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "snapshot_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "offer_snapshot_technologies_snapshot_id_offer_snapshots_id_fk": {
+          "name": "offer_snapshot_technologies_snapshot_id_offer_snapshots_id_fk",
+          "tableFrom": "offer_snapshot_technologies",
+          "tableTo": "offer_snapshots",
+          "columnsFrom": ["snapshot_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "offer_snapshot_technologies_classification_id_classifications_id_fk": {
+          "name": "offer_snapshot_technologies_classification_id_classifications_id_fk",
+          "tableFrom": "offer_snapshot_technologies",
+          "tableTo": "classifications",
+          "columnsFrom": ["classification_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "offer_snapshot_technologies_technology_id_technologies_id_fk": {
+          "name": "offer_snapshot_technologies_technology_id_technologies_id_fk",
+          "tableFrom": "offer_snapshot_technologies",
+          "tableTo": "technologies",
+          "columnsFrom": ["technology_id"],
+          "columnsTo": ["id"],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "offer_snapshot_technologies_evidence_id_classification_evidence_id_fk": {
+          "name": "offer_snapshot_technologies_evidence_id_classification_evidence_id_fk",
+          "tableFrom": "offer_snapshot_technologies",
+          "tableTo": "classification_evidence",
+          "columnsFrom": ["evidence_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "offer_snapshot_technologies_snapshot_id_classification_id_technology_id_pk": {
+          "name": "offer_snapshot_technologies_snapshot_id_classification_id_technology_id_pk",
+          "columns": ["snapshot_id", "classification_id", "technology_id"]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "offer_snapshot_technologies_mention_kind_check": {
+          "name": "offer_snapshot_technologies_mention_kind_check",
+          "value": "\"offer_snapshot_technologies\".\"mention_kind\" in ('mentioned', 'required', 'preferred', 'contextual')"
+        },
+        "offer_snapshot_technologies_confidence_check": {
+          "name": "offer_snapshot_technologies_confidence_check",
+          "value": "\"offer_snapshot_technologies\".\"confidence\" is null or \"offer_snapshot_technologies\".\"confidence\" between 0 and 1"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.offer_snapshots": {
+      "name": "offer_snapshots",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "offer_id": {
+          "name": "offer_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ingestion_run_id": {
+          "name": "ingestion_run_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "content_hash": {
+          "name": "content_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description_text": {
+          "name": "description_text",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "company_name": {
+          "name": "company_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "source_published_at": {
+          "name": "source_published_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "source_updated_at": {
+          "name": "source_updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "location_label": {
+          "name": "location_label",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "commune_code": {
+          "name": "commune_code",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "department_code": {
+          "name": "department_code",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "region_code": {
+          "name": "region_code",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "latitude": {
+          "name": "latitude",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "longitude": {
+          "name": "longitude",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "contract_source_code": {
+          "name": "contract_source_code",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "contract_kind": {
+          "name": "contract_kind",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'unknown'"
+        },
+        "contract_label": {
+          "name": "contract_label",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "structured_experience_required": {
+          "name": "structured_experience_required",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "structured_experience_label": {
+          "name": "structured_experience_label",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "salary_data": {
+          "name": "salary_data",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "application_url": {
+          "name": "application_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "source_url": {
+          "name": "source_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "raw_payload": {
+          "name": "raw_payload",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "raw_payload_expires_at": {
+          "name": "raw_payload_expires_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "valid_from": {
+          "name": "valid_from",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "valid_to": {
+          "name": "valid_to",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "offer_snapshots_offer_hash_idx": {
+          "name": "offer_snapshots_offer_hash_idx",
+          "columns": [
+            {
+              "expression": "offer_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "content_hash",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "offer_snapshots_one_current_idx": {
+          "name": "offer_snapshots_one_current_idx",
+          "columns": [
+            {
+              "expression": "offer_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "where": "\"offer_snapshots\".\"valid_to\" is null",
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "offer_snapshots_published_idx": {
+          "name": "offer_snapshots_published_idx",
+          "columns": [
+            {
+              "expression": "source_published_at",
+              "isExpression": false,
+              "asc": false,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "offer_snapshots_geo_idx": {
+          "name": "offer_snapshots_geo_idx",
+          "columns": [
+            {
+              "expression": "region_code",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "department_code",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "commune_code",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "offer_snapshots_contract_idx": {
+          "name": "offer_snapshots_contract_idx",
+          "columns": [
+            {
+              "expression": "contract_kind",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "source_published_at",
+              "isExpression": false,
+              "asc": false,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "offer_snapshots_offer_id_offers_id_fk": {
+          "name": "offer_snapshots_offer_id_offers_id_fk",
+          "tableFrom": "offer_snapshots",
+          "tableTo": "offers",
+          "columnsFrom": ["offer_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "offer_snapshots_ingestion_run_id_ingestion_runs_id_fk": {
+          "name": "offer_snapshots_ingestion_run_id_ingestion_runs_id_fk",
+          "tableFrom": "offer_snapshots",
+          "tableTo": "ingestion_runs",
+          "columnsFrom": ["ingestion_run_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "offer_snapshots_hash_length_check": {
+          "name": "offer_snapshots_hash_length_check",
+          "value": "char_length(\"offer_snapshots\".\"content_hash\") >= 32"
+        },
+        "offer_snapshots_validity_check": {
+          "name": "offer_snapshots_validity_check",
+          "value": "\"offer_snapshots\".\"valid_to\" is null or \"offer_snapshots\".\"valid_to\" >= \"offer_snapshots\".\"valid_from\""
+        },
+        "offer_snapshots_latitude_check": {
+          "name": "offer_snapshots_latitude_check",
+          "value": "\"offer_snapshots\".\"latitude\" is null or \"offer_snapshots\".\"latitude\" between -90 and 90"
+        },
+        "offer_snapshots_longitude_check": {
+          "name": "offer_snapshots_longitude_check",
+          "value": "\"offer_snapshots\".\"longitude\" is null or \"offer_snapshots\".\"longitude\" between -180 and 180"
+        },
+        "offer_snapshots_contract_check": {
+          "name": "offer_snapshots_contract_check",
+          "value": "\"offer_snapshots\".\"contract_kind\" in ('cdi', 'cdd', 'interim', 'alternance', 'internship', 'freelance', 'public', 'other', 'unknown')"
+        },
+        "offer_snapshots_salary_object_check": {
+          "name": "offer_snapshots_salary_object_check",
+          "value": "\"offer_snapshots\".\"salary_data\" is null or jsonb_typeof(\"offer_snapshots\".\"salary_data\") = 'object'"
+        },
+        "offer_snapshots_raw_payload_expiry_check": {
+          "name": "offer_snapshots_raw_payload_expiry_check",
+          "value": "(\"offer_snapshots\".\"raw_payload\" is null and \"offer_snapshots\".\"raw_payload_expires_at\" is null) or (\"offer_snapshots\".\"raw_payload\" is not null and \"offer_snapshots\".\"raw_payload_expires_at\" is not null)"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.offers": {
+      "name": "offers",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "source_id": {
+          "name": "source_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "external_id": {
+          "name": "external_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "first_seen_at": {
+          "name": "first_seen_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "last_seen_at": {
+          "name": "last_seen_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "missing_since": {
+          "name": "missing_since",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "closed_at": {
+          "name": "closed_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "reopened_count": {
+          "name": "reopened_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "offers_active_last_seen_idx": {
+          "name": "offers_active_last_seen_idx",
+          "columns": [
+            {
+              "expression": "last_seen_at",
+              "isExpression": false,
+              "asc": false,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "where": "\"offers\".\"closed_at\" is null",
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "offers_closed_idx": {
+          "name": "offers_closed_idx",
+          "columns": [
+            {
+              "expression": "closed_at",
+              "isExpression": false,
+              "asc": false,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "where": "\"offers\".\"closed_at\" is not null",
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "offers_source_id_sources_id_fk": {
+          "name": "offers_source_id_sources_id_fk",
+          "tableFrom": "offers",
+          "tableTo": "sources",
+          "columnsFrom": ["source_id"],
+          "columnsTo": ["id"],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "offers_source_external_unique": {
+          "name": "offers_source_external_unique",
+          "nullsNotDistinct": false,
+          "columns": ["source_id", "external_id"]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "offers_seen_dates_check": {
+          "name": "offers_seen_dates_check",
+          "value": "\"offers\".\"last_seen_at\" >= \"offers\".\"first_seen_at\""
+        },
+        "offers_closed_date_check": {
+          "name": "offers_closed_date_check",
+          "value": "\"offers\".\"closed_at\" is null or \"offers\".\"closed_at\" >= \"offers\".\"first_seen_at\""
+        },
+        "offers_reopened_count_check": {
+          "name": "offers_reopened_count_check",
+          "value": "\"offers\".\"reopened_count\" >= 0"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.published_dataset_offers": {
+      "name": "published_dataset_offers",
+      "schema": "",
+      "columns": {
+        "dataset_id": {
+          "name": "dataset_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "offer_id": {
+          "name": "offer_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "snapshot_id": {
+          "name": "snapshot_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "classification_id": {
+          "name": "classification_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "job_families": {
+          "name": "job_families",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'{}'::text[]"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "published_dataset_offers_dataset_id_published_datasets_id_fk": {
+          "name": "published_dataset_offers_dataset_id_published_datasets_id_fk",
+          "tableFrom": "published_dataset_offers",
+          "tableTo": "published_datasets",
+          "columnsFrom": ["dataset_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "published_dataset_offers_offer_id_offers_id_fk": {
+          "name": "published_dataset_offers_offer_id_offers_id_fk",
+          "tableFrom": "published_dataset_offers",
+          "tableTo": "offers",
+          "columnsFrom": ["offer_id"],
+          "columnsTo": ["id"],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "published_dataset_offers_snapshot_id_offer_snapshots_id_fk": {
+          "name": "published_dataset_offers_snapshot_id_offer_snapshots_id_fk",
+          "tableFrom": "published_dataset_offers",
+          "tableTo": "offer_snapshots",
+          "columnsFrom": ["snapshot_id"],
+          "columnsTo": ["id"],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "published_dataset_offers_classification_id_classifications_id_fk": {
+          "name": "published_dataset_offers_classification_id_classifications_id_fk",
+          "tableFrom": "published_dataset_offers",
+          "tableTo": "classifications",
+          "columnsFrom": ["classification_id"],
+          "columnsTo": ["id"],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "published_dataset_offers_dataset_id_offer_id_pk": {
+          "name": "published_dataset_offers_dataset_id_offer_id_pk",
+          "columns": ["dataset_id", "offer_id"]
+        }
+      },
+      "uniqueConstraints": {
+        "published_dataset_offers_snapshot_unique": {
+          "name": "published_dataset_offers_snapshot_unique",
+          "nullsNotDistinct": false,
+          "columns": ["dataset_id", "snapshot_id"]
+        },
+        "published_dataset_offers_classification_unique": {
+          "name": "published_dataset_offers_classification_unique",
+          "nullsNotDistinct": false,
+          "columns": ["dataset_id", "classification_id"]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.published_datasets": {
+      "name": "published_datasets",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "dataset_version": {
+          "name": "dataset_version",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "source_id": {
+          "name": "source_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ingestion_run_id": {
+          "name": "ingestion_run_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "classifier_version": {
+          "name": "classifier_version",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "metric_versions": {
+          "name": "metric_versions",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "query_set_version": {
+          "name": "query_set_version",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "taxonomy_versions": {
+          "name": "taxonomy_versions",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "source_cutoff_at": {
+          "name": "source_cutoff_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "computed_at": {
+          "name": "computed_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "published_at": {
+          "name": "published_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "is_current": {
+          "name": "is_current",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "quality_summary": {
+          "name": "quality_summary",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'{}'::jsonb"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "published_datasets_one_current_idx": {
+          "name": "published_datasets_one_current_idx",
+          "columns": [
+            {
+              "expression": "is_current",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "where": "\"published_datasets\".\"is_current\" = true",
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "published_datasets_source_id_sources_id_fk": {
+          "name": "published_datasets_source_id_sources_id_fk",
+          "tableFrom": "published_datasets",
+          "tableTo": "sources",
+          "columnsFrom": ["source_id"],
+          "columnsTo": ["id"],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "published_datasets_ingestion_run_id_ingestion_runs_id_fk": {
+          "name": "published_datasets_ingestion_run_id_ingestion_runs_id_fk",
+          "tableFrom": "published_datasets",
+          "tableTo": "ingestion_runs",
+          "columnsFrom": ["ingestion_run_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "published_datasets_dataset_version_unique": {
+          "name": "published_datasets_dataset_version_unique",
+          "nullsNotDistinct": false,
+          "columns": ["dataset_version"]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "published_datasets_status_check": {
+          "name": "published_datasets_status_check",
+          "value": "\"published_datasets\".\"status\" in ('draft', 'validated', 'published', 'withdrawn')"
+        },
+        "published_datasets_json_check": {
+          "name": "published_datasets_json_check",
+          "value": "jsonb_typeof(\"published_datasets\".\"metric_versions\") = 'object' and jsonb_typeof(\"published_datasets\".\"taxonomy_versions\") = 'object' and jsonb_typeof(\"published_datasets\".\"quality_summary\") = 'object'"
+        },
+        "published_datasets_lifecycle_check": {
+          "name": "published_datasets_lifecycle_check",
+          "value": "((\"published_datasets\".\"status\" in ('draft', 'validated') and \"published_datasets\".\"is_current\" = false and \"published_datasets\".\"published_at\" is null) or (\"published_datasets\".\"status\" = 'published' and \"published_datasets\".\"published_at\" is not null) or (\"published_datasets\".\"status\" = 'withdrawn' and \"published_datasets\".\"is_current\" = false and \"published_datasets\".\"published_at\" is not null))"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.source_queries": {
+      "name": "source_queries",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "source_id": {
+          "name": "source_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "query_key": {
+          "name": "query_key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "query_set_version": {
+          "name": "query_set_version",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "label": {
+          "name": "label",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "definition": {
+          "name": "definition",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "job_families": {
+          "name": "job_families",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'{}'::text[]"
+        },
+        "territory_scope": {
+          "name": "territory_scope",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "enabled": {
+          "name": "enabled",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "valid_from": {
+          "name": "valid_from",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "valid_to": {
+          "name": "valid_to",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "source_queries_source_id_sources_id_fk": {
+          "name": "source_queries_source_id_sources_id_fk",
+          "tableFrom": "source_queries",
+          "tableTo": "sources",
+          "columnsFrom": ["source_id"],
+          "columnsTo": ["id"],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "source_queries_source_key_version_unique": {
+          "name": "source_queries_source_key_version_unique",
+          "nullsNotDistinct": false,
+          "columns": ["source_id", "query_key", "query_set_version"]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "source_queries_definition_object_check": {
+          "name": "source_queries_definition_object_check",
+          "value": "jsonb_typeof(\"source_queries\".\"definition\") = 'object'"
+        },
+        "source_queries_validity_check": {
+          "name": "source_queries_validity_check",
+          "value": "\"source_queries\".\"valid_to\" is null or \"source_queries\".\"valid_to\" >= \"source_queries\".\"valid_from\""
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.sources": {
+      "name": "sources",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "key": {
+          "name": "key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "label": {
+          "name": "label",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "attribution_url": {
+          "name": "attribution_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "terms_url": {
+          "name": "terms_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "enabled": {
+          "name": "enabled",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "sources_key_unique": {
+          "name": "sources_key_unique",
+          "nullsNotDistinct": false,
+          "columns": ["key"]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.technologies": {
+      "name": "technologies",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "label": {
+          "name": "label",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "category": {
+          "name": "category",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "taxonomy_version": {
+          "name": "taxonomy_version",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "enabled": {
+          "name": "enabled",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "technologies_slug_version_unique": {
+          "name": "technologies_slug_version_unique",
+          "nullsNotDistinct": false,
+          "columns": ["slug", "taxonomy_version"]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.technology_aliases": {
+      "name": "technology_aliases",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "technology_id": {
+          "name": "technology_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "alias": {
+          "name": "alias",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "match_kind": {
+          "name": "match_kind",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'word'"
+        },
+        "negative_patterns": {
+          "name": "negative_patterns",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'{}'::text[]"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "technology_aliases_technology_id_technologies_id_fk": {
+          "name": "technology_aliases_technology_id_technologies_id_fk",
+          "tableFrom": "technology_aliases",
+          "tableTo": "technologies",
+          "columnsFrom": ["technology_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "technology_aliases_technology_alias_kind_unique": {
+          "name": "technology_aliases_technology_alias_kind_unique",
+          "nullsNotDistinct": false,
+          "columns": ["technology_id", "alias", "match_kind"]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "technology_aliases_match_kind_check": {
+          "name": "technology_aliases_match_kind_check",
+          "value": "\"technology_aliases\".\"match_kind\" in ('word', 'exact', 'regex', 'case_sensitive')"
+        }
+      },
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {
+    "public.current_public_offer_classifications": {
+      "columns": {
+        "offer_id": {
+          "name": "offer_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "source_id": {
+          "name": "source_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "external_id": {
+          "name": "external_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "first_seen_at": {
+          "name": "first_seen_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_seen_at": {
+          "name": "last_seen_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "closed_at": {
+          "name": "closed_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "snapshot_id": {
+          "name": "snapshot_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "company_name": {
+          "name": "company_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "location_label": {
+          "name": "location_label",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "commune_code": {
+          "name": "commune_code",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "department_code": {
+          "name": "department_code",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "region_code": {
+          "name": "region_code",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "contract_kind": {
+          "name": "contract_kind",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "source_published_at": {
+          "name": "source_published_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "application_url": {
+          "name": "application_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "classification_id": {
+          "name": "classification_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "classifier_version": {
+          "name": "classifier_version",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "classification_status": {
+          "name": "classification_status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "claims_junior": {
+          "name": "claims_junior",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "beginner_friendly": {
+          "name": "beginner_friendly",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "contradictory_junior": {
+          "name": "contradictory_junior",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "minimum_experience_months": {
+          "name": "minimum_experience_months",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "salary_transparent": {
+          "name": "salary_transparent",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "remote_mode": {
+          "name": "remote_mode",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "job_family": {
+          "name": "job_family",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "classification_segment": {
+          "name": "classification_segment",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "junior_observation_version": {
+          "name": "junior_observation_version",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "junior_observation_status": {
+          "name": "junior_observation_status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "junior_observation_contradictory": {
+          "name": "junior_observation_contradictory",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "definition": "\n  select\n    o.id as offer_id,\n    o.source_id,\n    o.external_id,\n    o.first_seen_at,\n    o.last_seen_at,\n    o.closed_at,\n    s.id as snapshot_id,\n    s.title,\n    s.company_name,\n    s.location_label,\n    s.commune_code,\n    s.department_code,\n    s.region_code,\n    s.contract_kind,\n    s.source_published_at,\n    s.application_url,\n    c.id as classification_id,\n    c.classifier_version,\n    c.status as classification_status,\n    c.claims_junior,\n    c.beginner_friendly,\n    c.contradictory_junior,\n    c.minimum_experience_months,\n    c.salary_transparent,\n    c.remote_mode,\n    c.job_family,\n    case\n      when d.metric_versions->>'junior_contradiction_rate' = 'junior-contradiction-2.0.0'\n        and c.junior_observation_status = 'resolved' and c.junior_observation_contradictory = true then 'contradictory'\n      when c.status = 'ambiguous' then 'ambiguous'\n      when c.status = 'unclassified' then 'unknown'\n      when c.status = 'classified' and c.contradictory_junior = true then 'contradictory'\n      when c.status = 'classified' and c.beginner_friendly = true then 'beginner_friendly'\n      when c.status = 'classified' and c.claims_junior = true and (c.beginner_friendly is null or c.contradictory_junior is null) then 'junior_unresolved'\n      when c.status = 'classified' and c.claims_junior = true and c.beginner_friendly = false and c.contradictory_junior = false then 'other_junior'\n      when c.status = 'classified' and c.claims_junior = false then 'not_explicitly_junior'\n      else 'unknown'\n    end as classification_segment,\n    c.junior_observation_version,\n    c.junior_observation_status,\n    c.junior_observation_contradictory\n  from published_datasets d\n  join published_dataset_offers membership on membership.dataset_id = d.id\n  join offers o on o.id = membership.offer_id\n  join offer_snapshots s on s.id = membership.snapshot_id\n  join classifications c on c.id = membership.classification_id\n  where d.is_current = true\n",
+      "name": "current_public_offer_classifications",
+      "schema": "public",
+      "isExisting": false,
+      "materialized": false
+    }
+  },
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

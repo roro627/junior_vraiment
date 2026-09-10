@@ -57,6 +57,20 @@
       "when": 1788717882700,
       "tag": "20260906180442_yellow_mysterio",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1788965812885,
+      "tag": "20260909145652_medical_masque",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1789040970824,
+      "tag": "20260910114930_open_skullbuster",
+      "breakpoints": true
     }
   ]
 }

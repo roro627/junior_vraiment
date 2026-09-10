@@ -385,6 +385,12 @@ Le KPI principal ne prend que `true`.
 
 ## 11. Extraction de l'expérience
 
+Correctif candidat `classifier-1.2.1` du 8 septembre 2026 : frontières d'unités, plages
+« entre … et … », portée locale des modalités et exclusions d'ancienneté d'entreprise / durée
+niée. Les cas reproduits et les limites de validation sont détaillés dans
+[l'audit du KPI principal](19-HEADLINE-RELIABILITY-AUDIT.md). Aucun ancien classement n'est
+réécrit et les règles d'exclusion du KPI ne sont pas modifiées par ce correctif.
+
 ### Modèle
 
 Chaque occurrence devient :
@@ -608,6 +614,19 @@ Ne pas déduire `onsite` d'un simple lieu de travail.
 ## 15. Métriques publiées
 
 ### 15.1 Indicateur principal — contradiction junior
+
+Le candidat `classifier-1.3.0` ajoute les régressions issues de la revue aveugle v2 :
+ancienneté de l'employeur avec antécédent éloigné, présentation « acteur majeur », alternative
+explicite acceptant un débutant et conflits de niveau senior / confirmé / lead avec un signal
+junior. Ces conflits restent bloquants pour l'axe de contradiction, contrairement au simple
+conflit d'acceptation / expérience. Aucune ancienne classification n'est réécrite.
+
+La version 2 approuvée le 9 septembre 2026 est définie dans l'[ADR 0014](adr/0014-observable-junior-contradiction.md).
+Elle compte les observations junior résolues sur l'axe du seuil, indépendamment de
+l'accessibilité. Numérateur : observations résolues positives ; dénominateur : toutes les
+observations résolues ; inconnus et ambiguïtés : états de cet axe, non du statut global.
+Les formules suivantes restent celles de la version 1 publiée. La version 2 est candidate
+jusqu'à validation indépendante et activation versionnée ; aucune série historique n'est réécrite.
 
 #### Population
 
@@ -1030,6 +1049,27 @@ La licence et les conditions de la source priment. Toute nouvelle contrainte doi
 ---
 
 ## 25. Limites à afficher
+
+### Correctifs candidats du 10 septembre 2026
+
+Le candidat 1.3.7 complète la lecture déterministe des formulations réellement rencontrées :
+qualifications collées à une durée, variantes de positionnement junior, exclusions d'ancienneté
+d'entreprise, profils explicitement expérimentés et préférence exprimée après un long nom de domaine.
+Les intitulés de métier seuls ne donnent pas un niveau. Les tests conservent les extraits attendus.
+Les campagnes aveugles et relectures hors ligne sont conservées avec leurs échecs et empreintes ;
+un rapport réévalué après correction n'est pas une référence indépendante. L'activation v2 nécessite
+un rapport du moteur figé qui passe aussi le contrôle du dénominateur. Voir ADR 0014 et docs/21
+pour l'état de publication réel.
+
+La septième campagne aveugle, après gel du moteur et exclusion des textes de développement,
+comprend 200 offres : 15 vrais positifs selon les annotations, aucun faux positif/négatif sur cet
+axe ; dénominateur 81 vrais inclus, trois inclusions et trois exclusions en désaccord (précision
+et rappel 96,4 %). Le rapport conserve aussi les désaccords tri-état : l'accord exact de tous les
+champs n'est pas 100 %. Ce sont des annotations IA en une passe, pas une vérité certifiée par des
+humains ni un échantillon représentatif du marché français. Les six campagnes précédentes et
+leurs échecs restent archivés pour retracer les corrections, pas pour estimer un taux national.
+
+### Limites publiques
 
 - le périmètre dépend des offres accessibles via la source ;
 - les formulations libres peuvent rester ambiguës ;

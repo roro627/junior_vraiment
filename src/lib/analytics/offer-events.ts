@@ -11,6 +11,8 @@ export function analyticsClassificationLabel(
   offer: PublicOffer,
 ): AnalyticsClassificationLabel {
   const classification = offer.classification;
+  if (classification.juniorObservation?.contradictory === true)
+    return "contradictory";
   if (classification.status === "ambiguous") return "ambiguous";
   if (classification.status === "unclassified") return "unknown";
   if (classification.contradictoryJunior === true) return "contradictory";

@@ -207,6 +207,12 @@ Conséquences normatives :
 
 ### 5.4 Offre junior contradictoire
 
+Évolution approuvée le 9 septembre 2026 : l'[ADR 0014](docs/adr/0014-observable-junior-contradiction.md)
+définit la version 2, avec résolution séparée de la contradiction observable et de
+l'accessibilité. Les formules v1 ci-dessous décrivent les datasets déjà publiés et restent
+applicables tant que la validation et l'activation v2 ne sont pas réalisées. Elles ne doivent
+pas servir à exclure automatiquement les conflits de cohérence dans le calcul candidat v2.
+
 Le résultat est également tri-état :
 
 ```text

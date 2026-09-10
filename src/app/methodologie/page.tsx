@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 import {
   getCachedDataStatus,
@@ -11,6 +12,7 @@ import { TrustPage } from "@/components/trust-page";
 import { buildAnalyticsContext } from "@/lib/analytics/context";
 import { formatInteger, formatLongDate } from "@/lib/format";
 import { buildStaticPageMetadata } from "@/lib/seo/static-metadata";
+import { JUNIOR_OBSERVATION_METRIC_VERSION } from "@/domain/metrics/junior-observation";
 
 export const metadata: Metadata = buildStaticPageMetadata({
   canonical: "/methodologie",
@@ -33,7 +35,26 @@ const navigation = [
   { href: "#corrections", label: "Corrections" },
 ] as const;
 
-export default async function MethodologyPage() {
+export default function MethodologyPage() {
+  return (
+    <TrustPage
+      eyebrow="Méthode ouverte"
+      title="Notre méthodologie, en toute transparence"
+      lead="Chaque chiffre part d’offres officielles, passe par des règles déterministes et reste relié aux preuves qui l’ont produit."
+      navigation={navigation}
+    >
+      <Suspense
+        fallback={
+          <p role="status">Chargement des versions et exemples observés…</p>
+        }
+      >
+        <MethodologyContent />
+      </Suspense>
+    </TrustPage>
+  );
+}
+
+async function MethodologyContent() {
   const exampleQuery = offersSearchParamsSchema.parse({
     classification: "contradictory",
     period: "current",
@@ -52,14 +73,12 @@ export default async function MethodologyPage() {
     ({ availableCount }) => availableCount > 0,
   );
   const analyticsContext = buildAnalyticsContext(status.meta);
+  const observationMetric =
+    status.meta.metricVersions["junior_contradiction_rate"] ===
+    JUNIOR_OBSERVATION_METRIC_VERSION;
 
   return (
-    <TrustPage
-      eyebrow="Méthode ouverte"
-      title="Notre méthodologie, en toute transparence"
-      lead="Chaque chiffre part d’offres officielles, passe par des règles déterministes et reste relié aux preuves qui l’ont produit."
-      navigation={navigation}
-    >
+    <>
       <PageViewAnalytics route_name="methodology" context={analyticsContext} />
       <section id="source">
         <p className="section-label">01 · Source et périmètre</p>
@@ -144,7 +163,9 @@ export default async function MethodologyPage() {
         <p>
           Une absence de preuve reste <code>null</code>&nbsp;: elle ne devient
           jamais automatiquement «&nbsp;non&nbsp;». L’annotation LLM à passe A
-          unique sert uniquement à évaluer hors ligne le moteur déterministe.
+          sert uniquement à évaluer hors ligne le moteur déterministe. Une
+          relecture ciblée peut corriger le jeu de développement ; un nouveau
+          lot aveugle est réservé à la validation, sans montrer les prédictions.
         </p>
       </section>
 
@@ -157,13 +178,29 @@ export default async function MethodologyPage() {
         >
           <span>offres junior demandant au moins 24 mois</span>
           <span aria-hidden="true">÷</span>
-          <span>offres junior classées avec minimum obligatoire résolu</span>
+          <span>
+            {observationMetric
+              ? "offres junior dont le seuil de 24 mois est résolu"
+              : "offres junior classées avec minimum obligatoire résolu"}
+          </span>
         </div>
         <p>
           Les offres junior sans durée obligatoire exploitable sont publiées
           comme inconnues. Les cas ambigus sont comptés séparément. Aucun de ces
           deux groupes ne réduit artificiellement le taux.
         </p>
+        {observationMetric ? (
+          <p>
+            Méthode 2 : « débutant accepté » et « au moins deux ans exigés »
+            peuvent coexister dans une annonce. Cette observation entre dans le
+            KPI lorsque les deux preuves sont explicites, même si son
+            accessibilité reste indéterminée et son statut global ambigu. Un
+            conflit sur le niveau du poste (junior contre senior), ou des durées
+            de part et d’autre du seuil, reste exclu. Les séries calculées avec
+            l’ancienne méthode ne sont pas reliées à la nouvelle comme une
+            évolution du marché.
+          </p>
+        ) : null}
         <p>
           Moins de 20 offres résolues&nbsp;: «&nbsp;Pas assez de données&nbsp;».
           De 20 à 49&nbsp;: faible échantillon. À partir de 50&nbsp;: affichage
@@ -273,6 +310,6 @@ export default async function MethodologyPage() {
           </a>
         </div>
       </section>
-    </TrustPage>
+    </>
   );
 }

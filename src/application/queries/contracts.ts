@@ -359,12 +359,24 @@ export const countItemSchema = z
   })
   .strict();
 
+export const juniorObservationSchema = z
+  .strictObject({
+    version: z.literal("junior-observation-2.0.0"),
+    status: z.enum(["resolved", "unknown", "ambiguous"]),
+    contradictory: z.boolean().nullable(),
+  })
+  .refine(
+    (value) => (value.status === "resolved") === (value.contradictory !== null),
+    "Un seuil non résolu reste indéterminé.",
+  );
+
 export const classificationSchema = z
   .object({
     status: z.enum(["classified", "ambiguous", "unclassified"]),
     claimsJunior: z.boolean().nullable(),
     beginnerFriendly: z.boolean().nullable(),
     contradictoryJunior: z.boolean().nullable(),
+    juniorObservation: juniorObservationSchema.nullable().optional(),
     classifierVersion: z.string().min(1).max(100),
     warnings: z.array(z.string().max(120)),
   })

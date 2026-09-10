@@ -24,6 +24,8 @@ function classificationPresentation(offer: PublicOffer): {
   label: string;
   tone: string;
 } {
+  if (offer.classification.juniorObservation?.contradictory === true)
+    return { label: "Junior et ≥ 2 ans exigés", tone: "negative" };
   if (offer.classification.status === "ambiguous")
     return { label: "Ambigu", tone: "warning" };
   if (offer.classification.status === "unclassified")

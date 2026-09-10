@@ -1,0 +1,368 @@
+{
+  "reportVersion": "classifier-validation-report-1.2.0",
+  "evaluatedAt": "2026-09-09T14:33:31.515Z",
+  "gateStatus": "passed",
+  "representativeReference": {
+    "referenceSetVersion": "llm-gold-a-1.0.0",
+    "annotationProtocolVersion": "llm-review-a-1.0.0",
+    "methodology": "single-blind-llm-pass-a-reference-set",
+    "model": "gpt-5.6-terra",
+    "reasoningEffort": "medium",
+    "classifierVersion": "classifier-1.3.0",
+    "baselineClassifierVersion": "classifier-1.0.0-draft",
+    "collectedAt": "2026-09-03T15:50:32.540Z",
+    "rowCount": 200,
+    "devRowCount": 140,
+    "validationRowCount": 60,
+    "sourceSha256": "8e047945267e084cc03ee067701f3addb96a328b4995accdf3676517e981f286",
+    "annotationChunks": [
+      {
+        "fileName": "pass-a-01-10.json",
+        "rowCount": 10,
+        "sha256": "e4b61621f4cf7d36eef6d15b4bec1d2ad45ef8ff40424da71e636f6e0459838e"
+      },
+      {
+        "fileName": "pass-a-11-20.json",
+        "rowCount": 10,
+        "sha256": "72b2a58084ce0ba3d310c0b1e39bfbb01bbbbfc4fa6e41fa577e65c3f2d90e6e"
+      },
+      {
+        "fileName": "single-021-040.json",
+        "rowCount": 20,
+        "sha256": "6fd58ad9f2f298212d39eb9a87767877d2344bc12a14ed9447842c12e713fe51"
+      },
+      {
+        "fileName": "single-041-060.json",
+        "rowCount": 20,
+        "sha256": "da0887ac69ace80513f59d6e26c574c0edc334732bd5a6eed7c407f41e37c7e6"
+      },
+      {
+        "fileName": "single-061-080.json",
+        "rowCount": 20,
+        "sha256": "61e834ac7f636cc491558d4e201df371807c032cacae98013ad1ee57d80d2143"
+      },
+      {
+        "fileName": "single-081-100.json",
+        "rowCount": 20,
+        "sha256": "a1528c6346c4682ccb4dae1a3daadc7b37c9abbf0c6d0de19a29daf9e60f9b90"
+      },
+      {
+        "fileName": "single-101-120.json",
+        "rowCount": 20,
+        "sha256": "af165f89afb47cc3172ce4380c446aaebf1cf86f63b6c213d9e53505725a2713"
+      },
+      {
+        "fileName": "single-121-140.json",
+        "rowCount": 20,
+        "sha256": "55937c94b02118f6d5e2b1ff07e9010896d9a24d38d27b7eb695b5f60995803b"
+      },
+      {
+        "fileName": "single-141-160.json",
+        "rowCount": 20,
+        "sha256": "23fe41c17da1e077647a9447ec0f6ec14be6b950479c5d055946237cfc8647bb"
+      },
+      {
+        "fileName": "single-161-180.json",
+        "rowCount": 20,
+        "sha256": "9ea44b4b6401d5c94992a2093b121073039ee8f190a768e5678138de1451508c"
+      },
+      {
+        "fileName": "single-181-200.json",
+        "rowCount": 20,
+        "sha256": "1141ab71773fdae95879f9216c20cafdeccea5256d55ba5899c159cde7820ac8"
+      }
+    ],
+    "splitDefinition": {
+      "method": "sha256-review-id-within-query-group",
+      "validationFraction": 0.3,
+      "selection": "highest-hashes"
+    },
+    "sha256": "a7f4eb9b2b3bf3e540e3982da43d5ca70a95ab4a98cd47f0fcd0cef341688a10"
+  },
+  "targetedChallengeReference": {
+    "referenceSetVersion": "llm-gold-a-targeted-junior-1.0.0",
+    "annotationProtocolVersion": "llm-review-a-1.0.0",
+    "methodology": "single-blind-llm-pass-a-targeted-challenge-set",
+    "model": "gpt-5.6-terra",
+    "reasoningEffort": "medium",
+    "classifierVersion": "classifier-1.3.0",
+    "collectedAt": "2026-09-04T11:47:48.997Z",
+    "rowCount": 46,
+    "validationRowCount": 46,
+    "marketPrevalenceEligible": false,
+    "sourceSha256": "3f51f6300510843f06f5ba3aebb9e81e10566af262ecfc0bea1ff2315478a526",
+    "annotationChunks": [
+      {
+        "fileName": "targeted-pass-a-001-010.json",
+        "rowCount": 10,
+        "sha256": "56b3793d9a32a534b35053b743ada8d63a14965bc0747c5fae12b26404a2935d"
+      },
+      {
+        "fileName": "targeted-pass-a-011-020.json",
+        "rowCount": 10,
+        "sha256": "94a817593358da93e807391b8d55919dc4c3080743a5812e9be016aabf3fedd5"
+      },
+      {
+        "fileName": "targeted-pass-a-021-030.json",
+        "rowCount": 10,
+        "sha256": "82e906b353f2fb1c3df54f4dd831e031e54cb66fc98fdaa3237de908af1c27f7"
+      },
+      {
+        "fileName": "targeted-pass-a-031-040.json",
+        "rowCount": 10,
+        "sha256": "e4868a1426f28925467d904f1c8ff92a6970c118f3bfeae7b255f06484c829ab"
+      },
+      {
+        "fileName": "targeted-pass-a-041-046.json",
+        "rowCount": 6,
+        "sha256": "0733e79a2e9a55c7f822098ee0aaeda3cfce874631b40aca208d1acf780173b3"
+      }
+    ],
+    "splitDefinition": {
+      "method": "dedicated-targeted-challenge-set",
+      "validationFraction": 1,
+      "selection": "all-rows"
+    },
+    "sha256": "df5eb81ff5e11fcd9c1dbec968a2c71a0663bb941ca6af4e44b91c9ddfd077d0"
+  },
+  "coverage": {
+    "contradictionPredictedPositive": 3,
+    "contradictionReferencePositive": 3,
+    "experiencePredicted": 38,
+    "positivePredictions": 104,
+    "positivePredictionsWithEvidence": 104,
+    "representativeLlmEvidenceRows": 60,
+    "targetedLlmEvidenceRows": 46
+  },
+  "metrics": {
+    "contradictoryJuniorPrecision": {
+      "status": "passed",
+      "numerator": 3,
+      "denominator": 3,
+      "value": 1,
+      "threshold": 0.92,
+      "reason": null
+    },
+    "contradictoryJuniorRecall": {
+      "status": "passed",
+      "numerator": 3,
+      "denominator": 3,
+      "value": 1,
+      "threshold": 0.85,
+      "reason": null
+    },
+    "resolvedRequiredExperienceExactPrecision": {
+      "status": "passed",
+      "numerator": 37,
+      "denominator": 38,
+      "value": 0.9736842105263158,
+      "threshold": 0.9,
+      "reason": null
+    },
+    "positivePredictionEvidenceCoverage": {
+      "status": "passed",
+      "numerator": 104,
+      "denominator": 104,
+      "value": 1,
+      "threshold": 1,
+      "reason": null
+    },
+    "semanticEvidenceIntegrity": {
+      "status": "passed",
+      "numerator": 106,
+      "denominator": 106,
+      "value": 1,
+      "threshold": 1,
+      "reason": null
+    },
+    "noExperienceFalsePositiveProtection": {
+      "status": "passed",
+      "numerator": 5,
+      "denominator": 5,
+      "value": 1,
+      "threshold": 1,
+      "reason": null
+    }
+  },
+  "diagnostics": {
+    "contradictoryJuniorF1": 1,
+    "contradictoryJuniorConfusionMatrix": {
+      "truePositive": 3,
+      "falsePositive": 0,
+      "falseNegative": 0,
+      "trueNegative": 39,
+      "nullReferenceExcluded": 4
+    },
+    "statusConfusionMatrix": {
+      "classified": {
+        "classified": 79,
+        "ambiguous": 3,
+        "unclassified": 0
+      },
+      "ambiguous": {
+        "classified": 0,
+        "ambiguous": 22,
+        "unclassified": 0
+      },
+      "unclassified": {
+        "classified": 0,
+        "ambiguous": 0,
+        "unclassified": 2
+      }
+    },
+    "semanticViolationCount": 0,
+    "semanticViolations": [],
+    "noExperienceFixtureCount": 5,
+    "noExperienceFailureIds": []
+  },
+  "delta": {
+    "fromClassifierVersion": "classifier-1.0.0-draft",
+    "toClassifierVersion": "classifier-1.3.0",
+    "changedRowCount": 45,
+    "changedReviewIds": [
+      "a3e0fb4ece88b97e",
+      "f4e4228956bd3b7b",
+      "079821a736e7f9c3",
+      "680870b4a46f488d",
+      "be35b1eb9cd37285",
+      "a8568ff39013f479",
+      "a0915c76c46ed4af",
+      "484dc08544e63d93",
+      "f6fe6a3c81faf0d1",
+      "3bb113bb0fb2f0bf",
+      "8f646f8abaa923f0",
+      "9f5fa129f374fca3",
+      "cac5c0cbc40c7d51",
+      "cc133da5a663ac6d",
+      "e70a1363b675646c",
+      "e67495979581a1cc",
+      "923271c1d66ea201",
+      "73654376e703780d",
+      "93db8e010c369a60",
+      "b1e48eb5815fe580",
+      "f5732b29ab91e4d9",
+      "c36d70740266c47e",
+      "23e57021f36e766d",
+      "934363f6c0fa4594",
+      "296e5e95f6f50ea2",
+      "74087c6a1adae852",
+      "6d0a66cf8423fb3d",
+      "8ad2c26e9c967e9a",
+      "71f4b3b8d35d9f6e",
+      "f16dd1ec5c775e2c",
+      "0c5022577e6e7a9c",
+      "91c391141a4eeac8",
+      "fcb752de36e589f5",
+      "1dbd2b33f0598740",
+      "3570166fa233cf28",
+      "656e602e9857541f",
+      "e30a513ab220cdf5",
+      "deff7d20b1f97947",
+      "5ab665e627978d09",
+      "4a28543e2d9b3a42",
+      "a03b90147d52f23b",
+      "a7f54c5c65316a58",
+      "fb9ed1e1be7ef3af",
+      "cb70492d24a00fac",
+      "5b286c8755daffcc"
+    ],
+    "newAmbiguousReviewIds": [
+      "a3e0fb4ece88b97e",
+      "079821a736e7f9c3",
+      "be35b1eb9cd37285",
+      "a8568ff39013f479",
+      "a0915c76c46ed4af",
+      "484dc08544e63d93",
+      "f6fe6a3c81faf0d1",
+      "3bb113bb0fb2f0bf",
+      "8f646f8abaa923f0",
+      "9f5fa129f374fca3",
+      "cac5c0cbc40c7d51",
+      "cc133da5a663ac6d",
+      "e70a1363b675646c",
+      "e67495979581a1cc",
+      "923271c1d66ea201",
+      "73654376e703780d",
+      "93db8e010c369a60",
+      "b1e48eb5815fe580",
+      "f5732b29ab91e4d9",
+      "c36d70740266c47e",
+      "23e57021f36e766d",
+      "934363f6c0fa4594",
+      "296e5e95f6f50ea2",
+      "74087c6a1adae852",
+      "6d0a66cf8423fb3d",
+      "8ad2c26e9c967e9a",
+      "71f4b3b8d35d9f6e",
+      "f16dd1ec5c775e2c",
+      "0c5022577e6e7a9c",
+      "91c391141a4eeac8",
+      "fcb752de36e589f5",
+      "1dbd2b33f0598740",
+      "656e602e9857541f",
+      "e30a513ab220cdf5",
+      "deff7d20b1f97947",
+      "5ab665e627978d09",
+      "4a28543e2d9b3a42",
+      "a03b90147d52f23b",
+      "a7f54c5c65316a58",
+      "fb9ed1e1be7ef3af",
+      "cb70492d24a00fac",
+      "5b286c8755daffcc"
+    ],
+    "fieldDeltas": {
+      "status": {
+        "changed": 43,
+        "baselineValidationMatches": 52,
+        "currentValidationMatches": 58,
+        "validationRows": 60
+      },
+      "claimsJunior": {
+        "changed": 0,
+        "baselineValidationMatches": 59,
+        "currentValidationMatches": 59,
+        "validationRows": 60
+      },
+      "minimumExperienceMonths": {
+        "changed": 7,
+        "baselineValidationMatches": 52,
+        "currentValidationMatches": 52,
+        "validationRows": 60
+      },
+      "beginnerFriendly": {
+        "changed": 43,
+        "baselineValidationMatches": 52,
+        "currentValidationMatches": 58,
+        "validationRows": 60
+      },
+      "contradictoryJunior": {
+        "changed": 12,
+        "baselineValidationMatches": 58,
+        "currentValidationMatches": 60,
+        "validationRows": 60
+      }
+    }
+  },
+  "provenance": {
+    "nodeVersion": "v24.19.0",
+    "packageManager": "pnpm@11.25.0",
+    "files": {
+      "scripts/evaluate-classifier-reference.ts": "6b12d46aa2ffcb979022d4a1dcd3c896573e5d1e3b5beb59be1cb72a3da87a54",
+      "scripts/merge-agent-review-200.ts": "1db9a45396b6e538c36a0ccaa35f5c6246f4251ec59849429b720fd8a35aec0e",
+      "scripts/merge-targeted-reference.ts": "db73e15e9df367adf89e6b1868b4e676bc538372a3f571e063b3a2b801b3be5b",
+      "scripts/reference-annotation-validation.ts": "9ec6f1594c919af74f1c1932dbe55b2eca5ad9620e7331a94554efdd97f07860",
+      "src/domain/classification/classifier.ts": "c817bb70a9aaf52e4660ed5717bdc381c52eaa2a058b9efac65acc8efb728f29",
+      "src/domain/classification/types.ts": "cb6398d3833ed5636dfafdb346edb9f7751cd5a2702d4e9cbe76e4c8cb0bf1d2",
+      "src/tests/fixtures/classifier/gold-v1.draft.json": "9d280e48c9dff069b03afb3f11172b51f22d6129efe41a6d5b81e90578636237",
+      "src/tests/fixtures/classifier/no-experience.json": "99ce00a1202a944f25505a2f1b08b022e02cae4974816acf5816b067d1bd6452",
+      "pnpm-lock.yaml": "687bb4cb730a3a20ea5ae936f7f5d5cb65f5777271f3621305b6e8ffc5388a63"
+    }
+  },
+  "notes": [
+    "Les corpus réels restent locaux et ne sont pas inclus dans ce rapport agrégé.",
+    "Les reviewId publiés dans les deltas sont des identifiants opaques dérivés par hash.",
+    "Un statut not_evaluable ne vaut ni zéro ni réussite.",
+    "La précision d'expérience est mesurée uniquement sur le split représentatif de validation et les prédictions classées avec une durée résolue.",
+    "Le complément junior ciblé sert uniquement à mesurer la contradiction et ne mesure jamais la prévalence du marché."
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "classifierVersion": "classifier-1.3.0",
+  "implementation": [
+    {
+      "file": "src/domain/classification/classifier.ts",
+      "sha256": "c817bb70a9aaf52e4660ed5717bdc381c52eaa2a058b9efac65acc8efb728f29"
+    },
+    {
+      "file": "src/domain/classification/normalize-text.ts",
+      "sha256": "e0f57c8802e4cd40f6cc46695f16cfe4b4a2c7c21d3b5be240f39348937e0139"
+    },
+    {
+      "file": "src/domain/classification/junior-observation.ts",
+      "sha256": "2927ec3825f32ad1a4371855b6574f070e0a88bda20101e18f603b18eefc4982"
+    }
+  ],
+  "protocol": "llm-observation-a-2.0.0",
+  "model": "gpt-5.6-terra",
+  "effort": "medium",
+  "passes": 1,
+  "evaluatedAt": "2026-09-09T14:42:15.596Z",
+  "summary": {
+    "reference": {
+      "tp": 7,
+      "fp": 1,
+      "fn": 4,
+      "tn": 188,
+      "count": 200,
+      "exact": 74,
+      "precision": 0.875,
+      "recall": 0.6363636363636364
+    },
+    "challenge": {
+      "tp": 45,
+      "fp": 0,
+      "fn": 20,
+      "tn": 15,
+      "count": 80,
+      "exact": 60,
+      "precision": 1,
+      "recall": 0.6923076923076923
+    }
+  },
+  "challengeExactOverlaps": 9,
+  "precision": 0.9811320754716981,
+  "recall": 0.6842105263157895,
+  "gateStatus": "failed",
+  "files": [
+    {
+      "file": "input-1.json",
+      "sha256": "df9d02642c1d177ac8e9f07da8ee21bbb2229bc5b8efa1673b4708d843b25c10"
+    },
+    {
+      "file": "labels-1.json",
+      "sha256": "bb31043433374c13fcbc65c3c59ea7152980d6e0e13dd64c354e254490d0d1d2"
+    },
+    {
+      "file": "input-2.json",
+      "sha256": "1cc06265d25f26aa97488ec703b82e32f397362be57660963b92248983c7666c"
+    },
+    {
+      "file": "labels-2.json",
+      "sha256": "1ce6489956e23c1a3a5c1e787e2b0d52064177be04cfebca58bab512b697a175"
+    },
+    {
+      "file": "input-3.json",
+      "sha256": "1e1f4e29a89020aea92d9e08f0eee1275193c5a815705d6517b5a7157b101576"
+    },
+    {
+      "file": "labels-3.json",
+      "sha256": "3b77bc086319aa3be337400b712085253a7d26e499cf55b63b3dbe556ce89fba"
+    },
+    {
+      "file": "input-4.json",
+      "sha256": "4d90d9f743f62b7fdf166e6268a2db07ef7f60ffbe025e2679c452a81f6c1434"
+    },
+    {
+      "file": "labels-4.json",
+      "sha256": "239c8c70499e2d0cc6b870455586f50c19c4850522adcc7ba0ba0b8de5d1eb64"
+    },
+    {
+      "file": "input-5.json",
+      "sha256": "8a803b59f9f9b44996e5e5dbb5c7cab12013db0daa43ffaac09f16a9af8dbe1d"
+    },
+    {
+      "file": "labels-5.json",
+      "sha256": "8f921dcdf054537f430a2d5f5bd777c06d9499680f481b32826588a33065d96b"
+    },
+    {
+      "file": "input-6.json",
+      "sha256": "9470faa2e3c725437de5bce2913f6551bff49f5a1aa147af3805cee1fb0876c2"
+    },
+    {
+      "file": "labels-6.json",
+      "sha256": "5249a443dfa8cf75bca89b6e134ee22c627989f5962bedffd78e1fd2e799aa38"
+    },
+    {
+      "file": "input-7.json",
+      "sha256": "5b764f0401895413df589855f4e14eda001c74793140832f0636877f63c71464"
+    },
+    {
+      "file": "labels-7.json",
+      "sha256": "46f2b88b72e40a612a99ce8d8939bc9129786462a167d43e24d044ba82c8f8a5"
+    }
+  ],
+  "limitations": [
+    "Single-pass LLM reference, not human-certified truth.",
+    "Challenge sample is not prevalence-eligible.",
+    "Reference sample inherited from the initial collection, not a nationally representative sample.",
+    "Aggregate gates do not certify every axis or production readiness.",
+    "Each cohort must meet its own thresholds; an aggregate cannot conceal a failing cohort.",
+    "Labels include unresolved policy disagreements on senior positioning and absence versus negative evidence; do not treat them as certified truth.",
+    "Candidate rules have been inspected against these labels: this is now a development reference, not an untouched holdout."
+  ]
+}

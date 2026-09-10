@@ -514,6 +514,19 @@ pnpm exec vitest run src/db/maintenance.live.test.ts
 Ne jamais utiliser la connexion de production pour ce test : il modifie les échéances de deux
 charges brutes et injecte un diagnostic de test. La tâche normale ne fait pas ces modifications.
 
+### Reprise de pagination et changement de classificateur (10 septembre 2026)
+
+Une variation du total France Travail entre pages est un échec `pagination_incomplete` :
+les pages originales restent conservées. Une nouvelle tentative bornée (2 ou 3) est possible
+via `recover-france-travail-collection`, uniquement après échec/annulation de la précédente.
+Le retry du même run n'efface pas une page incohérente. Voir le helper dans docs/20.
+
+Avant publication, le runner prépare les classifications manquantes de tout le périmètre actif,
+y compris les offres absentes une première fois mais pas encore fermées. Il ne réécrit aucune
+ancienne classification. Un changement de version crée un nouveau dataset ; le cutoff reste
+celui des pages source, jamais l'heure tardive de reclassification. Une migration additive
+doit précéder le déploiement du code qui lit les nouveaux champs.
+
 ### Portes de release
 
 - [ ] migrations compatibles ;

@@ -9,6 +9,7 @@ import {
   type ResponseMeta,
 } from "@/application/queries/contracts";
 import { rateFromCounts } from "@/domain/metrics/rate";
+import { JUNIOR_OBSERVATION_METRIC_VERSION } from "@/domain/metrics/junior-observation";
 
 import { readCurrentDataset, type CurrentDataset } from "./current-dataset";
 
@@ -146,6 +147,9 @@ export async function getPublicOverview({
   generatedAt,
 }: PublicOverviewInput): Promise<OverviewResponse> {
   const dataset = await readCurrentDataset(sql);
+  const observationMetric =
+    dataset.metricVersions["junior_contradiction_rate"] ===
+    JUNIOR_OBSERVATION_METRIC_VERSION;
   const area = parseArea(query.area);
   const technologyJson = JSON.stringify(query.technologies);
   const contractJson = JSON.stringify(query.contracts);
@@ -164,6 +168,8 @@ export async function getPublicOverview({
         membership.classification_id,
         classification.status,
         classification.claims_junior,
+        classification.junior_observation_status,
+        classification.junior_observation_contradictory,
         classification.minimum_experience_months,
         classification.beginner_friendly,
         classification.salary_transparent,
@@ -216,22 +222,16 @@ export async function getPublicOverview({
       select
         count(*)::integer as "sampleSize",
         count(*) filter (
-          where status = 'classified'
-            and claims_junior = true
-            and minimum_experience_months >= 24
+          where claims_junior = true and case when ${observationMetric} then junior_observation_status = 'resolved' and junior_observation_contradictory = true else status = 'classified' and minimum_experience_months >= 24 end
         )::integer as "contradictionNumerator",
         count(*) filter (
-          where status = 'classified'
-            and claims_junior = true
-            and minimum_experience_months is not null
+          where claims_junior = true and case when ${observationMetric} then junior_observation_status = 'resolved' else status = 'classified' and minimum_experience_months is not null end
         )::integer as "contradictionDenominator",
         count(*) filter (
-          where status = 'classified'
-            and claims_junior = true
-            and minimum_experience_months is null
+          where claims_junior = true and case when ${observationMetric} then junior_observation_status = 'unknown' else status = 'classified' and minimum_experience_months is null end
         )::integer as "contradictionUnknown",
         count(*) filter (
-          where status = 'ambiguous' and claims_junior = true
+          where claims_junior = true and case when ${observationMetric} then junior_observation_status = 'ambiguous' else status = 'ambiguous' end
         )::integer as "contradictionAmbiguous",
         count(*) filter (
           where status = 'classified' and beginner_friendly = true

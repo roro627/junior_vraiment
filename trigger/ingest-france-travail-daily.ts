@@ -5,6 +5,7 @@ import {
   runDailyFranceTravailIngestion,
 } from "@/application/ingestion/run-daily-ingestion";
 import { FranceTravailError } from "@/lib/france-travail/errors";
+import { IngestionPaginationIncompleteError } from "@/db/full-ingestion-run";
 
 import { datasetPublicationQueue } from "./queues";
 
@@ -71,6 +72,7 @@ export const ingestFranceTravailDailyTask = schedules.task({
       return summary;
     } catch (error) {
       if (
+        error instanceof IngestionPaginationIncompleteError ||
         error instanceof IngestionQualityBlockedError ||
         (error instanceof FranceTravailError && !error.retryable)
       ) {

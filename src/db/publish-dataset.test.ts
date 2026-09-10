@@ -9,6 +9,7 @@ describe("publishDataset", () => {
       async (parts: TemplateStringsArray, ...values: unknown[]) => {
         const sql = parts.join("?");
         expect(sql).toMatch(/where is_current = true\s+and id <> \?/u);
+        expect(sql).toContain("length(dataset_version) between 1 and 100");
         expect(values.filter((value) => value === datasetId)).toHaveLength(2);
         return [{ id: datasetId }];
       },

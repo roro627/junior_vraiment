@@ -1,4 +1,4 @@
-export const CLASSIFIER_VERSION = "classifier-1.2.0";
+export const CLASSIFIER_VERSION = "classifier-1.3.7";
 
 export type ClassificationStatus = "classified" | "ambiguous" | "unclassified";
 

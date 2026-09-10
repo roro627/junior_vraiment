@@ -3,6 +3,22 @@ import { describe, expect, it, vi } from "vitest";
 import { createOrResumeDraftDataset } from "./published-dataset-lifecycle";
 
 describe("dataset source clock", () => {
+  it("rejects an identifier outside the public API contract before writing", async () => {
+    const sql = vi.fn();
+    await expect(
+      createOrResumeDraftDataset({
+        sql: sql as unknown as NeonQueryFunction<false, false>,
+        datasetVersion: "x".repeat(101),
+        ingestionRunId: "fixture",
+        classifierVersion: "fixture",
+        metricVersions: {},
+        taxonomyVersions: {},
+        qualitySummary: {},
+        computedAt: new Date(),
+      }),
+    ).rejects.toThrow("100 caractères");
+    expect(sql).not.toHaveBeenCalled();
+  });
   it("freezes the observed page clock instead of the delayed completion clock", async () => {
     const sql = vi.fn(async (parts: TemplateStringsArray) => {
       const statement = parts.join("?");

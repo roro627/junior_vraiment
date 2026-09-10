@@ -35,6 +35,8 @@ const evidenceLabels: Record<PublicOffer["evidence"][number]["kind"], string> =
   };
 
 function classificationLabel(offer: PublicOffer): string {
+  if (offer.classification.juniorObservation?.contradictory === true)
+    return "Junior et expérience exigée ≥ 2 ans";
   if (offer.classification.status === "ambiguous") return "Ambiguë";
   if (offer.classification.status === "unclassified") return "Non classée";
   if (offer.classification.contradictoryJunior === true)
@@ -165,6 +167,15 @@ export function EvidenceDialog({
                 </dd>
               </div>
             </dl>
+
+            {offer.classification.juniorObservation ? (
+              <p className="data-warning">
+                Observation : {offer.classification.juniorObservation.version}.
+                {offer.classification.status === "ambiguous"
+                  ? " Le statut global reste ambigu et l’accessibilité n’est pas confirmée. La coexistence des signaux junior et expérience est évaluée séparément."
+                  : " Ce classement décrit les exigences écrites, pas une décision de recrutement."}
+              </p>
+            ) : null}
 
             <EvidenceGroup title="Preuves junior" evidence={juniorEvidence} />
             <EvidenceGroup

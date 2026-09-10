@@ -25,6 +25,15 @@ Les changements compatibles restent dans `v1`. Un changement incompatible crée 
 
 Chaque réponse de donnée inclut :
 
+Extension additive du 10 septembre 2026 : `classification.juniorObservation` expose l'axe
+`junior-observation-2.0.0` sur un dataset qui déclare `junior-contradiction-2.0.0`.
+Il comporte `version`, `status` (`resolved`, `unknown`, `ambiguous`) et `contradictory` tri-état.
+Absent ou null pour l'ancienne méthode. Les anciens champs gardent leur sens : le statut global
+peut rester ambigu alors que l'observation est résolue positive. Les preuves sont dans `evidence`.
+Le filtre `contradictory` suit la méthode déclarée du dataset ; le filtre d'expérience conserve
+l'ambiguïté globale. Les tendances calculent chaque dataset avec sa propre méthode et annotent
+la rupture, sans relier artificiellement les séries.
+
 ```json
 {
   "meta": {

@@ -1,5 +1,7 @@
 @import "tailwindcss";
 @import "./tokens.css";
+@import "./home-pilot.css";
+@import "./site-design.css";
 
 @theme inline {
   --color-background: var(--background);
@@ -100,7 +102,7 @@ body {
   color: var(--brand-strong);
 }
 
-a {
+a:not([data-slot="button"]) {
   color: inherit;
 }
 

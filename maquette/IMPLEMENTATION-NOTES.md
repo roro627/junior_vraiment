@@ -1,5 +1,111 @@
 # Notes d'implémentation de la maquette
 
+## Raffinement du pilote orange — 7 septembre 2026
+
+À la demande du propriétaire, la direction orange reste limitée à la page pilote locale.
+La capture approuvée reste intacte. Le contenu est resserré à 78 rem, le KPI est isolé sur
+une surface blanche dans le hero glacier, son unité est plus discrète et les contrôles utilisent
+un rayon de 12 px. Les titres des indicateurs précèdent leurs valeurs ; les filtres sont regroupés
+avant les indicateurs secondaires. Les sections détaillées suivent une numérotation continue.
+La version mobile reste linéaire, sans nouvelles dépendances ni animation permanente.
+
+Audit en lecture seule du dataset publié, fenêtre 30 jours au 7 septembre : l'API et les lignes
+figées en base donnent 0 / 354 pour le KPI principal. Les 354 offres junior résolues comprennent
+353 minima à zéro mois et un à douze mois. Les 80 offres junior ambiguës portent toutes les
+avertissements de conflit entre acceptation des débutants et expérience exigée ; elles sont
+exclues conformément à la méthode, jamais reclassées pour modifier le taux. Aucun chiffre
+n'a été changé. Un encart conditionnel explique désormais qu'un zéro confirmé ne signifie pas
+absence de difficultés sur le marché. Une absence de données conserve son état distinct.
+Validation du raffinement : format, lint, TypeScript, build Next et Storybook réussis.
+277 tests unitaires réussis (24 tests conditionnels ignorés dans cette suite), plus deux tests
+réels de lecture Neon exécutés séparément ; 113 tests navigateur réussis sur quatre projets
+(trois répétitions de la matrice responsive réservée à Chromium ignorées). Le nouveau test
+vérifie aussi le détail du zéro au clavier et son accessibilité après ouverture.
+Captures desktop/mobile revues, sans débordement de 320 à 1920 px. L'audit manuel avec lecteur
+d'écran et les mesures Lighthouse/Web Vitals ne sont pas exécutés pour ce raffinement.
+Le skill Browser a servi à revoir la hiérarchie réelle, les filtres et les états chargés.
+Les validations des versions précédentes ci-dessous restent historiques. Aucun déploiement.
+
+## Pilote orange retenu — 7 septembre 2026
+
+Le propriétaire a retenu la troisième proposition claire/orange et fourni sa capture
+`sources/home-orange-approved.png` (1457 × 1079), copie inchangée de la capture fournie.
+Elle remplace la direction éditoriale du pilote décrite ci-dessous. La validation concerne
+uniquement une implémentation locale de `/`, pas une propagation ni un déploiement.
+
+Inventaire : en-tête horizontal avec signature soulignée, hero bleu glacier avec introduction
+et KPI côte à côte, pied de hero avec territoire/source/fraîcheur, trois métriques sur une
+surface blanche, sélecteur de période et barre de filtres. Seul l'état desktop nominal est
+dessiné. Les données de l'image ne sont jamais codées en dur.
+
+Tokens isolés `.home-pilot` : blanc, bleu glacier `#edf4fa`, encre `#252a31`, gris `#59616c`,
+orange de signature `#ef501c`, orange interactif `#cb3f12` (contraste texte blanc AA), séparateurs
+abricot. Geist conservé, sans italique ni nouvelle fonte. Hero/panneaux à 24 px de rayon,
+contrôles à 8 px ; gouttières fluides, contenu maximal 86 rem. Pas d'ombre décorative.
+
+Adaptations : fractions/couvertures et alertes conservées même lorsqu'absentes de la capture ;
+liens des preuves visibles ; filtres secondaires repliables, période partageable via URL ;
+mobile en une colonne et navigation repliable. Les sections non dessinées reprennent les mêmes
+surfaces, filets et hiérarchie sans bande sombre ni typographie éditoriale. Boutons shadcn
+existants, disclosures natifs et transitions CSS centralisées ; reduced motion sans translation.
+
+Les validations de la version précédente ci-dessous ne valent pas validation de cette révision.
+
+Validation de cette révision : format, lint, TypeScript, build Next et build Storybook réussis ;
+276 tests unitaires réussis (24 tests conditionnels non activés), 109 tests E2E réussis sur
+Chromium, Firefox, WebKit et mobile (3 répétitions de la matrice responsive volontairement
+réservée à Chromium ignorées). Les tests couvrent notamment axe, clavier, reduced motion,
+les filtres et la synchronisation de leur formulaire après changement de période par lien.
+Aucun débordement horizontal aux largeurs 320, 375, 768, 1024, 1440 et 1920 px.
+Captures locales revues : `.local/orange-pilot-1440-viewport.png` et
+`.local/orange-pilot-375-viewport.png`. Le lecteur d'écran manuel et les mesures de performance
+restent à vérifier avant publication ; aucun nouveau score Lighthouse n'est revendiqué.
+Validation artistique du propriétaire en attente, sans déploiement ni propagation.
+
+## Pilote de refonte — 7 septembre 2026
+
+Le propriétaire a supprimé les deux images et demandé une nouvelle direction artistique autonome.
+Ces suppressions sont préservées. Les notes historiques ci-dessous décrivent l'ancien design,
+pas une contrainte visuelle pour le pilote. Seule la route `/` est refondue, en local, avant sa
+validation ; les autres pages et le site de production restent inchangés.
+
+Direction : observatoire éditorial, papier clair et encre, accent vermillon, titrage Geist et
+contrepoint italique Georgia (fonte système, aucun téléchargement). Une grille asymétrique met
+en regard la question et sa mesure. Filets et alignements structurent les informations ; les
+surfaces colorées ont une fonction de lecture. Les valeurs restent celles des lectures serveur.
+
+Les tokens du pilote sont isolés sous `.home-pilot` dans `src/styles/tokens.css`. Primitives :
+en-tête typographique, section numérotée, valeur/fraction, barre proportionnelle et lien fléché.
+Les composants ont leurs stories ; filtres GET et badges de fraîcheur sont réutilisés.
+La tendance du pilote utilise une échelle fixe 0–100 %, l'espacement calendaire réel et un tableau
+consultable au clavier ; les jours absents, points non publiables et changements de périmètre
+ne sont pas reliés. Son lien de données conserve les filtres de la page.
+Les distributions n'imposent pas une longueur minimale aux valeurs nulles ou égales à zéro.
+
+États prévus : normal, zéro réel, échantillon insuffisant, données partielles/anciennes, erreur,
+chargement, filtres actifs, historique court, navigation mobile et reduced motion. La hiérarchie
+mobile est linéaire, avec des cibles de 44 px et les détails de filtre repliables.
+Motion : apparition courte de 8 px au rendu, liens et contrôles réactifs ; aucun compteur,
+scrolljacking, boucle, ni hydratation ajoutée uniquement pour une décoration.
+
+Contrôles du pilote exécutés le 7 septembre : format, lint, TypeScript, 272 tests unitaires
+réussis (24 tests conditionnels non activés), 104 parcours E2E réussis sur Chromium,
+Firefox, WebKit et mobile, build Next et build Storybook. Les contrôles axe incluent l'historique
+déplié ; le clavier, reduced motion et les filtres partagés par URL sont couverts. Revue visuelle
+dans le navigateur aux largeurs 320, 375, 768, 900, 1024, 1440 et 1920 px ; état vide vérifié
+avec le filtre réel « Stage ». Le lecteur d'écran manuel reste à vérifier avant généralisation.
+Les disclosures natifs conservent aussi une ouverture effectuée avant l'hydratation : la tolérance
+est limitée à leurs attributs, jamais aux valeurs métier. Un test retient les scripts jusqu'à
+l'ouverture du menu, puis vérifie que l'action est conservée après leur chargement.
+
+Les deux tentatives Lighthouse 13.4.1 sous Windows échouent sur `NO_NAVSTART` et une erreur
+de nettoyage temporaire `EPERM`. Aucun score de performance, LCP ou CLS n'est donc validé.
+Le runtime Docker local est également indisponible après tentative de démarrage. Cette mesure
+reste à refaire avant publication de la refonte ; elle ne remplace pas la validation artistique.
+
+Validation visuelle du propriétaire en attente. Aucune propagation aux autres routes autorisée
+avant ce retour.
+
 ## Références et priorité
 
 - Référence principale retenue : `92cd2c5c-9fb9-41ae-b5ef-f68035f45605.png`.
@@ -90,3 +196,16 @@
 - tester clavier, zoom 200 %, contraste forcé et reduced motion ;
 - faire confirmer visuellement la correspondance des deux noms UUID avec principale/secondaire
   avant de figer la baseline finale.
+# Extension approuvée — 9 septembre 2026
+
+Le propriétaire autorise l'extension du pilote orange à toutes les routes. La référence
+`sources/home-orange-approved.png` et le pilote affiné restent la direction de composition.
+Les anciens fichiers supprimés par le propriétaire ne sont pas restaurés.
+
+Les tokens orange, encre et bleu pâle deviennent globaux, y compris dans les portails de
+preuves et Storybook. Navigation et footer réutilisent les mêmes composants serveur.
+Explorer conserve sa densité de travail ; les pages de confiance gardent un sommaire et une
+largeur de lecture ; les insights reprennent le contraste surface bleue / mesure blanche.
+Les pages d'erreur, les états vides et les squelettes héritent des tokens sans fausses données.
+Les interactions existantes et reduced motion sont conservés. Storybook ajoute les compositions
+de lecture avec et sans sommaire. Cette extension ne publie pas le KPI v2 candidat.

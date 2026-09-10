@@ -1,0 +1,14 @@
+.env*
+!.env.example
+.local
+.neon
+.trigger/
+id_france_travail.json
+Set up Neon.txt
+playwright-report/
+test-results/
+storybook-static/
+.lighthouseci/
+coverage/
+*.log
+*.tsbuildinfo

@@ -4,11 +4,12 @@ import { classifyOffer } from "@/domain/classification/classifier";
 import { CLASSIFIER_VERSION } from "@/domain/classification/types";
 import { evaluateCompleteIngestionQuality } from "@/domain/ingestion/quality";
 import { BEGINNER_FRIENDLY_METRIC_VERSION } from "@/domain/metrics/beginner-friendly";
-import { JUNIOR_CONTRADICTION_METRIC_VERSION } from "@/domain/metrics/junior-contradiction";
+import { JUNIOR_OBSERVATION_METRIC_VERSION } from "@/domain/metrics/junior-observation";
 import { SALARY_TRANSPARENCY_METRIC_VERSION } from "@/domain/metrics/salary-transparency";
 import { TAXONOMY_VERSIONS } from "@/domain/taxonomies/versions";
 import {
   beginFullIngestionRun,
+  IngestionPaginationIncompleteError,
   commitFullQueryPage,
   completeFullQuery,
   completeFullRun,
@@ -53,7 +54,9 @@ import { FranceTravailError } from "@/lib/france-travail/errors";
 import { normalizeFranceTravailOffer } from "@/lib/france-travail/normalize";
 
 import { requestRevalidation } from "../use-cases/request-revalidation";
+import { responseMetaSchema } from "../queries/contracts";
 import { franceBusinessDate } from "./run-limited-ingestion";
+import { reclassifyCurrentDataset } from "./reclassify-current-dataset";
 
 const FULL_PAGE_SIZE = 150;
 const OFFER_STORAGE_CONCURRENCY = 8;
@@ -81,6 +84,7 @@ type DailyIngestionDependencies = {
   client: FranceTravailClient;
   scheduledAt: Date;
   triggerRunId: string;
+  attempt?: number;
   rawPayloadRetentionDays: number;
   requestsPerSecond: number;
   revalidationUrl: string;
@@ -127,6 +131,9 @@ function nextRangeStart(page: FranceTravailSourcePage): number | null {
 }
 
 function errorCode(error: unknown): string {
+  if (error instanceof IngestionPaginationIncompleteError) {
+    return "pagination_incomplete";
+  }
   if (error instanceof FranceTravailError) {
     return `france_travail_${error.code}`;
   }
@@ -255,20 +262,21 @@ async function collectQuery(input: {
     startedAt: input.now(),
   });
 
-  if (
-    input.state.pagesReceived > 0 &&
-    input.state.checkpoint?.nextRangeStart === null
-  ) {
-    await completeFullQuery({
-      sql: input.sql,
-      ingestionRunQueryId: input.state.ingestionRunQueryId,
-      finishedAt: input.now(),
-    });
-    return;
-  }
-
   let rangeStart = input.state.checkpoint?.nextRangeStart ?? 0;
   try {
+    // A terminal checkpoint is not a proof of completeness. Record a failed
+    // validation just like a failure during collection, without erasing pages.
+    if (
+      input.state.pagesReceived > 0 &&
+      input.state.checkpoint?.nextRangeStart === null
+    ) {
+      await completeFullQuery({
+        sql: input.sql,
+        ingestionRunQueryId: input.state.ingestionRunQueryId,
+        finishedAt: input.now(),
+      });
+      return;
+    }
     for (;;) {
       input.signal?.throwIfAborted();
       const page = await input.client.search(
@@ -328,12 +336,18 @@ async function collectQuery(input: {
   }
 }
 
-function createDatasetVersion(input: {
+export function createDatasetVersion(input: {
   startedAt: Date;
   querySetVersion: string;
 }): string {
   // A new publication format preserves older datasets while correcting replay freshness.
-  return `${input.startedAt.toISOString()}__${CLASSIFIER_VERSION}__${input.querySetVersion}__source-pages-1`;
+  const metricLabel = JUNIOR_OBSERVATION_METRIC_VERSION.replace(
+    "junior-contradiction-",
+    "kpi-",
+  );
+  return responseMetaSchema.shape.datasetVersion.parse(
+    `${input.startedAt.toISOString()}__${CLASSIFIER_VERSION}__${input.querySetVersion}__${metricLabel}__source-pages-1`,
+  );
 }
 
 export async function runFullFranceTravailIngestion({
@@ -341,6 +355,7 @@ export async function runFullFranceTravailIngestion({
   client,
   scheduledAt,
   triggerRunId,
+  attempt = 1,
   rawPayloadRetentionDays,
   requestsPerSecond,
   revalidationUrl,
@@ -349,6 +364,11 @@ export async function runFullFranceTravailIngestion({
   now = () => new Date(),
   sleep = defaultSleep,
 }: DailyIngestionDependencies): Promise<DailyFranceTravailIngestionSummary> {
+  if (!Number.isInteger(attempt) || attempt < 1 || attempt > 3) {
+    throw new RangeError(
+      "La tentative de collecte doit être comprise entre 1 et 3.",
+    );
+  }
   if (requestsPerSecond <= 0 || requestsPerSecond > 5) {
     throw new RangeError(
       "Le débit France Travail doit être compris entre 0 et 5 req/s.",
@@ -365,7 +385,7 @@ export async function runFullFranceTravailIngestion({
     businessDate,
     querySetVersion: querySet.querySetVersion,
     triggerRunId,
-    attempt: 1,
+    attempt,
     startedAt,
     queries: queryRegistrations(queries),
   });
@@ -464,6 +484,13 @@ export async function runFullFranceTravailIngestion({
       );
     }
 
+    // Offers retained after their first absence still belong to the active scope.
+    // A classifier upgrade must cover those snapshots too, not only today's responses.
+    await reclassifyCurrentDataset({
+      sql,
+      classifiedAt: now(),
+      ingestionRunId: run.ingestionRunId,
+    });
     const dataset = await createOrResumeDraftDataset({
       sql,
       datasetVersion: createDatasetVersion({
@@ -473,7 +500,7 @@ export async function runFullFranceTravailIngestion({
       ingestionRunId: run.ingestionRunId,
       classifierVersion: CLASSIFIER_VERSION,
       metricVersions: {
-        junior_contradiction_rate: JUNIOR_CONTRADICTION_METRIC_VERSION,
+        junior_contradiction_rate: JUNIOR_OBSERVATION_METRIC_VERSION,
         beginner_friendly_rate: BEGINNER_FRIENDLY_METRIC_VERSION,
         salary_transparency_rate: SALARY_TRANSPARENCY_METRIC_VERSION,
       },
@@ -551,6 +578,7 @@ export async function runFullFranceTravailIngestion({
 export async function runDailyFranceTravailIngestion(input: {
   scheduledAt: Date;
   triggerRunId: string;
+  attempt?: number;
   signal?: AbortSignal;
 }): Promise<DailyFranceTravailIngestionSummary> {
   const database = readDatabaseEnvironment();
@@ -568,6 +596,7 @@ export async function runDailyFranceTravailIngestion(input: {
     client: new FranceTravailClient(source),
     scheduledAt: input.scheduledAt,
     triggerRunId: input.triggerRunId,
+    attempt: input.attempt ?? 1,
     rawPayloadRetentionDays: base.RAW_PAYLOAD_RETENTION_DAYS,
     requestsPerSecond: source.INGESTION_REQUESTS_PER_SECOND,
     revalidationUrl: worker.REVALIDATION_URL,

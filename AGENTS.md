@@ -15,6 +15,10 @@ Ordre obligatoire :
 
 Ne jamais déduire une règle métier depuis le seul rendu visuel.
 
+Pour reprendre sans historique de conversation, lire `docs/20-SERVICES-RUNBOOK.md` et
+`docs/21-HANDOFF.md`. Revérifier les accès et mettre à jour le handoff avant de terminer ;
+ne jamais y écrire un secret ni présenter un candidat comme déployé.
+
 ---
 
 ## 2. Priorités

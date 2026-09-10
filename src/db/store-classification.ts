@@ -3,6 +3,7 @@ import { createHash, randomUUID } from "node:crypto";
 import type { NeonQueryFunction } from "@neondatabase/serverless";
 
 import type { ClassificationResult } from "@/domain/classification/types";
+import { resolveJuniorObservation } from "@/domain/classification/junior-observation";
 
 const TAXONOMY_JOBS_VERSION = "jobs-1.0.0";
 const TAXONOMY_TECHNOLOGIES_VERSION = "technologies-1.2.0";
@@ -18,7 +19,12 @@ function createClassificationResultHash(
   classification: ClassificationResult,
 ): string {
   return createHash("sha256")
-    .update(JSON.stringify(classification))
+    .update(
+      JSON.stringify({
+        classification,
+        juniorObservation: resolveJuniorObservation(classification),
+      }),
+    )
     .digest("hex");
 }
 
@@ -29,6 +35,8 @@ export async function storeClassification({
   classifiedAt,
 }: StoreClassificationInput): Promise<boolean> {
   const classificationId = randomUUID();
+  const observation = resolveJuniorObservation(classification);
+  const resultHash = createClassificationResultHash(classification);
   const warnings = JSON.stringify(classification.warnings);
   const technologySlugs = JSON.stringify(
     classification.technologySlugs.map((slug) => ({ slug })),
@@ -57,6 +65,9 @@ export async function storeClassification({
         claims_junior,
         beginner_friendly,
         contradictory_junior,
+        junior_observation_version,
+        junior_observation_status,
+        junior_observation_contradictory,
         minimum_experience_months,
         salary_transparent,
         remote_mode,
@@ -74,12 +85,15 @@ export async function storeClassification({
         ${classification.claimsJunior},
         ${classification.beginnerFriendly},
         ${classification.contradictoryJunior},
+        ${observation.version},
+        ${observation.status},
+        ${observation.contradictory},
         ${classification.minimumExperienceMonths},
         ${classification.salaryTransparent},
         ${classification.remoteMode},
         ${classification.ruleIds},
         ${warnings}::jsonb,
-        ${createClassificationResultHash(classification)},
+        ${resultHash},
         ${classifiedAt}
       )
       on conflict (snapshot_id, classifier_version) do nothing
@@ -179,5 +193,13 @@ export async function storeClassification({
     );
   }
 
+  if (!row["classificationCreated"]) {
+    const [existing] =
+      await sql`select result_hash from classifications where snapshot_id=${snapshotId} and classifier_version=${classification.classifierVersion}`;
+    if (existing?.["result_hash"] !== resultHash)
+      throw new Error(
+        "Une classification versionnée ne peut pas changer de résultat ; incrémenter sa version.",
+      );
+  }
   return row["classificationCreated"];
 }

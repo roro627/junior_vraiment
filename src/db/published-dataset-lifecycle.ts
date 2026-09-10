@@ -1,4 +1,10 @@
 import type { NeonQueryFunction } from "@neondatabase/serverless";
+import { z } from "zod";
+import { JUNIOR_OBSERVATION_VERSION } from "@/domain/classification/junior-observation";
+import {
+  computeJuniorObservationMetric,
+  JUNIOR_OBSERVATION_METRIC_VERSION,
+} from "@/domain/metrics/junior-observation";
 
 import {
   CLASSIFIER_VERSION,
@@ -54,6 +60,7 @@ export type DatasetMetric = {
   datasetId: string;
   metric:
     | JuniorContradictionMetric
+    | ReturnType<typeof computeJuniorObservationMetric>
     | BeginnerFriendlyMetric
     | SalaryTransparencyMetric;
 };
@@ -67,6 +74,7 @@ export type DatasetValidationResult = {
     membershipMatchesScope: boolean;
     classificationsComplete: boolean;
     metricPresent: boolean;
+    observationEvidenceComplete: boolean;
   };
 };
 
@@ -105,6 +113,10 @@ function asDatasetStatus(value: string): DraftDataset["status"] {
 export async function createOrResumeDraftDataset(
   input: DraftDatasetInput,
 ): Promise<DraftDataset> {
+  if (input.datasetVersion.length < 1 || input.datasetVersion.length > 100)
+    throw new RangeError(
+      "La version du dataset dépasse le contrat public (100 caractères).",
+    );
   const metricVersions = JSON.stringify(input.metricVersions);
   const taxonomyVersions = JSON.stringify(input.taxonomyVersions);
   const qualitySummary = JSON.stringify(input.qualitySummary);
@@ -343,25 +355,67 @@ export async function computeAndStorePublishedMetrics(input: {
       classification.minimum_experience_months as "minimumExperienceMonths",
       classification.beginner_friendly as "beginnerFriendly",
       classification.salary_transparent as "salaryTransparent"
+      , classification.junior_observation_version as "observationVersion"
+      , classification.junior_observation_status as "observationStatus"
+      , classification.junior_observation_contradictory as "observationContradictory"
     from published_dataset_offers membership
     join classifications classification on classification.id = membership.classification_id
     where membership.dataset_id = ${input.datasetId}
     order by membership.offer_id
   `;
   const classifications = classificationRows.map(metricClassification);
-  const metrics = [
-    computeJuniorContradictionMetric(classifications),
-    computeBeginnerFriendlyMetric(classifications),
-    computeSalaryTransparencyMetric(classifications),
-  ];
   const datasetRows = await input.sql`
-    select run.business_date::text as "businessDate"
+    select run.business_date::text as "businessDate", dataset.metric_versions as "metricVersions"
     from published_datasets dataset
     join ingestion_runs run on run.id = dataset.ingestion_run_id
     where dataset.id = ${input.datasetId}
   `;
   const dataset = datasetRows.at(0);
   if (!dataset) throw new Error("Le dataset est introuvable.");
+  const versions = z
+    .record(z.string(), z.string())
+    .parse(dataset["metricVersions"]);
+  const observationSchema = z
+    .object({
+      observationVersion: z.literal(JUNIOR_OBSERVATION_VERSION),
+      observationStatus: z.enum(["resolved", "unknown", "ambiguous"]),
+      observationContradictory: z.boolean().nullable(),
+      claimsJunior: z.boolean().nullable(),
+    })
+    .refine(
+      (row) =>
+        (row.observationStatus === "resolved") ===
+        (row.observationContradictory !== null),
+    );
+  const juniorVersion = versions["junior_contradiction_rate"];
+  if (
+    juniorVersion !== JUNIOR_CONTRADICTION_METRIC_VERSION &&
+    juniorVersion !== JUNIOR_OBSERVATION_METRIC_VERSION
+  )
+    throw new Error("Version du KPI principal non prise en charge.");
+  const juniorMetric =
+    juniorVersion === JUNIOR_OBSERVATION_METRIC_VERSION
+      ? computeJuniorObservationMetric(
+          classificationRows.map((row) => {
+            const value = observationSchema.parse(row);
+            return {
+              claimsJunior: value.claimsJunior,
+              status: value.observationStatus,
+              contradictory: value.observationContradictory,
+            };
+          }),
+        )
+      : computeJuniorContradictionMetric(classifications);
+  const metrics = [
+    juniorMetric,
+    computeBeginnerFriendlyMetric(classifications),
+    computeSalaryTransparencyMetric(classifications),
+  ];
+  for (const metric of metrics)
+    if (versions[metric.metric] !== metric.metricVersion)
+      throw new Error(
+        "Le calcul ne correspond pas à la méthode déclarée du dataset.",
+      );
   const businessDate = requiredString(dataset, "businessDate");
   for (const metric of metrics) {
     const metadata = JSON.stringify({
@@ -428,7 +482,7 @@ export async function validateDraftDataset(input: {
 }): Promise<DatasetValidationResult> {
   const rows = await input.sql`
     with dataset as (
-      select id, source_id, query_set_version, classifier_version, status
+      select id, source_id, query_set_version, classifier_version, metric_versions, status
       from published_datasets
       where id = ${input.datasetId}
     ), active_scope as (
@@ -468,7 +522,7 @@ export async function validateDraftDataset(input: {
           and metric.dimension_hash = ${OVERALL_DIMENSION_HASH}
           and (
             (metric.metric_key = 'junior_contradiction_rate'
-              and metric.metric_version = ${JUNIOR_CONTRADICTION_METRIC_VERSION})
+              and metric.metric_version = (select metric_versions->>'junior_contradiction_rate' from dataset))
             or (metric.metric_key = 'beginner_friendly_rate'
               and metric.metric_version = ${BEGINNER_FRIENDLY_METRIC_VERSION})
             or (metric.metric_key = 'salary_transparency_rate'
@@ -477,6 +531,20 @@ export async function validateDraftDataset(input: {
         group by metric.dataset_id
         having count(distinct metric.metric_key) = 3
       ) as "metricPresent",
+      not exists (
+        select 1 from dataset d
+        join published_dataset_offers m on m.dataset_id=d.id
+        join classifications c on c.id=m.classification_id
+        where d.metric_versions->>'junior_contradiction_rate' = ${JUNIOR_OBSERVATION_METRIC_VERSION}
+          and (c.junior_observation_version is distinct from ${JUNIOR_OBSERVATION_VERSION}
+            or c.junior_observation_status is null
+            or (c.junior_observation_status='resolved' and not exists (
+              select 1 from classification_evidence e where e.classification_id=c.id and e.evidence_kind='junior_claim' and length(trim(e.excerpt)) > 0
+            ))
+            or (c.junior_observation_contradictory=true and not exists (
+              select 1 from classification_evidence e where e.classification_id=c.id and e.evidence_kind='required_experience' and length(trim(e.excerpt)) > 0
+            )))
+      ) as "observationEvidenceComplete",
       (select status from dataset) as status
   `;
   const row = rows.at(0);
@@ -497,6 +565,7 @@ export async function validateDraftDataset(input: {
     membershipMatchesScope: memberCount === scopeCount,
     classificationsComplete: missingClassificationCount === 0,
     metricPresent,
+    observationEvidenceComplete: row["observationEvidenceComplete"] === true,
   };
   const canValidate =
     status === "validated" ||

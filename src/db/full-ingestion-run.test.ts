@@ -1,7 +1,37 @@
 import type { NeonQueryFunction } from "@neondatabase/serverless";
 import { describe, expect, it, vi } from "vitest";
 
-import { readFullIngestionQualityFacts } from "./full-ingestion-run";
+import {
+  completeFullQuery,
+  IngestionPaginationIncompleteError,
+  readFullIngestionQualityFacts,
+} from "./full-ingestion-run";
+
+describe("completeFullQuery", () => {
+  it("keeps source-total, count and chain checks and fails with a safe typed error", async () => {
+    const query = vi.fn(async (parts: TemplateStringsArray) => {
+      const statement = parts.join("?");
+      expect(statement).toContain(
+        "page_state.minimum_source_total = page_state.maximum_source_total",
+      );
+      expect(statement).toContain(
+        "page_state.received_count = page_state.maximum_source_total",
+      );
+      expect(statement).toContain(
+        "next_page.range_start = page.next_range_start",
+      );
+      expect(statement).not.toMatch(/delete\s+from/iu);
+      return [];
+    });
+    await expect(
+      completeFullQuery({
+        sql: query as unknown as NeonQueryFunction<false, false>,
+        ingestionRunQueryId: "fixture-query",
+        finishedAt: new Date(),
+      }),
+    ).rejects.toBeInstanceOf(IngestionPaginationIncompleteError);
+  });
+});
 
 describe("readFullIngestionQualityFacts", () => {
   it.each([null, 0, 3])(

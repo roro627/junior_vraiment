@@ -72,6 +72,10 @@ test("@a11y the explorer and evidence panel have no serious automated violations
   await page.getByRole("button", { name: "Voir la preuve" }).first().click();
   await expect(page.getByRole("dialog")).toBeVisible();
 
+  // Measure the final colors, not the intentional opening crossfade.
+  await expect(page.getByRole("dialog")).toHaveCSS("opacity", "1");
+  await expect(page.locator(".evidence-overlay")).toHaveCSS("opacity", "1");
+
   const results = await new AxeBuilder({ page }).analyze();
   const blockingViolations = results.violations.filter(
     ({ impact }) => impact === "critical" || impact === "serious",
@@ -83,7 +87,9 @@ test("@a11y the explorer and evidence panel have no serious automated violations
 test("the lazy evidence panel reports a chunk failure and can retry", async ({
   page,
 }) => {
-  await page.goto("/explorer", { waitUntil: "networkidle" });
+  // Initial scripts must finish before injecting a lazy-chunk failure; unrelated
+  // background requests are not a readiness signal for this interaction.
+  await page.goto("/explorer", { waitUntil: "load" });
   await page.route("**/*.js", (route) => route.abort());
   const trigger = page.getByRole("button", { name: "Voir la preuve" }).first();
 

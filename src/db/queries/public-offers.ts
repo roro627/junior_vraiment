@@ -3,6 +3,7 @@ import { z } from "zod";
 
 import {
   offersResponseSchema,
+  juniorObservationSchema,
   publicOfferSchema,
   type OffersQuery,
   type OffersResponse,
@@ -17,6 +18,7 @@ import {
 } from "@/application/queries/public-id";
 
 import { readCurrentDataset, type CurrentDataset } from "./current-dataset";
+import { JUNIOR_OBSERVATION_METRIC_VERSION } from "@/domain/metrics/junior-observation";
 
 const salaryDataSchema = z
   .object({
@@ -60,6 +62,7 @@ const publicOfferRowSchema = z
     claimsJunior: z.boolean().nullable(),
     beginnerFriendly: z.boolean().nullable(),
     contradictoryJunior: z.boolean().nullable(),
+    juniorObservation: juniorObservationSchema.nullable().default(null),
     classifierVersion: z.string(),
     warnings: z.array(z.object({ code: z.string() }).passthrough()),
     salaryTransparent: z.boolean(),
@@ -140,6 +143,7 @@ function mapPublicOffer(
       claimsJunior: row.claimsJunior,
       beginnerFriendly: row.beginnerFriendly,
       contradictoryJunior: row.contradictoryJunior,
+      juniorObservation: row.juniorObservation,
       classifierVersion: row.classifierVersion,
       warnings: row.warnings.map(({ code }) => code.slice(0, 120)),
     },
@@ -207,6 +211,9 @@ export async function getPublicOffers({
   generatedAt,
 }: PublicOffersInput): Promise<OffersResponse> {
   const dataset = await readCurrentDataset(sql);
+  const observationMetric =
+    dataset.metricVersions["junior_contradiction_rate"] ===
+    JUNIOR_OBSERVATION_METRIC_VERSION;
   const area = parseArea(query.scope.area);
   const technologyJson = JSON.stringify(query.scope.technologies);
   const contractJson = JSON.stringify(query.scope.contracts);
@@ -246,7 +253,10 @@ export async function getPublicOffers({
         membership.classification_id,
         snapshot.source_published_at,
         classification.minimum_experience_months,
+        classification.status as classification_status,
         case
+          when ${observationMetric} and classification.junior_observation_status = 'resolved'
+            and classification.junior_observation_contradictory = true then 'contradictory'
           when classification.status = 'ambiguous' then 'ambiguous'
           when classification.status = 'unclassified' then 'unknown'
           when classification.status = 'classified'
@@ -327,7 +337,7 @@ export async function getPublicOffers({
             select 1
             from jsonb_array_elements_text(${experienceJson}::jsonb) requested(bucket)
             where requested.bucket = case
-              when classification_segment = 'ambiguous' then 'ambiguous'
+              when classification_status = 'ambiguous' then 'ambiguous'
               when minimum_experience_months = 0 then 'none'
               when minimum_experience_months between 1 and 12 then '1_12'
               when minimum_experience_months between 13 and 23 then '13_23'
@@ -415,6 +425,11 @@ export async function getPublicOffers({
       classification.claims_junior as "claimsJunior",
       classification.beginner_friendly as "beginnerFriendly",
       classification.contradictory_junior as "contradictoryJunior",
+      case when ${observationMetric} then jsonb_build_object(
+        'version', classification.junior_observation_version,
+        'status', classification.junior_observation_status,
+        'contradictory', classification.junior_observation_contradictory
+      ) else null end as "juniorObservation",
       classification.classifier_version as "classifierVersion",
       classification.warnings,
       classification.salary_transparent as "salaryTransparent",

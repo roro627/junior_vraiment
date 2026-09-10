@@ -76,11 +76,11 @@
     "experienceRequired": null,
     "experienceLabel": null,
     "expected": {
-      "status": "unclassified",
-      "claimsJunior": null,
+      "status": "classified",
+      "claimsJunior": false,
       "minimumExperienceMonths": null,
       "beginnerFriendly": null,
-      "contradictoryJunior": null
+      "contradictoryJunior": false
     }
   },
   {
@@ -91,10 +91,10 @@
     "experienceLabel": "5 ans exigés",
     "expected": {
       "status": "classified",
-      "claimsJunior": null,
+      "claimsJunior": false,
       "minimumExperienceMonths": 60,
       "beginnerFriendly": false,
-      "contradictoryJunior": null
+      "contradictoryJunior": false
     }
   },
   {

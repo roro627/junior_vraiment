@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 
 import { overviewSearchParamsSchema } from "@/application/queries/contracts";
-import { AppHeader } from "@/components/app-header";
-import { HomeDataFreshness } from "@/components/home-data-freshness";
+import {
+  PilotFooter,
+  PilotHeader,
+} from "@/components/home-pilot/pilot-primitives";
 import { HomeDashboard } from "@/components/home-dashboard";
 import { HomeSkeleton } from "@/components/home-skeleton";
-import { SiteFooter } from "@/components/site-footer";
+import "@/styles/home-pilot.css";
 import { isExternalDataBuildSkipped } from "@/lib/env";
 import { buildStaticPageMetadata } from "@/lib/seo/static-metadata";
 import { resolveSiteUrl } from "@/lib/site-url";
@@ -50,15 +52,6 @@ async function FilteredDashboard({
   return <HomeDashboard query={query} />;
 }
 
-async function FilteredFreshness({
-  searchParams,
-}: {
-  searchParams: Promise<RawSearchParams>;
-}) {
-  const query = parseHomeQuery(await searchParams);
-  return <HomeDataFreshness query={query} />;
-}
-
 export default function HomePage({
   searchParams,
 }: {
@@ -81,36 +74,12 @@ export default function HomePage({
   }).replace(/</gu, "\\u003c");
 
   return (
-    <div className="site-shell">
+    <div className="home-pilot">
       <a className="skip-link" href="#contenu">
         Aller au contenu
       </a>
-      <AppHeader />
-      <main className="home-dashboard" id="contenu">
-        <section className="home-introduction" id="observer">
-          <div>
-            <p className="eyebrow">Marché tech junior · France</p>
-            <h1>Le vrai état du marché tech junior en France.</h1>
-            <p className="lead">
-              Le marché tech junior, mesuré plutôt que raconté.
-            </p>
-          </div>
-          {skipExternalData ? (
-            <span className="freshness-badge" aria-hidden="true">
-              Actualisation…
-            </span>
-          ) : (
-            <Suspense
-              fallback={
-                <span className="freshness-badge" aria-hidden="true">
-                  Actualisation…
-                </span>
-              }
-            >
-              <FilteredFreshness searchParams={searchParams} />
-            </Suspense>
-          )}
-        </section>
+      <PilotHeader />
+      <main id="contenu">
         {skipExternalData ? (
           <HomeSkeleton />
         ) : (
@@ -119,7 +88,7 @@ export default function HomePage({
           </Suspense>
         )}
       </main>
-      <SiteFooter />
+      <PilotFooter />
       <script type="application/ld+json">{structuredData}</script>
     </div>
   );

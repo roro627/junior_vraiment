@@ -8,6 +8,7 @@ import { neon } from "@neondatabase/serverless";
 import { describe, expect, it } from "vitest";
 
 import { classifyOffer } from "@/domain/classification/classifier";
+import { reclassifyCurrentDataset } from "@/application/ingestion/reclassify-current-dataset";
 import { CLASSIFIER_VERSION } from "@/domain/classification/types";
 import type { NormalizedOffer } from "@/domain/offers/normalized-offer";
 import { readDatabaseEnvironment, readToolEnvironment } from "@/lib/env";
@@ -17,6 +18,10 @@ import {
   commitFullQueryPage,
   completeFullQuery,
   completeFullRun,
+  failFullQuery,
+  failFullRun,
+  IngestionPaginationIncompleteError,
+  IngestionRecoveryNotAllowedError,
   readFullIngestionQualityFacts,
   storeFullRunQualitySummary,
   transitionFullRun,
@@ -67,6 +72,101 @@ function fixtureOffer(
 }
 
 describe.runIf(liveTestsEnabled)("durable full ingestion on Neon", () => {
+  it("preserves moving-total pages while starting an independent recovery attempt", async () => {
+    const sql = neon(readDatabaseEnvironment().DATABASE_DIRECT_URL);
+    const suffix = randomUUID();
+    const querySetVersion = `queries-recovery-test-${suffix}`;
+    const startedAt = new Date("2098-02-01T03:30:00Z");
+    const begin = (attempt: number) =>
+      beginFullIngestionRun({
+        sql,
+        businessDate: "2098-02-01",
+        querySetVersion,
+        triggerRunId: `recovery-test-${suffix}-${attempt}`,
+        attempt,
+        startedAt,
+        queries: [
+          {
+            queryKey: "synthetic-moving-total",
+            label: "Fixture recovery",
+            definition: { fixture: true },
+            jobFamilies: ["backend"],
+            territoryScope: "france",
+          },
+        ],
+      });
+    try {
+      const first = await begin(1);
+      await expect(begin(2)).rejects.toBeInstanceOf(
+        IngestionRecoveryNotAllowedError,
+      );
+      const query = first.queries[0];
+      if (!query) throw new Error("Fixture query missing");
+      for (const page of [
+        {
+          rangeStart: 0,
+          nextRangeStart: 150,
+          isTerminal: false,
+          sourceTotal: 184,
+          validCount: 150,
+        },
+        {
+          rangeStart: 150,
+          nextRangeStart: null,
+          isTerminal: true,
+          sourceTotal: 185,
+          validCount: 35,
+        },
+      ])
+        await commitFullQueryPage({
+          sql,
+          ingestionRunId: first.ingestionRunId,
+          ingestionRunQueryId: query.ingestionRunQueryId,
+          page: {
+            ...page,
+            quarantined: [],
+            inPerimeterCount: 0,
+            warningCount: 0,
+            committedAt: startedAt,
+          },
+        });
+      await expect(
+        completeFullQuery({
+          sql,
+          ingestionRunQueryId: query.ingestionRunQueryId,
+          finishedAt: startedAt,
+        }),
+      ).rejects.toBeInstanceOf(IngestionPaginationIncompleteError);
+      await failFullQuery({
+        sql,
+        ingestionRunQueryId: query.ingestionRunQueryId,
+        finishedAt: startedAt,
+        errorCode: "pagination_incomplete",
+      });
+      await failFullRun({
+        sql,
+        ingestionRunId: first.ingestionRunId,
+        finishedAt: startedAt,
+        errorCode: "pagination_incomplete",
+      });
+      const second = await begin(2);
+      expect(second.ingestionRunId).not.toBe(first.ingestionRunId);
+      expect(second.queries[0]?.pagesReceived).toBe(0);
+      expect(second.queries[0]?.checkpoint).toBeNull();
+      const replay = await begin(2);
+      expect(replay.ingestionRunId).toBe(second.ingestionRunId);
+      const pages =
+        await sql`select source_total from ingestion_query_pages where ingestion_run_query_id=${query.ingestionRunQueryId} order by range_start`;
+      expect(pages.map((page) => page["source_total"])).toEqual([184, 185]);
+      const [old] =
+        await sql`select status from ingestion_runs where id=${first.ingestionRunId}`;
+      expect(old?.["status"]).toBe("failed");
+    } finally {
+      await sql`delete from ingestion_runs where query_set_version=${querySetVersion}`;
+      await sql`delete from source_queries where query_set_version=${querySetVersion}`;
+    }
+  });
+
   it("replays a page safely, freezes membership and requires two absences", async () => {
     const { DATABASE_DIRECT_URL } = readDatabaseEnvironment();
     const sql = neon(DATABASE_DIRECT_URL);
@@ -76,6 +176,7 @@ describe.runIf(liveTestsEnabled)("durable full ingestion on Neon", () => {
     const offerExternalId = `offer-${suffix}`;
     const baseTime = new Date("2098-01-01T03:30:00Z");
     let datasetId: string | null = null;
+    let observationDatasetId: string | null = null;
     let offerId: string | null = null;
 
     const begin = async (day: number): Promise<FullIngestionRun> => {
@@ -281,7 +382,9 @@ describe.runIf(liveTestsEnabled)("durable full ingestion on Neon", () => {
         ingestionRunId: first.ingestionRunId,
         classifierVersion: CLASSIFIER_VERSION,
         metricVersions: {
-          juniorContradiction: "junior-contradiction-1.0.0",
+          junior_contradiction_rate: "junior-contradiction-1.0.0",
+          beginner_friendly_rate: "beginner-friendly-1.0.0",
+          salary_transparency_rate: "salary-transparency-1.0.0",
         },
         taxonomyVersions: { jobs: "jobs-1.0.0" },
         qualitySummary: quality,
@@ -334,6 +437,77 @@ describe.runIf(liveTestsEnabled)("durable full ingestion on Neon", () => {
         offersMarkedMissing: 1,
         offersClosed: 0,
       });
+      // No response today: its retained, changed snapshot still needs the current engine.
+      expect(
+        await reclassifyCurrentDataset({
+          sql,
+          classifiedAt: baseTime,
+          ingestionRunId: second.ingestionRunId,
+        }),
+      ).toMatchObject({
+        snapshotCount: 1,
+        classificationsCreated: 1,
+        classificationCount: 1,
+      });
+      expect(
+        await reclassifyCurrentDataset({
+          sql,
+          classifiedAt: baseTime,
+          ingestionRunId: second.ingestionRunId,
+        }),
+      ).toMatchObject({
+        snapshotCount: 1,
+        classificationsCreated: 0,
+        classificationCount: 1,
+      });
+      const [unchangedMembership] =
+        await sql`select snapshot_id from published_dataset_offers where dataset_id=${datasetId}`;
+      expect(unchangedMembership?.["snapshot_id"]).toBe(stored.snapshotId);
+      const observationDataset = await createOrResumeDraftDataset({
+        sql,
+        datasetVersion: `dataset-observation-integration-${suffix}`,
+        ingestionRunId: second.ingestionRunId,
+        classifierVersion: CLASSIFIER_VERSION,
+        metricVersions: {
+          junior_contradiction_rate: "junior-contradiction-2.0.0",
+          beginner_friendly_rate: "beginner-friendly-1.0.0",
+          salary_transparency_rate: "salary-transparency-1.0.0",
+        },
+        taxonomyVersions: { jobs: "jobs-1.0.0" },
+        qualitySummary: quality,
+        computedAt: baseTime,
+      });
+      observationDatasetId = observationDataset.datasetId;
+      expect(
+        await freezeDatasetMembership({ sql, datasetId: observationDatasetId }),
+      ).toMatchObject({ memberCount: 1, missingClassificationCount: 0 });
+      const observationMetric = await computeAndStoreJuniorContradictionMetric({
+        sql,
+        datasetId: observationDatasetId,
+        computedAt: baseTime,
+      });
+      expect(observationMetric.metric).toMatchObject({
+        metricVersion: "junior-contradiction-2.0.0",
+        numerator: 1,
+        denominator: 1,
+        value: null,
+        sampleQuality: "insufficient",
+      });
+      expect(
+        await validateDraftDataset({
+          sql,
+          datasetId: observationDatasetId,
+          qualityDecision: "publish",
+        }),
+      ).toMatchObject({ validated: true });
+      const [axis] =
+        await sql`select c.status,c.beginner_friendly,c.contradictory_junior,c.junior_observation_contradictory from classifications c join published_dataset_offers m on m.classification_id=c.id where m.dataset_id=${observationDatasetId}`;
+      expect(axis).toMatchObject({
+        status: "ambiguous",
+        beginner_friendly: null,
+        contradictory_junior: null,
+        junior_observation_contradictory: true,
+      });
       const third = await begin(3);
       expect(await finishEmptyRun(third, 3)).toEqual({
         offersMarkedMissing: 1,
@@ -346,6 +520,8 @@ describe.runIf(liveTestsEnabled)("durable full ingestion on Neon", () => {
       expect(lifecycle?.["missingSince"]).not.toBeNull();
       expect(lifecycle?.["closedAt"]).not.toBeNull();
     } finally {
+      if (observationDatasetId)
+        await sql`delete from published_datasets where id=${observationDatasetId}`;
       if (datasetId) {
         await sql`delete from published_datasets where id = ${datasetId}`;
       }

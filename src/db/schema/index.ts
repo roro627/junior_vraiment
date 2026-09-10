@@ -472,6 +472,9 @@ export const classifications = pgTable(
     claimsJunior: boolean("claims_junior"),
     beginnerFriendly: boolean("beginner_friendly"),
     contradictoryJunior: boolean("contradictory_junior"),
+    juniorObservationVersion: text("junior_observation_version"),
+    juniorObservationStatus: text("junior_observation_status"),
+    juniorObservationContradictory: boolean("junior_observation_contradictory"),
     minimumExperienceMonths: integer("minimum_experience_months"),
     salaryTransparent: boolean("salary_transparent").notNull().default(false),
     remoteMode: text("remote_mode").notNull().default("unknown"),
@@ -494,6 +497,19 @@ export const classifications = pgTable(
     unique("classifications_snapshot_version_unique").on(
       table.snapshotId,
       table.classifierVersion,
+    ),
+    check(
+      "classifications_junior_observation_check",
+      sql`
+      (${table.juniorObservationVersion} is null and ${table.juniorObservationStatus} is null and ${table.juniorObservationContradictory} is null)
+      or (${table.juniorObservationVersion} is not null and length(${table.juniorObservationVersion}) > 0
+        and ${table.juniorObservationStatus} is not null and ${table.juniorObservationStatus} in ('resolved', 'unknown', 'ambiguous')
+        and ((${table.juniorObservationStatus} = 'resolved' and ${table.juniorObservationContradictory} is not null
+          and ${table.claimsJunior} is true and ${table.minimumExperienceMonths} is not null
+          and ((${table.juniorObservationContradictory} is true and ${table.minimumExperienceMonths} >= 24)
+            or (${table.juniorObservationContradictory} is false and ${table.minimumExperienceMonths} < 24)))
+          or (${table.juniorObservationStatus} <> 'resolved' and ${table.juniorObservationContradictory} is null)))
+    `,
     ),
     index("classifications_contradiction_idx")
       .on(table.classifierVersion, table.contradictoryJunior)
@@ -1035,6 +1051,9 @@ export const currentPublicOfferClassifications = pgView(
     remoteMode: text("remote_mode"),
     jobFamily: text("job_family"),
     classificationSegment: text("classification_segment"),
+    juniorObservationVersion: text("junior_observation_version"),
+    juniorObservationStatus: text("junior_observation_status"),
+    juniorObservationContradictory: boolean("junior_observation_contradictory"),
   },
 ).as(sql`
   select
@@ -1065,6 +1084,8 @@ export const currentPublicOfferClassifications = pgView(
     c.remote_mode,
     c.job_family,
     case
+      when d.metric_versions->>'junior_contradiction_rate' = 'junior-contradiction-2.0.0'
+        and c.junior_observation_status = 'resolved' and c.junior_observation_contradictory = true then 'contradictory'
       when c.status = 'ambiguous' then 'ambiguous'
       when c.status = 'unclassified' then 'unknown'
       when c.status = 'classified' and c.contradictory_junior = true then 'contradictory'
@@ -1073,7 +1094,10 @@ export const currentPublicOfferClassifications = pgView(
       when c.status = 'classified' and c.claims_junior = true and c.beginner_friendly = false and c.contradictory_junior = false then 'other_junior'
       when c.status = 'classified' and c.claims_junior = false then 'not_explicitly_junior'
       else 'unknown'
-    end as classification_segment
+    end as classification_segment,
+    c.junior_observation_version,
+    c.junior_observation_status,
+    c.junior_observation_contradictory
   from published_datasets d
   join published_dataset_offers membership on membership.dataset_id = d.id
   join offers o on o.id = membership.offer_id

@@ -1,0 +1,130 @@
+[
+  {
+    "fixtureId": "company-pronoun-long-antecedent",
+    "description": "Notre client est une TPE, d'une quinzaine de salariés active dans le secteur informatique. Elle a 30 ans d'expérience dans les technologies.",
+    "required": false,
+    "label": "Débutant accepté",
+    "months": 0,
+    "status": "classified"
+  },
+  {
+    "fixtureId": "company-market-actor",
+    "description": "Entreprise Exemple est un acteur majeur du marché des énergies renouvelables en France avec plus de 25 ans d'expérience dans le développement.",
+    "required": false,
+    "label": "Débutant accepté",
+    "months": 0,
+    "status": "classified"
+  },
+  {
+    "fixtureId": "beginner-alternative",
+    "description": "Vous justifiez d'une expérience de 2 à 5 ans dans la sécurité des systèmes d'information y compris les aspects SSI ou vous êtes débutant(e) avec une formation solide.",
+    "required": false,
+    "label": "Débutant accepté",
+    "months": 0,
+    "status": "classified"
+  },
+  {
+    "fixtureId": "applicant-company-context",
+    "description": "Pour notre entreprise, vous justifiez de 3 ans d'expérience en développement.",
+    "required": true,
+    "label": "3 ans exigés",
+    "months": 36,
+    "status": "classified"
+  },
+  {
+    "fixtureId": "company-founded-age",
+    "description": "Fondé il y a plus de 30 ans, notre groupe accompagne les entreprises.",
+    "required": false,
+    "label": "Débutant accepté",
+    "months": 0,
+    "status": "classified"
+  },
+  {
+    "fixtureId": "company-experience",
+    "description": "Notre client est une entreprise informatique. Elle a 30 ans d'expérience dans les technologies de l'information.",
+    "required": false,
+    "label": "Débutant accepté",
+    "months": 0,
+    "status": "classified"
+  },
+  {
+    "fixtureId": "company-growth",
+    "description": "Une entreprise scientifique portée par une forte croissance depuis plus de 40 ans. Vous justifiez de 3 ans d'expérience minimum en développement.",
+    "required": false,
+    "label": "Débutant accepté",
+    "months": 36,
+    "status": "ambiguous"
+  },
+  {
+    "fixtureId": "negated-duration",
+    "description": "Pas besoin d'avoir 10 ans d'expérience ! Nous recherchons un profil avec de bonnes bases.",
+    "required": false,
+    "label": "Débutant accepté",
+    "months": 0,
+    "status": "classified"
+  },
+  {
+    "fixtureId": "different-modalities",
+    "description": "Vous avez au minimum 2 ans d'expérience professionnelle (idéalement 5 années ou plus) dans le développement.",
+    "required": true,
+    "label": "2 ans exigés",
+    "months": 24,
+    "status": "classified"
+  },
+  {
+    "fixtureId": "between-range",
+    "description": "Vous avez entre 5 et 10 ans d'expérience en développement.",
+    "required": true,
+    "label": "5 ans exigés",
+    "months": 60,
+    "status": "classified"
+  },
+  {
+    "fixtureId": "remote-wait-not-experience",
+    "description": "Minimum 2 ans d'expérience en développement Java. Télétravail possible après 3 mois.",
+    "required": true,
+    "label": "2 ans exigés",
+    "months": 24,
+    "status": "classified"
+  },
+  {
+    "fixtureId": "preferred-minimum",
+    "description": "Vous disposez idéalement d'une expérience d'au moins 1 à 2 ans en développement.",
+    "required": false,
+    "label": "Débutant accepté",
+    "months": 0,
+    "status": "classified"
+  },
+  {
+    "fixtureId": "required-domain-preference",
+    "description": "Vous avez 3 ans d'expérience minimum, idéalement dans le secteur bancaire.",
+    "required": true,
+    "label": "3 ans exigés",
+    "months": 36,
+    "status": "classified"
+  },
+  {
+    "fixtureId": "full-year-unit",
+    "description": "Vous justifiez d'au moins 3 années d'expérience en développement.",
+    "required": true,
+    "label": "3 années exigées",
+    "months": 36,
+    "status": "classified"
+  },
+  {
+    "fixtureId": "education-preference-not-experience",
+    "description": "Doctorat souhaité.\nExpérience confirmée (6 ans minimum) en Data Science.",
+    "required": false,
+    "label": "Débutant accepté",
+    "months": 72,
+    "status": "ambiguous"
+  },
+  {
+    "fixtureId": "experience-since",
+    "description": "Vous avez une expérience professionnelle en développement depuis 3 ans.",
+    "required": true,
+    "label": "3 ans exigés",
+    "months": 36,
+    "status": "classified"
+  }
+]

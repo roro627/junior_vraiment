@@ -83,7 +83,10 @@ function firstMatch(value: string, pattern: RegExp): RegExpExecArray | null {
   return pattern.exec(value);
 }
 
-function sourceClause(text: TextField, match: TextMatch): string {
+function sourceClause(
+  text: TextField,
+  match: TextMatch,
+): { value: string; before: string; after: string } {
   const range = sourceRangeForNormalizedMatch(
     text.normalized,
     match.index,
@@ -102,7 +105,12 @@ function sourceClause(text: TextField, match: TextMatch): string {
     end += 1;
   }
 
-  return normalizeTextForMatching(text.source.slice(start, end)).value;
+  return {
+    value: normalizeTextForMatching(text.source.slice(start, end)).value,
+    before: normalizeTextForMatching(text.source.slice(start, range.start))
+      .value,
+    after: normalizeTextForMatching(text.source.slice(range.end, end)).value,
+  };
 }
 
 function experienceCandidates(text: TextField): Evidence[] {
@@ -112,7 +120,7 @@ function experienceCandidates(text: TextField): Evidence[] {
     {
       ruleId: "EXP_RANGE_YEARS",
       regex: new RegExp(
-        `${amountPattern}\\s*(?:a|à|–|-)\\s*${amountPattern}\\s*(?:ans?|annees?|années?)`,
+        `(?<![\\p{L}\\p{N}])${amountPattern}\\s*(?:a|à|–|-|et)\\s*${amountPattern}\\s*(?:années?|annees?|ans?)(?![\\p{L}\\p{N}])`,
         "gu",
       ),
       unit: "years",
@@ -121,13 +129,30 @@ function experienceCandidates(text: TextField): Evidence[] {
     {
       ruleId: "EXP_SINGLE_DURATION",
       regex: new RegExp(
-        `${amountPattern}\\s*(?:\\+\\s*)?(ans?|annees?|années?|mois)`,
+        `(?<![\\p{L}\\p{N}])${amountPattern}\\s*(?:\\+\\s*)?(années?|annees?|ans?|mois)(?![\\p{L}\\p{N}])`,
+        "gu",
+      ),
+      unit: "captured",
+      amountGroup: 1,
+    },
+    {
+      // Observed source formatting can concatenate a heading and a requirement.
+      // Scope this exception to a qualifications heading, not any word+number.
+      ruleId: "EXP_PROFILE_STACK",
+      regex: new RegExp(
+        `qualifications${amountPattern}\\s*(années?|annees?|ans?)\\s+minimum\\s+sur\\s+(?:la\\s+)?stack\\b`,
         "gu",
       ),
       unit: "captured",
       amountGroup: 1,
     },
   ] as const;
+
+  const durations = [
+    ...text.normalized.value.matchAll(
+      new RegExp(patterns[1].regex.source, "gu"),
+    ),
+  ];
 
   for (const pattern of patterns) {
     pattern.regex.lastIndex = 0;
@@ -149,8 +174,97 @@ function experienceCandidates(text: TextField): Evidence[] {
         match.index + match[0].length + 70,
       );
       const context = text.normalized.value.slice(contextStart, contextEnd);
-      const clause = sourceClause(text, match);
+      const clauseParts = sourceClause(text, match);
+      const clause = clauseParts.value;
+      // A requirement attached to another duration cannot qualify this one.
+      const previousEnd = durations
+        .filter((item) => item.index + item[0].length <= matchStart)
+        .at(-1);
+      const nextStart = durations.find((item) => item.index >= matchEnd);
+      const before = text.normalized.value.slice(
+        Math.max(
+          contextStart,
+          matchStart - clauseParts.before.length,
+          previousEnd ? previousEnd.index + previousEnd[0].length : 0,
+        ),
+        matchStart,
+      );
+      const after = text.normalized.value.slice(
+        matchEnd,
+        Math.min(
+          contextEnd,
+          matchEnd + clauseParts.after.length,
+          nextStart?.index ?? contextEnd,
+        ),
+      );
+      const localContext = `${before}${match[0]}${after}`;
+      // A long domain name can separate a duration from its trailing modality.
+      // Stop at the next duration and clause boundary, never borrow a later requirement.
+      const modalityAfter = text.normalized.value.slice(
+        matchEnd,
+        Math.min(
+          matchEnd + clauseParts.after.length,
+          nextStart?.index ?? text.normalized.value.length,
+        ),
+      );
+      const trailingPreference =
+        /^\s+(?:dans|en|sur)\b[^,;.!?]{0,200}\best\s+(?:souhait[ée]e?|appr[ée]ci[ée]e?)(?!\p{L})/u.test(
+          modalityAfter,
+        );
+      const applicantSubject = /\b(?:vous|tu|votre|candidat|candidate)\b/u.test(
+        before,
+      );
+      const employerDuration =
+        (!applicantSubject &&
+          /pourquoi (?:nous )?rejoindre[^]{0,350}$/u.test(
+            text.normalized.value.slice(
+              Math.max(0, matchStart - 400),
+              matchStart,
+            ),
+          ) &&
+          /^\s+d['’]exp[ée]rience\s+dans (?:des|nos) projets\b/u.test(after)) ||
+        (!applicantSubject &&
+          /positionn[ée][^.!?;]{0,90}(?:entreprises|soci[ée]t[ée]s)/u.test(
+            clauseParts.after,
+          )) ||
+        /(?:fond[ée]|cr[ée][ée])[^.!?;]{0,35}$/u.test(before) ||
+        (!applicantSubject &&
+          /(?:entreprise|soci[ée]t[ée]|groupe|notre client)[^.!?;]{0,70}$/u.test(
+            before,
+          )) ||
+        (/elle a\s*$/u.test(before) &&
+          /entreprise|soci[ée]t[ée]|notre client/u.test(
+            text.normalized.value.slice(
+              Math.max(0, matchStart - 250),
+              matchStart,
+            ),
+          )) ||
+        (!applicantSubject &&
+          /(?:est un acteur|acteur majeur)[^.!?;]*$/u.test(clauseParts.before));
+      const negatedDuration =
+        /(?:pas besoin d['’]avoir|sans exiger|ne (?:demandons|requiert|demandent) pas)[^.!?;]{0,35}$/u.test(
+          before,
+        );
+      const experienceSubject =
+        pattern.ruleId === "EXP_PROFILE_STACK" ||
+        /^\s+minimum\s+sur\s+(?:la\s+)?stack\b/u.test(after) ||
+        (/(?:qualifications|comp[ée]tences(?: techniques)?|profil(?: recherch[ée])?)\s*$/u.test(
+          before,
+        ) &&
+          /^\s+minimum\s+sur\s+(?:la\s+)?stack\b/u.test(after)) ||
+        text.field === "experienceLabel" ||
+        /exp[ée]rience/u.test(localContext) ||
+        /(?:vous|tu)[^.!?;]{0,60}(?:au moins|minimum|justifiez|disposez)/u.test(
+          before,
+        );
+      const beginnerAlternative = /\bou vous [êe]tes d[ée]butant/u.test(
+        clauseParts.after,
+      );
       const excluded =
+        employerDuration ||
+        negatedDuration ||
+        beginnerAlternative ||
+        !experienceSubject ||
         /(?:bac\s*\+|formation|cursus|contrat|mission|projet)\s+(?:de\s+)?$/u.test(
           text.normalized.value.slice(contextStart, match.index),
         ) ||
@@ -160,20 +274,47 @@ function experienceCandidates(text: TextField): Evidence[] {
         );
       const desiredSignal =
         /idealement|idéalement|souhaite|souhaité|souhaitee|souhaitée|apprecie|apprécié|appreciee|appréciée|serait un plus|de preference|de préférence|bonus/u.test(
-          clause,
+          localContext,
         );
       const strongRequiredSignal =
         text.field === "experienceLabel" ||
         /minimum|au moins|plus de|exige|exigé|exigee|exigée|requis|requise|obligatoire|justifiez|disposez/u.test(
-          clause,
+          localContext,
         );
       const genericRequiredSignal =
         /experience (?:professionnelle )?(?:de )?|expérience (?:professionnelle )?(?:de )?|ans? d['’](?:experience|expérience|xp)/u.test(
-          clause,
+          localContext,
         );
-      const desired = desiredSignal && !strongRequiredSignal;
+      const preferenceBeforeDuration =
+        /id[ée]alement|souhait[ée]|appr[ée]ci[ée]|de pr[ée]f[ée]rence/u.test(
+          before,
+        );
+      const desired =
+        preferenceBeforeDuration ||
+        trailingPreference ||
+        (desiredSignal && !strongRequiredSignal);
       const required =
-        strongRequiredSignal || (!desiredSignal && genericRequiredSignal);
+        !desired &&
+        (strongRequiredSignal || (!desiredSignal && genericRequiredSignal));
+
+      if (employerDuration || negatedDuration) {
+        addEvidence(
+          evidence,
+          text,
+          match,
+          "exclusion",
+          negatedDuration ? "EXP_NEGATED_DURATION" : "EXP_EMPLOYER_HISTORY",
+        );
+      }
+      if (beginnerAlternative) {
+        addEvidence(
+          evidence,
+          text,
+          match,
+          "exclusion",
+          "EXP_BEGINNER_ALTERNATIVE",
+        );
+      }
 
       if (!excluded && (desired || required)) {
         const amount = toAmount(match[pattern.amountGroup] ?? "0");
@@ -268,7 +409,7 @@ export function classifyOffer(offer: NormalizedOffer): ClassificationResult {
 
   const titleJuniorMatch = firstMatch(
     title.normalized.value,
-    /\b(?:junior|debutant|débutant|debutante|débutante|graduate|jeune diplome|jeune diplômé|jeune diplomee|jeune diplômée|premier emploi)\b/gu,
+    /\b(?:junior|debutant|débutant|debutante|débutante|graduate|jeune diplome|jeune diplômé|jeune diplomee|jeune diplômée|premier emploi)(?!\p{L})/gu,
   );
   if (titleJuniorMatch && negativeMatches.length === 0) {
     addEvidence(
@@ -282,9 +423,14 @@ export function classifyOffer(offer: NormalizedOffer): ClassificationResult {
   }
 
   const bodyJuniorPattern =
-    /\b(?:profil junior|debutants? acceptes?|débutants? acceptés?|debutantes? acceptees?|débutantes? acceptées?|jeunes? diplomees?|jeunes? diplômées?|aucune experience (?:n['’]est )?requise|aucune expérience (?:n['’]est )?requise|sans experience requise|sans expérience requise)\b/gu;
+    /\b(?:profil junior|stage et alternance inclus pour les profils juniors|junior ou exp[ée]riment[ée]e?|experience level\s*:\s*entry level|debutants? acceptes?|débutants? acceptés?|debutantes? acceptees?|débutantes? acceptées?|jeunes? diplomees?|jeunes? diplômées?|aucune experience (?:n['’]est )?requise|aucune expérience (?:n['’]est )?requise|sans experience requise|sans expérience requise)(?!\p{L})/gu;
   for (const field of fields.slice(1)) {
-    const match = firstMatch(field.normalized.value, bodyJuniorPattern);
+    const match =
+      firstMatch(field.normalized.value, bodyJuniorPattern) ??
+      firstMatch(
+        field.normalized.value,
+        /\bposte\s+ouvert\s+aux\s+profils?\s+juniors?(?!\p{L})/gu,
+      );
     if (match && negativeMatches.length === 0) {
       const explicitlyAcceptsBeginners =
         /(?:debutants? acceptes?|débutants? acceptés?|debutantes? acceptees?|débutantes? acceptées?|aucune experience (?:n['’]est )?requise|aucune expérience (?:n['’]est )?requise|sans experience requise|sans expérience requise)/u.test(
@@ -360,17 +506,72 @@ export function classifyOffer(offer: NormalizedOffer): ClassificationResult {
       ? false
       : null;
 
-  const titleHasSenior = /\b(?:senior|senior|confirmé|confirme)\b/u.test(
+  const titleSeniorMatch = firstMatch(
     title.normalized.value,
+    /\b(?:s[ée]nior|confirm[ée]e?|exp[ée]riment[ée]e?|lead)(?!\p{L})/gu,
   );
+  const titleOffersJuniorAlternative =
+    titleSeniorMatch !== null &&
+    (/^\s*\(?\s*ou\s+(?:junior|d[ée]butant)/u.test(
+      title.normalized.value.slice(
+        titleSeniorMatch.index + titleSeniorMatch[0].length,
+      ),
+    ) ||
+      /(?:junior|d[ée]butant)\s+ou\s*$/u.test(
+        title.normalized.value.slice(0, titleSeniorMatch.index),
+      ));
+  const titleHasSenior =
+    titleSeniorMatch !== null && !titleOffersJuniorAlternative;
+  if (titleSeniorMatch && titleHasSenior) {
+    addEvidence(
+      evidence,
+      title,
+      titleSeniorMatch,
+      positiveJunior ? "conflict" : "exclusion",
+      positiveJunior ? "SENIOR_TITLE_JUNIOR_CONFLICT" : "EXPLICIT_SENIOR_TITLE",
+    );
+    if (!positiveJunior) claimsJunior = false;
+  }
   if (
-    (titleHasSenior && titleJuniorMatch) ||
+    (titleHasSenior && positiveJunior) ||
     (positiveJunior && negativeMatches.length)
   ) {
     warnings.push({
       code: "CONFLICTING_JUNIOR_SIGNALS",
       severity: "blocking",
       message: "Les signaux explicites de niveau se contredisent.",
+    });
+  }
+  const seniorRole = firstMatch(
+    description.normalized.value,
+    /(?:(?:en tant que(?: profil)?|recherche un[\p{L}\s’'-]{0,12}|profil(?:\s+m[ée]dior\+?\s*\/)?)\s+(?:s[ée]nior|lead)(?!\p{L})|nous (?:recrutons|recherchons)\s+un(?:e|\(e\))?\s+(?:d[ée]veloppeur(?:se|\(se\))?|ing[ée]nieur(?:e|\(e\))?)(?:\s+(?:informatique|devops|cloud|logiciel)){0,2}\s+(?:exp[ée]riment[ée]e?|confirm[ée]e?|s[ée]nior)(?!\p{L}))/gu,
+  );
+  const namedSeniorRole = firstMatch(
+    description.normalized.value,
+    /en tant qu['’]ing[ée]nieur(?:e|\(e\))?(?:\s+(?:os|temps|r[ée]el|cybers[ée]curit[ée]|&|cloud|devops|logiciel|informatique)){0,6}\s+(?:exp[ée]riment[ée]e?|confirm[ée]e?|s[ée]nior)(?!\p{L})/gu,
+  );
+  const experiencedProfile = firstMatch(
+    description.normalized.value,
+    /\bprofil\s+(?:exp[ée]riment[ée]e?|confirm[ée]e?)(?!\p{L})/gu,
+  );
+  const recruitingSenior = firstMatch(
+    description.normalized.value,
+    /\bnous (?:recherchons|recrutons)\s+un(?:e|\(e\)?)?\s+(?:s[ée]nior|lead)(?!\p{L})/gu,
+  );
+  const conflictingRole =
+    seniorRole ?? namedSeniorRole ?? experiencedProfile ?? recruitingSenior;
+  if (positiveJunior && conflictingRole && !titleHasSenior) {
+    addEvidence(
+      evidence,
+      description,
+      conflictingRole,
+      "conflict",
+      "SENIOR_ROLE_JUNIOR_CONFLICT",
+    );
+    warnings.push({
+      code: "CONFLICTING_JUNIOR_SIGNALS",
+      severity: "blocking",
+      message: "Le rôle senior annoncé contredit le signal junior.",
     });
   }
   if (explicitBeginnerAccepted && (minimumExperienceMonths ?? 0) > 0) {

@@ -1,6 +1,6 @@
 {
   "reportVersion": "classifier-validation-report-1.2.0",
-  "evaluatedAt": "2026-09-04T23:08:46.650Z",
+  "evaluatedAt": "2026-09-10T12:37:18.255Z",
   "gateStatus": "passed",
   "representativeReference": {
     "referenceSetVersion": "llm-gold-a-1.0.0",
@@ -8,7 +8,7 @@
     "methodology": "single-blind-llm-pass-a-reference-set",
     "model": "gpt-5.6-terra",
     "reasoningEffort": "medium",
-    "classifierVersion": "classifier-1.2.0",
+    "classifierVersion": "classifier-1.3.7",
     "baselineClassifierVersion": "classifier-1.0.0-draft",
     "collectedAt": "2026-09-03T15:50:32.540Z",
     "rowCount": 200,
@@ -77,7 +77,7 @@
       "validationFraction": 0.3,
       "selection": "highest-hashes"
     },
-    "sha256": "9db183aa4c5fcbe6973a9b1cae02bc6fba3022979358cd1183957f9763d0efa6"
+    "sha256": "d7a40710bd7338dfc86eeb7139fbefc1baf48e90a30a73292d81e27f4276cc98"
   },
   "targetedChallengeReference": {
     "referenceSetVersion": "llm-gold-a-targeted-junior-1.0.0",
@@ -85,7 +85,7 @@
     "methodology": "single-blind-llm-pass-a-targeted-challenge-set",
     "model": "gpt-5.6-terra",
     "reasoningEffort": "medium",
-    "classifierVersion": "classifier-1.2.0",
+    "classifierVersion": "classifier-1.3.7",
     "collectedAt": "2026-09-04T11:47:48.997Z",
     "rowCount": 46,
     "validationRowCount": 46,
@@ -123,12 +123,12 @@
       "validationFraction": 1,
       "selection": "all-rows"
     },
-    "sha256": "dce0f05bf4fb6eb1824f0ab15b186fcbccc178b498a21160709c3853f50fe704"
+    "sha256": "70ffcf305c719136f09349b7666ecb7af4d918992a692e200860e81349b385f5"
   },
   "coverage": {
     "contradictionPredictedPositive": 3,
     "contradictionReferencePositive": 3,
-    "experiencePredicted": 40,
+    "experiencePredicted": 38,
     "positivePredictions": 104,
     "positivePredictionsWithEvidence": 104,
     "representativeLlmEvidenceRows": 60,
@@ -153,9 +153,9 @@
     },
     "resolvedRequiredExperienceExactPrecision": {
       "status": "passed",
-      "numerator": 39,
-      "denominator": 40,
-      "value": 0.975,
+      "numerator": 37,
+      "denominator": 38,
+      "value": 0.9736842105263158,
       "threshold": 0.9,
       "reason": null
     },
@@ -195,13 +195,13 @@
     },
     "statusConfusionMatrix": {
       "classified": {
-        "classified": 77,
-        "ambiguous": 5,
+        "classified": 79,
+        "ambiguous": 3,
         "unclassified": 0
       },
       "ambiguous": {
-        "classified": 2,
-        "ambiguous": 20,
+        "classified": 0,
+        "ambiguous": 22,
         "unclassified": 0
       },
       "unclassified": {
@@ -217,28 +217,41 @@
   },
   "delta": {
     "fromClassifierVersion": "classifier-1.0.0-draft",
-    "toClassifierVersion": "classifier-1.2.0",
-    "changedRowCount": 41,
+    "toClassifierVersion": "classifier-1.3.7",
+    "changedRowCount": 68,
     "changedReviewIds": [
       "a3e0fb4ece88b97e",
       "f4e4228956bd3b7b",
+      "a1ae9599a6e8fd59",
       "079821a736e7f9c3",
+      "72be56f2c0a688db",
       "680870b4a46f488d",
+      "be35b1eb9cd37285",
+      "a8568ff39013f479",
       "a0915c76c46ed4af",
       "484dc08544e63d93",
+      "b2e721257cb3a1a2",
+      "793555fcc5466120",
+      "4cf69924dc80922b",
       "f6fe6a3c81faf0d1",
       "3bb113bb0fb2f0bf",
       "8f646f8abaa923f0",
+      "9f5fa129f374fca3",
       "cac5c0cbc40c7d51",
       "cc133da5a663ac6d",
       "e70a1363b675646c",
+      "e67495979581a1cc",
       "74d0d91ccad54a71",
       "923271c1d66ea201",
       "73654376e703780d",
+      "bbd8c72c66be8a33",
       "93db8e010c369a60",
       "b1e48eb5815fe580",
       "f5732b29ab91e4d9",
+      "41d939114be9fa02",
+      "18380358c055c0c5",
       "c36d70740266c47e",
+      "2dadaa52d33847c2",
       "23e57021f36e766d",
       "934363f6c0fa4594",
       "296e5e95f6f50ea2",
@@ -248,31 +261,49 @@
       "71f4b3b8d35d9f6e",
       "f16dd1ec5c775e2c",
       "0c5022577e6e7a9c",
-      "6f93eec32f5ccf47",
+      "ba659bf1548d15df",
+      "419d9bfb092a58f8",
+      "29202551efa0e5a0",
+      "68b7a49d2a9d0948",
       "91c391141a4eeac8",
       "fcb752de36e589f5",
+      "1dbd2b33f0598740",
       "3570166fa233cf28",
+      "93a481de09db12d0",
+      "74b4f47263944c90",
       "656e602e9857541f",
+      "b098166a24fa7ec0",
+      "03d258f952c71057",
+      "158869993cc6d999",
       "e30a513ab220cdf5",
       "deff7d20b1f97947",
+      "5ab665e627978d09",
+      "1b68402b98ed517b",
       "33e011ce71ea396b",
-      "84ac64219a1a9c7e",
       "4a28543e2d9b3a42",
+      "a03b90147d52f23b",
+      "a7f54c5c65316a58",
+      "fabe463ad71f60e6",
       "fb9ed1e1be7ef3af",
       "cb70492d24a00fac",
-      "5b286c8755daffcc"
+      "5b286c8755daffcc",
+      "ff4771e97a3a0573"
     ],
     "newAmbiguousReviewIds": [
       "a3e0fb4ece88b97e",
       "079821a736e7f9c3",
+      "be35b1eb9cd37285",
+      "a8568ff39013f479",
       "a0915c76c46ed4af",
       "484dc08544e63d93",
       "f6fe6a3c81faf0d1",
       "3bb113bb0fb2f0bf",
       "8f646f8abaa923f0",
+      "9f5fa129f374fca3",
       "cac5c0cbc40c7d51",
       "cc133da5a663ac6d",
       "e70a1363b675646c",
+      "e67495979581a1cc",
       "923271c1d66ea201",
       "73654376e703780d",
       "93db8e010c369a60",
@@ -288,45 +319,50 @@
       "71f4b3b8d35d9f6e",
       "f16dd1ec5c775e2c",
       "0c5022577e6e7a9c",
+      "419d9bfb092a58f8",
       "91c391141a4eeac8",
       "fcb752de36e589f5",
+      "1dbd2b33f0598740",
       "656e602e9857541f",
       "e30a513ab220cdf5",
       "deff7d20b1f97947",
+      "5ab665e627978d09",
       "4a28543e2d9b3a42",
+      "a03b90147d52f23b",
+      "a7f54c5c65316a58",
       "fb9ed1e1be7ef3af",
       "cb70492d24a00fac",
       "5b286c8755daffcc"
     ],
     "fieldDeltas": {
       "status": {
-        "changed": 37,
+        "changed": 46,
         "baselineValidationMatches": 52,
-        "currentValidationMatches": 56,
+        "currentValidationMatches": 58,
         "validationRows": 60
       },
       "claimsJunior": {
-        "changed": 0,
+        "changed": 35,
         "baselineValidationMatches": 59,
-        "currentValidationMatches": 59,
+        "currentValidationMatches": 48,
         "validationRows": 60
       },
       "minimumExperienceMonths": {
-        "changed": 14,
+        "changed": 7,
         "baselineValidationMatches": 52,
         "currentValidationMatches": 52,
         "validationRows": 60
       },
       "beginnerFriendly": {
-        "changed": 37,
+        "changed": 44,
         "baselineValidationMatches": 52,
-        "currentValidationMatches": 56,
+        "currentValidationMatches": 58,
         "validationRows": 60
       },
       "contradictoryJunior": {
-        "changed": 4,
+        "changed": 36,
         "baselineValidationMatches": 58,
-        "currentValidationMatches": 58,
+        "currentValidationMatches": 53,
         "validationRows": 60
       }
     }
@@ -339,9 +375,9 @@
       "scripts/merge-agent-review-200.ts": "1db9a45396b6e538c36a0ccaa35f5c6246f4251ec59849429b720fd8a35aec0e",
       "scripts/merge-targeted-reference.ts": "db73e15e9df367adf89e6b1868b4e676bc538372a3f571e063b3a2b801b3be5b",
       "scripts/reference-annotation-validation.ts": "9ec6f1594c919af74f1c1932dbe55b2eca5ad9620e7331a94554efdd97f07860",
-      "src/domain/classification/classifier.ts": "629c946f0b92dad0f1f4dea975d0c158c64d0f72f4b9b10b551e0f4aa5ffd25b",
-      "src/domain/classification/types.ts": "77a9d660ea656410788f3e3449320ad03b38d25c86a884c55bbdf23e737e5f2e",
-      "src/tests/fixtures/classifier/gold-v1.draft.json": "9d280e48c9dff069b03afb3f11172b51f22d6129efe41a6d5b81e90578636237",
+      "src/domain/classification/classifier.ts": "1571d4f0681130cfd940125cb140d9e80f24a17199de1965e4a133ab550f2529",
+      "src/domain/classification/types.ts": "c262bc8107da4f68a1552979ed2745f5380c92c280bca9928d3a62438189ba26",
+      "src/tests/fixtures/classifier/gold-v1.draft.json": "75d2b01216fe9277b1831c0e6b5f7084daf10a56de036de326f21cbe0a1073ee",
       "src/tests/fixtures/classifier/no-experience.json": "99ce00a1202a944f25505a2f1b08b022e02cae4974816acf5816b067d1bd6452",
       "pnpm-lock.yaml": "687bb4cb730a3a20ea5ae936f7f5d5cb65f5777271f3621305b6e8ffc5388a63"
     }

@@ -1,0 +1,106 @@
+{
+  "classifierVersion": "classifier-1.3.7",
+  "implementation": [
+    {
+      "file": "src/domain/classification/classifier.ts",
+      "sha256": "1571d4f0681130cfd940125cb140d9e80f24a17199de1965e4a133ab550f2529"
+    },
+    {
+      "file": "src/domain/classification/normalize-text.ts",
+      "sha256": "e0f57c8802e4cd40f6cc46695f16cfe4b4a2c7c21d3b5be240f39348937e0139"
+    },
+    {
+      "file": "src/domain/classification/junior-observation.ts",
+      "sha256": "18bd133fbe844ef7fbb158eb569545c514decbd4034ff0e04882c4484c3a80fe"
+    }
+  ],
+  "protocol": "llm-observation-a-2.0.0",
+  "clarifications": "docs/reference/observation-v2-holdout-clarifications.md",
+  "model": "gpt-5.6-terra",
+  "effort": "medium",
+  "passes": 1,
+  "targetedReview": null,
+  "evaluatedAt": "2026-09-10T12:39:22.216Z",
+  "summary": {
+    "reference": {
+      "tp": 15,
+      "fp": 0,
+      "fn": 0,
+      "tn": 185,
+      "count": 200,
+      "exact": 110,
+      "precision": 1,
+      "recall": 1
+    },
+    "challenge": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 0,
+      "count": 0,
+      "exact": 0,
+      "precision": null,
+      "recall": null
+    }
+  },
+  "challengeExactOverlaps": 0,
+  "precision": 1,
+  "recall": 1,
+  "denominator": {
+    "tp": 81,
+    "fp": 3,
+    "fn": 3,
+    "tn": 113,
+    "precision": 0.9642857142857143,
+    "recall": 0.9642857142857143
+  },
+  "gateStatus": "passed",
+  "files": [
+    {
+      "file": "input-1.json",
+      "sha256": "f16e88bcc4133ee396f7631710a755fd788e5b74753b9386c37f2637c05ab5bb"
+    },
+    {
+      "file": "labels-1.json",
+      "sha256": "ddf4f494f146344dec3dbd654640f579a393900d129ac7cf96443cd5c37260f5"
+    },
+    {
+      "file": "input-2.json",
+      "sha256": "ec1fe24e64090f9e02d42da196be59bc5a329fea1a1079161acfba8414dd0a3f"
+    },
+    {
+      "file": "labels-2.json",
+      "sha256": "e93656f04e840ad4bd3281cd0c7252fa14e063b3aaf4b6de7a36c0a17279d519"
+    },
+    {
+      "file": "input-3.json",
+      "sha256": "353be43cb1abe36841e3eb9da2a22914b5014f194291bcc574d5afcdff7d6909"
+    },
+    {
+      "file": "labels-3.json",
+      "sha256": "62e9dd9ae3f682eb5af740ae4164fba7bc26a3cbee782c7d5d8cc232f60f60c1"
+    },
+    {
+      "file": "input-4.json",
+      "sha256": "42128f7783814ceca017f291b3dda12783cf2f6652c4485246bb7125bf71f0f6"
+    },
+    {
+      "file": "labels-4.json",
+      "sha256": "bf160754c9141c8b980335e4452b4fe130df0994de9fec6361bf41f37b1c76e1"
+    },
+    {
+      "file": "input-5.json",
+      "sha256": "45f26390967e7a8ba69f1ac3a18545886bcd14e3fb9cbffcc8140d6f1376a270"
+    },
+    {
+      "file": "labels-5.json",
+      "sha256": "82774e9aad332f6f0f46e84012e8298c0fbc0a3f6340472c660e9706d8fb0ee8"
+    }
+  ],
+  "limitations": [
+    "Blind single-pass LLM holdout, not human-certified truth.",
+    "200 distinct current-dataset texts excluded from the development reference; not a nationally representative sample.",
+    "Engine frozen before annotation; no prediction shown to annotators.",
+    "Passing a finite sample does not certify every offer or every axis."
+  ]
+}

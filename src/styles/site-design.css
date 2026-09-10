@@ -1,0 +1,102 @@
+/* Shared composition extends the approved home, without changing data semantics. */
+.site-shell .trust-page,
+.site-shell .insights-index,
+.site-shell .insight-page,
+.site-shell .explorer {
+  padding-block: var(--space-6) var(--pilot-section);
+  gap: var(--pilot-section);
+}
+.site-shell .trust-page__header,
+.site-shell .insights-index > header,
+.site-shell .explorer__introduction {
+  max-width: none;
+  padding: var(--pilot-hero-padding);
+  border: var(--pilot-rule) solid var(--border);
+  border-radius: var(--pilot-panel-radius);
+  background: var(--pilot-hero-surface);
+}
+.site-shell
+  :is(.trust-page__header, .insights-index > header, .explorer__introduction)
+  h1 {
+  max-width: var(--reading-width);
+  font-size: var(--pilot-title);
+  font-weight: 620;
+  letter-spacing: var(--pilot-letter-heading);
+  line-height: 1.12;
+}
+.site-shell .lead {
+  max-width: var(--reading-width);
+  font-size: var(--pilot-copy);
+  line-height: 1.65;
+}
+.site-shell .eyebrow {
+  color: var(--brand-strong);
+}
+.site-shell .trust-page__navigation nav {
+  border-color: var(--pilot-divider);
+  gap: var(--space-2);
+}
+.site-shell .trust-page__navigation a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--control-min-size);
+  text-underline-offset: var(--pilot-underline-offset);
+}
+.site-shell .trust-page__navigation a:hover {
+  text-decoration: underline;
+}
+.site-shell .trust-page__content h2 {
+  font-weight: 620;
+}
+.site-shell .insight-hero {
+  background: var(--pilot-hero-surface);
+}
+.site-shell .insight-hero__metric {
+  background: var(--surface);
+}
+.site-shell :is(.insight-hero__metric strong, .insight-card__value) {
+  color: var(--foreground);
+  font-weight: 620;
+}
+.site-shell .insight-card {
+  border-top-color: var(--pilot-divider);
+}
+.site-shell .insight-card:focus-within {
+  border-color: var(--brand);
+}
+.site-shell .explorer__count {
+  gap: var(--space-2);
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+.explorer__results-layout {
+  display: grid;
+  gap: var(--space-6);
+}
+.site-shell .explorer__count strong {
+  font-size: var(--pilot-secondary-number);
+  font-weight: 620;
+}
+.site-freshness {
+  padding-block: var(--space-2);
+}
+.pilot-header svg,
+.pilot-footer svg {
+  width: var(--pilot-icon);
+  height: var(--pilot-icon);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .site-shell :is(.insight-card, .trust-page__navigation a) {
+    transition:
+      border-color var(--duration-fast) var(--ease-standard),
+      color var(--duration-fast) var(--ease-standard);
+  }
+}
+@media (max-width: 640px) {
+  .site-shell
+    :is(.trust-page__header, .insights-index > header, .explorer__introduction)
+    h1 {
+    font-size: var(--pilot-title-mobile);
+  }
+}

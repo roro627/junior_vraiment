@@ -8,14 +8,17 @@ import { resolveSiteUrl } from "@/lib/site-url";
 import "@/styles/globals.css";
 
 const geistSans = Geist({
+  preload: false,
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "optional",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
   preload: false,
+  display: "optional",
 });
 
 const siteUrl = resolveSiteUrl();

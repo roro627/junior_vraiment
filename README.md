@@ -350,6 +350,9 @@ L'application publique ne contacte jamais directement France Travail depuis le n
 
 ## Documentation
 
+Reprise opérationnelle : [utilisation des services](docs/20-SERVICES-RUNBOOK.md) et
+[état de travail / prochaine étape](docs/21-HANDOFF.md). Ces guides ne contiennent aucun secret.
+
 | Document | Objet |
 |---|---|
 | [`SPEC.md`](./SPEC.md) | Spécification exécutable du produit et critères d'acceptation |

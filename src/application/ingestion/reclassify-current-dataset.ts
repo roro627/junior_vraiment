@@ -56,10 +56,12 @@ type ReclassifyCurrentDatasetInput = {
   sql: NeonQueryFunction<false, false>;
   classifiedAt: Date;
   concurrency?: number;
+  /** Internal publication preparation: includes offers retained after one absence. */
+  ingestionRunId?: string;
 };
 
 export type ReclassificationSummary = {
-  datasetVersion: string;
+  datasetVersion: string | null;
   classifierVersion: typeof CLASSIFIER_VERSION;
   snapshotCount: number;
   classificationsCreated: number;
@@ -106,12 +108,34 @@ export async function reclassifyCurrentDataset({
   sql,
   classifiedAt,
   concurrency = 8,
+  ingestionRunId,
 }: ReclassifyCurrentDatasetInput): Promise<ReclassificationSummary> {
   if (!Number.isInteger(concurrency) || concurrency < 1 || concurrency > 16) {
     throw new RangeError("La concurrence de reclassification est invalide.");
   }
 
-  const dataset = await readCurrentDataset(sql);
+  const dataset = ingestionRunId ? null : await readCurrentDataset(sql);
+  const scope = ingestionRunId
+    ? await sql`
+        select snapshot.id as "snapshotId"
+        from ingestion_runs run
+        join offers offer on offer.source_id=run.source_id and offer.closed_at is null
+        join offer_snapshots snapshot on snapshot.offer_id=offer.id and snapshot.valid_to is null
+        where run.id=${ingestionRunId} and run.mode='full'
+          and run.status in ('validating','aggregating','succeeded','partial')
+          and exists (
+            select 1 from offer_query_matches matched
+            join source_queries query on query.id=matched.source_query_id
+            where matched.offer_id=offer.id and query.source_id=run.source_id
+              and query.query_set_version=run.query_set_version
+              and query.enabled=true and query.valid_to is null
+          )`
+    : await sql`select snapshot_id as "snapshotId" from published_dataset_offers where dataset_id=${dataset!.datasetId}`;
+  const snapshotIds = scope.map((row) =>
+    z.string().uuid().parse(row["snapshotId"]),
+  );
+  if (snapshotIds.length === 0)
+    throw new Error("Le périmètre à classifier est vide.");
   await syncTechnologyTaxonomy(sql);
   const rows = await sql`
     select
@@ -137,12 +161,15 @@ export async function reclassifyCurrentDataset({
       snapshot.salary_data as "salaryData",
       snapshot.application_url as "applicationUrl",
       snapshot.source_url as "sourceUrl"
-    from published_dataset_offers membership
-    join offer_snapshots snapshot on snapshot.id = membership.snapshot_id
-    join offers offer on offer.id = membership.offer_id
+    from offer_snapshots snapshot
+    join offers offer on offer.id = snapshot.offer_id
     join sources source on source.id = offer.source_id
-    where membership.dataset_id = ${dataset.datasetId}
-    order by membership.offer_id
+    where snapshot.id = any(${snapshotIds}::uuid[])
+      and not exists (
+        select 1 from classifications existing where existing.snapshot_id=snapshot.id
+          and existing.classifier_version=${CLASSIFIER_VERSION}
+      )
+    order by snapshot.id
   `;
   const snapshots = rows.map((row) => snapshotRowSchema.parse(row));
   let classificationsCreated = 0;
@@ -169,13 +196,11 @@ export async function reclassifyCurrentDataset({
         technology.classification_id,
         technology.technology_id
       ))::integer as "technologyMentionCount"
-    from published_dataset_offers membership
-    join classifications classification
-      on classification.snapshot_id = membership.snapshot_id
-      and classification.classifier_version = ${CLASSIFIER_VERSION}
+    from classifications classification
     left join offer_snapshot_technologies technology
       on technology.classification_id = classification.id
-    where membership.dataset_id = ${dataset.datasetId}
+    where classification.snapshot_id = any(${snapshotIds}::uuid[])
+      and classification.classifier_version = ${CLASSIFIER_VERSION}
   `;
   const classificationCount = z
     .number()
@@ -188,14 +213,14 @@ export async function reclassifyCurrentDataset({
     .nonnegative()
     .parse(verification?.["technologyMentionCount"]);
 
-  if (classificationCount !== snapshots.length) {
+  if (classificationCount !== snapshotIds.length) {
     throw new Error("La reclassification du dataset est incomplète.");
   }
 
   return {
-    datasetVersion: dataset.datasetVersion,
+    datasetVersion: dataset?.datasetVersion ?? null,
     classifierVersion: CLASSIFIER_VERSION,
-    snapshotCount: snapshots.length,
+    snapshotCount: snapshotIds.length,
     classificationsCreated,
     classificationCount,
     technologyMentionCount,

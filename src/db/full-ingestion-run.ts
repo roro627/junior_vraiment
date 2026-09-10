@@ -5,6 +5,23 @@ import {
   type PartitionVolume,
 } from "@/domain/ingestion/volume-policy";
 
+export class IngestionPaginationIncompleteError extends Error {
+  override name = "IngestionPaginationIncompleteError";
+
+  constructor() {
+    super("La pagination complète de la requête n'est pas prouvée.");
+  }
+}
+
+export class IngestionRecoveryNotAllowedError extends Error {
+  override name = "IngestionRecoveryNotAllowedError";
+  constructor() {
+    super(
+      "La tentative précédente doit être en échec ou annulée avant une recollecte.",
+    );
+  }
+}
+
 const checkpointSchema = z
   .strictObject({
     nextRangeStart: z.number().int().min(0).nullable(),
@@ -92,6 +109,19 @@ export async function beginFullIngestionRun({
   }
   if (queries.length === 0) {
     throw new Error("Le registre actif ne contient aucune requête.");
+  }
+
+  if (attempt > 1) {
+    const previous = await sql`
+      select run.id from ingestion_runs run
+      join sources source on source.id = run.source_id
+      where source.key = 'france-travail'
+        and run.business_date = ${businessDate}
+        and run.query_set_version = ${querySetVersion}
+        and run.mode = 'full' and run.attempt = ${attempt - 1}
+        and run.status in ('failed', 'cancelled')
+    `;
+    if (previous.length !== 1) throw new IngestionRecoveryNotAllowedError();
   }
 
   const runRows = await sql`
@@ -529,7 +559,7 @@ export async function completeFullQuery(input: {
     returning run_query.id
   `;
   if (rows.length !== 1) {
-    throw new Error("La pagination complète de la requête n'est pas prouvée.");
+    throw new IngestionPaginationIncompleteError();
   }
 }
 

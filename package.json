@@ -25,6 +25,7 @@
     "test:lighthouse": "lhci autorun",
     "classifier:validate:local": "tsx scripts/merge-agent-review-200.ts && tsx scripts/merge-targeted-reference.ts && tsx scripts/evaluate-classifier-reference.ts && tsx scripts/verify-classifier-validation-report.ts",
     "classifier:report:check": "tsx scripts/verify-classifier-validation-report.ts",
+    "observation:report:check": "tsx scripts/verify-observation-validation-report.ts",
     "query-set:validate:local": "tsx scripts/merge-query-set-reference.ts --directory=.local/query-set-validation-v3 --query-set=docs/reference/query-set.observed-v3-draft.json && tsx scripts/evaluate-query-set-reference.ts --directory=.local/query-set-validation-v3 --query-set=docs/reference/query-set.observed-v3-draft.json --output=docs/reference/query-set-v3-validation-report.json && tsx scripts/promote-query-set.ts && tsx scripts/verify-query-set-validation-report.ts",
     "query-set:report:check": "tsx scripts/verify-query-set-validation-report.ts",
     "storybook": "storybook dev -p 6006",
@@ -36,7 +37,7 @@
     "classifier:reclassify-current": "tsx scripts/reclassify-current-dataset.ts",
     "insights:publish:initial": "tsx scripts/publish-initial-insights.ts",
     "trigger:dev": "trigger dev start",
-    "trigger:deploy": "trigger deploy"
+    "trigger:deploy": "pnpm classifier:report:check && pnpm observation:report:check && trigger deploy"
   },
   "dependencies": {
     "@neondatabase/serverless": "1.1.0",

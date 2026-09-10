@@ -17,6 +17,7 @@ export async function publishDataset({
         quality_summary->>'decision' as quality_decision
       from published_datasets
       where id = ${datasetId}
+        and length(dataset_version) between 1 and 100
         and status in ('validated', 'published')
         and ingestion_run_id is not null
         and quality_summary->>'decision' in ('publish', 'publish_partial')

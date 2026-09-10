@@ -1,4 +1,5 @@
 import type { InsightOgModel } from "@/lib/seo/build-og-model";
+import { ogTokens } from "@/styles/og-tokens";
 
 export function InsightOgCard({ model }: { model: InsightOgModel }) {
   return (
@@ -9,8 +10,8 @@ export function InsightOgCard({ model }: { model: InsightOgModel }) {
         width: "100%",
         height: "100%",
         padding: "54px 64px",
-        background: "#f7f5fb",
-        color: "#17152b",
+        background: ogTokens.surface,
+        color: ogTokens.ink,
         fontFamily: "Geist",
       }}
     >
@@ -31,8 +32,8 @@ export function InsightOgCard({ model }: { model: InsightOgModel }) {
             width: 46,
             height: 46,
             borderRadius: 11,
-            background: "#6541c2",
-            color: "#ffffff",
+            background: ogTokens.brand,
+            color: ogTokens.onBrand,
           }}
         >
           J
@@ -45,7 +46,7 @@ export function InsightOgCard({ model }: { model: InsightOgModel }) {
           style={{
             display: "flex",
             minWidth: 340,
-            color: "#6541c2",
+            color: ogTokens.ink,
             fontSize: 132,
             fontWeight: 760,
             letterSpacing: "-8px",
@@ -67,7 +68,7 @@ export function InsightOgCard({ model }: { model: InsightOgModel }) {
           >
             {model.title}
           </div>
-          <div style={{ display: "flex", color: "#5d5870", fontSize: 25 }}>
+          <div style={{ display: "flex", color: ogTokens.muted, fontSize: 25 }}>
             {model.fraction} · {model.sample}
           </div>
         </div>
@@ -78,8 +79,8 @@ export function InsightOgCard({ model }: { model: InsightOgModel }) {
           display: "flex",
           justifyContent: "space-between",
           paddingTop: 24,
-          borderTop: "1px solid #dcd7e8",
-          color: "#5d5870",
+          borderTop: `1px solid ${ogTokens.border}`,
+          color: ogTokens.muted,
           fontSize: 20,
         }}
       >

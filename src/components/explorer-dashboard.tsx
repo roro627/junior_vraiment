@@ -37,22 +37,12 @@ export async function ExplorerDashboard({
   const analyticsContext = buildAnalyticsContext(offers.response.meta);
 
   return (
-    <main className="explorer" id="contenu">
+    <div className="explorer__results-layout">
       <PageViewAnalytics route_name="explorer" context={analyticsContext} />
-      <header className="explorer__introduction">
-        <div>
-          <p className="eyebrow">Observations vérifiables</p>
-          <h1>Explorer les offres</h1>
-          <p className="lead">
-            Retrouvez les annonces derrière les indicateurs et ouvrez chaque
-            preuve de classification.
-          </p>
-        </div>
-        <p className="explorer__count" aria-live="polite">
-          <strong>{formatInteger(offers.response.meta.sampleSize)}</strong>
-          <span>offres correspondent à vos critères</span>
-        </p>
-      </header>
+      <p className="explorer__count" aria-live="polite">
+        <strong>{formatInteger(offers.response.meta.sampleSize)}</strong>
+        <span>offres correspondent à vos critères</span>
+      </p>
 
       {corrected ? (
         <p className="data-warning" role="status">
@@ -71,6 +61,6 @@ export async function ExplorerDashboard({
         query={safeQuery}
         analyticsContext={analyticsContext}
       />
-    </main>
+    </div>
   );
 }

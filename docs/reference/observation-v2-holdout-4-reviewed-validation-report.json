@@ -1,0 +1,132 @@
+{
+  "classifierVersion": "classifier-1.3.4",
+  "implementation": [
+    {
+      "file": "src/domain/classification/classifier.ts",
+      "sha256": "9068159e234429d1b02dbeebb6368033e52116e8949c31a206370bb5abac2210"
+    },
+    {
+      "file": "src/domain/classification/normalize-text.ts",
+      "sha256": "e0f57c8802e4cd40f6cc46695f16cfe4b4a2c7c21d3b5be240f39348937e0139"
+    },
+    {
+      "file": "src/domain/classification/junior-observation.ts",
+      "sha256": "18bd133fbe844ef7fbb158eb569545c514decbd4034ff0e04882c4484c3a80fe"
+    }
+  ],
+  "protocol": "llm-observation-a-2.0.0",
+  "clarifications": "docs/reference/observation-v2-holdout-clarifications.md",
+  "model": "gpt-5.6-terra",
+  "effort": "medium",
+  "passes": 1,
+  "targetedReview": {
+    "authorizedAt": "2026-09-09",
+    "protocol": "docs/reference/observation-v2-targeted-review.md",
+    "entries": 25,
+    "predictionsShown": false
+  },
+  "evaluatedAt": "2026-09-10T12:17:23.264Z",
+  "summary": {
+    "reference": {
+      "tp": 5,
+      "fp": 3,
+      "fn": 0,
+      "tn": 192,
+      "count": 200,
+      "exact": 179,
+      "precision": 0.625,
+      "recall": 1
+    },
+    "challenge": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 0,
+      "count": 0,
+      "exact": 0,
+      "precision": null,
+      "recall": null
+    }
+  },
+  "challengeExactOverlaps": 0,
+  "precision": 0.625,
+  "recall": 1,
+  "denominator": {
+    "tp": 73,
+    "fp": 6,
+    "fn": 2,
+    "tn": 119,
+    "precision": 0.9240506329113924,
+    "recall": 0.9733333333333334
+  },
+  "gateStatus": "failed",
+  "files": [
+    {
+      "file": "input-1.json",
+      "sha256": "ee21c6ec7bf28863a5774ff96f0645c884b0af8b0c64fe5b39ce740228b95d2c"
+    },
+    {
+      "file": "labels-1.json",
+      "sha256": "0590ea340e4b895d7749e375ee959ea737dc6db0995be3c214af715416114eb9"
+    },
+    {
+      "file": "review-1.json",
+      "sha256": "7ce1f13274d5f5b50bd266f0ba82a882465ad45fbd5543557f838b638d62ca9b"
+    },
+    {
+      "file": "input-2.json",
+      "sha256": "02ba262f08de1ae87227a55732a77085a0f4a2c8b4c906abc848872eac24102f"
+    },
+    {
+      "file": "labels-2.json",
+      "sha256": "29e04b9c49f5ef2ecdf76bb4aa9ada444cb6c118f4725903b8d8a9ca94ac546b"
+    },
+    {
+      "file": "review-2.json",
+      "sha256": "68357ff7d42e8914e3756fd10d1fbea9a9323574ced9b780f5184f749fcbe918"
+    },
+    {
+      "file": "input-3.json",
+      "sha256": "3ccf78618dc9ebc06a5c5e10c9d681c1ba453353a6eee0bb422262fb4730e8cb"
+    },
+    {
+      "file": "labels-3.json",
+      "sha256": "cf8937181f8dc05a9a36dab97c5717397930bcfc057a6070eb5f7758a02e0935"
+    },
+    {
+      "file": "review-3.json",
+      "sha256": "65f23b3824eba80a22ab864a5b90fbc2fd5360230494602416e06671aabf35c6"
+    },
+    {
+      "file": "input-4.json",
+      "sha256": "4e5066ee78252972ddfe7b16e4809d818c7defcfe2f167dae6d26a25e5e2b633"
+    },
+    {
+      "file": "labels-4.json",
+      "sha256": "fccd19314685c07a5a865a47855768ed1359fee1cee17db93e204662c704a737"
+    },
+    {
+      "file": "review-4.json",
+      "sha256": "43a958a460b8ea7373a9dbc756413b09ad500409866e7ddf8b7e062bae98c104"
+    },
+    {
+      "file": "input-5.json",
+      "sha256": "d68d00f6b199f47d0e37f92453df77ecded23e9e4f3e4715ef16ecccc0b2141d"
+    },
+    {
+      "file": "labels-5.json",
+      "sha256": "4ab44254557d69ed3204144232943cb22b0d777dc783fb2f0ec84edf94547c11"
+    },
+    {
+      "file": "review-5.json",
+      "sha256": "00fd6f557dadcc666d0376c23c1e49739d4ac421e538fcccfc823ea89a6904bd"
+    }
+  ],
+  "limitations": [
+    "Blind single-pass LLM holdout, not human-certified truth.",
+    "200 distinct current-dataset texts excluded from the development reference; not a nationally representative sample.",
+    "Engine frozen before annotation; no prediction shown to annotators.",
+    "Targeted adjudication of disagreements: original blind results retained separately; this is not an untouched single-pass holdout.",
+    "Passing a finite sample does not certify every offer or every axis."
+  ]
+}

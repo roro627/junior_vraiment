@@ -4,6 +4,7 @@ import examples from "../../../docs/reference/openapi-examples.json";
 
 import {
   API_MAX_QUERY_STRING_LENGTH,
+  classificationSchema,
   dataStatusResponseSchema,
   offersResponseSchema,
   offersSearchParamsSchema,
@@ -16,6 +17,34 @@ import {
 } from "./contracts";
 
 describe("public API contracts", () => {
+  it("keeps a resolved observation separate from ambiguous accessibility", () => {
+    const value = {
+      status: "ambiguous",
+      claimsJunior: true,
+      beginnerFriendly: null,
+      contradictoryJunior: null,
+      classifierVersion: "fixture",
+      warnings: ["BEGINNER_EXPERIENCE_CONFLICT"],
+      juniorObservation: {
+        version: "junior-observation-2.0.0",
+        status: "resolved",
+        contradictory: true,
+      },
+    };
+    expect(classificationSchema.parse(value)).toEqual(value);
+    expect(
+      classificationSchema.safeParse({
+        ...value,
+        juniorObservation: { ...value.juniorObservation, status: "unknown" },
+      }).success,
+    ).toBe(false);
+    expect(
+      classificationSchema.safeParse({
+        ...value,
+        juniorObservation: { ...value.juniorObservation, contradictory: null },
+      }).success,
+    ).toBe(false);
+  });
   it("validates every documented response fixture", () => {
     expect(overviewResponseSchema.parse(examples.overview)).toEqual(
       examples.overview,
