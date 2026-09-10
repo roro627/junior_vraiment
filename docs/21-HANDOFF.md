@@ -6,8 +6,10 @@ Ce fichier décrit des vérifications réelles, pas des accès garantis dans un 
 ## Production vérifiée
 
 - Site : https://junior-vraiment.vercel.app ; identité orange étendue à tout le site.
-- Web promu : `dpl_JCReGvFtdzqtCphM2TsNEVzRJsnY`. Le commit final et son déploiement
-  automatique sont encore à vérifier avant la fin de cette release.
+- Commit applicatif publié : `e9ac649`. Déploiement GitHub automatique réellement prêt et aliasé :
+  `dpl_5kmivPeC4GYmvsW45DzqYvhGgC4R` (`junior-vraiment-mxf3cp2th-roro627s-projects.vercel.app`).
+  Le contrôle public de santé réussit sur ce déploiement. D'éventuels commits documentaires suivants
+  ne changent pas ce code applicatif ; utiliser la CLI pour lire le dernier déploiement courant.
 - Worker Trigger : `20260910.2`, moteur déterministe `classifier-1.3.7`.
 - Méthode publiée : `junior-contradiction-2.0.0` (ADR 0014).
 - Republication réussie : `run_06g8mog128tp6vv5tkq40inl01`, enfant de santé terminé.
@@ -39,8 +41,11 @@ Ce sont les offres observées via France Travail, pas une estimation représenta
   l'annotation hors ligne A Terra medium et à la relecture ciblée aveugle.
 - Contrôles réels : 341 tests unitaires réussis, 25 live opt-in ignorés ; deux tests d'ingestion
   PostgreSQL sur QA réussis ; builds Next et Storybook réussis ; neuf audits Lighthouse passent
-  leurs budgets inchangés ; 113 E2E locaux et 113 E2E publics avant v2 réussis (3 ignorés).
-  Nouveau passage public après v2 en cours : consigner son résultat avant de conclure.
+  leurs budgets inchangés ; 113 E2E locaux et 113 E2E publics après v2 réussis (3 ignorés).
+  Au premier test après bascule, une réponse CDN v1 persistait temporairement alors que le rendu
+  utilisait v2. Après renouvellement normal du cache, les 113 tests passent sans modification.
+- CI du commit applicatif : Quality `34479941509`, Security `34479941613` et Database migration
+  check `34479941316` réussis. Cela inclut les rapports figés, CodeQL, build et Storybook sur Linux.
 - Audit dépendances production : aucune vulnérabilité connue lors du contrôle.
 
 ## Incident de release résolu
@@ -74,9 +79,12 @@ automatiquement l'accès. Sur une autre machine, revérifier authentification et
 - E2E Windows : deux workers pour éviter les timeouts sous charge.
 - Anciennes maquettes supprimées volontairement par le propriétaire : ne pas restaurer.
 
-## Avant de clore cette release
+## Suite opérationnelle
 
-1. Finir les contrôles publics après v2, format/lint/types et contrôle du dépôt.
-2. Commit/push du lot autorisé, vérifier CI et déploiement final, puis actualiser cet état.
-3. Continuer ensuite la surveillance planifiée existante ; aucune configuration humaine manquante
-   établie. Ne pas présenter l'historique encore court comme une longue stabilité démontrée.
+La release applicative est publiée, les contrôles ci-dessus réussissent et les accès sont présents.
+Continuer la surveillance planifiée existante des collectes et alertes ; aucune nouvelle action
+humaine nécessaire établie. Ne pas présenter l'historique encore court comme une longue stabilité
+démontrée, ni confondre une nouvelle méthode avec une hausse réelle du marché.
+
+Les suppressions de deux anciennes PNG décidées par le propriétaire sont versionnées ; elles
+restent récupérables dans Git. Aucun secret ni annotation privée n'a été ajouté au commit.

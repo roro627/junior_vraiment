@@ -445,4 +445,7 @@ republication réussie. Aucun seuil statistique ni contrat API assoupli.
 
 Contrôles : 341 tests unitaires réussis (25 live opt-in ignorés), deux tests PostgreSQL QA réussis,
 113 E2E locaux réussis (3 ignorés), builds Next/Storybook réussis, neuf audits Lighthouse réussis,
-audit production sans vulnérabilité connue. Résultat final public et CI : voir le handoff courant.
+audit production sans vulnérabilité connue. Après v2 : 113 E2E publics réussis (3 ignorés).
+Commit applicatif e9ac649 : Quality 34479941509, Security 34479941613 et Database migration check
+34479941316 réussis. Déploiement automatique dpl_5kmivPeC4GYmvsW45DzqYvhGgC4R prêt et aliasé
+sur le domaine public ; contrôle de santé réussi. Dernier état : voir le handoff courant.
