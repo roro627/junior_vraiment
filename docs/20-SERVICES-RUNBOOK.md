@@ -234,6 +234,20 @@ web et worker. Générer de l'aléa cryptographique (au moins 32 octets) et l'é
 le mécanisme sécurisé, sans imprimer la valeur. La rotation du curseur invalide les anciens liens
 paginés ; l'application doit revenir à un curseur sûr. Ne pas régénérer à chaque build.
 
+### Blocage de volume et fraîcheur
+
+Un échec `volume_anomaly_detected` suivi d'alertes de santé GitHub et Trigger peut être
+un seul incident en cascade. Lire le run réel avec `scripts/inspect-ingestion-run.ts`,
+comparer les volumes par partition à son dernier succès, vérifier pagination, quarantaine,
+volume global et périmètre inchangé. Ne jamais désactiver les alertes pour rendre le statut vert.
+
+Depuis `ingestion-quality-1.3.0` (ADR 0015), les hausses locales >60 % sont des avertissements
+audités ; les pertes locales matérielles et la garde globale ±40 % restent bloquantes.
+Une hausse n'est pas à elle seule une preuve de qualité : confirmer la réponse source et les
+autres gardes. Après correction validée et déployée, utiliser une nouvelle tentative bornée
+de recollecte avec le timestamp planifié réellement observé, sans effacer les anciens runs.
+Vérifier ensuite publication, santé enfant, API publique et workflow `scheduled-health.yml`.
+
 ## 9. Sentry et PostHog
 
 Sentry : organisation `roro000`, projet `junior-vraiment`, région Allemagne selon docs/18.

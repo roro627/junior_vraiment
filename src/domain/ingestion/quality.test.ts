@@ -23,14 +23,16 @@ function qualityInput(
 }
 
 describe("evaluateCompleteIngestionQuality", () => {
-  it("persists small-volume warnings without overriding integrity blockers", () => {
-    const volumeWarnings = [{ queryId: "fixture", previous: 1, current: 2 }];
+  it("persists partition-volume warnings without overriding integrity blockers", () => {
+    const volumeWarnings = [
+      { queryId: "software-engineer", previous: 24, current: 44 },
+    ];
     const result = evaluateCompleteIngestionQuality(
       qualityInput({ volumeWarnings }),
     );
     expect(result.decision).toBe("publish");
     expect(result.volumeWarnings).toEqual(volumeWarnings);
-    expect(result.qualityVersion).toBe("ingestion-quality-1.2.0");
+    expect(result.qualityVersion).toBe("ingestion-quality-1.3.0");
     expect(
       evaluateCompleteIngestionQuality(
         qualityInput({ volumeWarnings, volumeAnomalyDetected: true }),
@@ -60,7 +62,7 @@ describe("evaluateCompleteIngestionQuality", () => {
     expect(evaluateCompleteIngestionQuality(input)).toMatchObject({
       decision: "publish",
       volumeWarnings,
-      qualityVersion: "ingestion-quality-1.2.0",
+      qualityVersion: "ingestion-quality-1.3.0",
     });
     for (const blocker of [
       { paginationComplete: false },

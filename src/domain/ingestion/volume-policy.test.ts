@@ -9,21 +9,26 @@ describe("partition volume guard", () => {
     [1, 0],
     [4, 0],
     [5, 1],
-  ])("records small changes %s → %s without blocking", (previous, current) => {
-    const partition = { queryId: "fixture", previous, current };
-    expect(assessPartitionVolumes([partition])).toEqual({
-      blocking: false,
-      warnings: [partition],
-    });
-  });
-  it.each([
     [1, 6],
     [5, 10],
     [100, 161],
+    [24, 44],
+    [138, 233],
+  ])(
+    "records growth or small losses %s → %s without blocking",
+    (previous, current) => {
+      const partition = { queryId: "fixture", previous, current };
+      expect(assessPartitionVolumes([partition])).toEqual({
+        blocking: false,
+        warnings: [partition],
+      });
+    },
+  );
+  it.each([
     [5, 0],
     [6, 1],
     [10, 3],
-  ])("blocks material growth or losses %s → %s", (previous, current) => {
+  ])("blocks material losses %s → %s", (previous, current) => {
     expect(
       assessPartitionVolumes([{ queryId: "fixture", previous, current }])
         .blocking,
@@ -54,7 +59,7 @@ describe("partition volume guard", () => {
     const smallLoss = { queryId: "small-loss", previous: 1, current: 0 };
     for (const material of [
       { queryId: "loss", previous: 5, current: 0 },
-      { queryId: "growth", previous: 5, current: 10 },
+      { queryId: "larger-loss", previous: 100, current: 30 },
     ]) {
       expect(assessPartitionVolumes([smallLoss, material])).toEqual({
         blocking: true,

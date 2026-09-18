@@ -23,7 +23,9 @@ export function assessPartitionVolumes(partitions: readonly PartitionVolume[]) {
     }
     const delta = current - previous;
     if (previous === 0 || Math.abs(delta) * 100 <= previous * 60) continue;
-    if (Math.abs(delta) < MINIMUM_BLOCKING_CHANGE) {
+    // Growth in overlapping keyword partitions does not prove lost coverage.
+    // Keep it auditable; the independent global-volume and integrity gates remain.
+    if (delta > 0 || Math.abs(delta) < MINIMUM_BLOCKING_CHANGE) {
       warnings.push(partition);
     } else {
       blocking = true;

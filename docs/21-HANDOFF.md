@@ -1,4 +1,28 @@
-# Reprise — 10 septembre 2026
+# Reprise — 18 septembre 2026
+
+## Intervention du 18 septembre — vérification en cours
+
+Les collectes du 12 au 18 ont été bloquées par des hausses de volume locales, sans
+perte de pagination ni quarantaine. La fraîcheur restait au 11 ; les échecs GitHub
+de santé sont la conséquence du même incident, pas une panne GitHub. Voir ADR 0015.
+
+- Worker `20260918.1` réellement déployé ; qualité `ingestion-quality-1.3.0`.
+- Recollecte du 18, tentative 2 : `run_06gb6h443hlp71ja5p1uastl01`, lancée à
+  06:46:47 UTC. Encore en cours au moment de cette note : ne pas annoncer la résolution.
+- Les protections globales ±40 %, pertes locales, pagination, validation et preuves restent
+  actives. Classificateur `1.3.7` et méthodologie KPI inchangés. Alertes non désactivées.
+- Validation locale : format, lint, typecheck, 343 tests unitaires (25 live ignorés),
+  rapports figés et build Next réussis ; deux tests d'ingestion PostgreSQL réussis sur QA.
+- QA dédiée `br-rough-queen-b2q3jba3`, expiration 19 septembre 06:00 UTC ; aucune fixture
+  de cette intervention injectée dans la production.
+- Vercel Ready, aucun log 5xx retourné sur 24 h ; audit des dépendances production sans
+  vulnérabilité connue. Rétention Trigger du 13 terminée avec succès.
+- Sentry non vérifié : navigateur intégré sur écran de connexion, aucun Chrome connecté
+  au navigateur d'agent et aucun jeton API de lecture disponible. Ne pas confondre DSN et jeton.
+
+La section ci-dessous décrit les contrôles historiques du **10 septembre**, pas l'état actuel.
+
+## Historique de reprise — 10 septembre 2026
 
 Lire d'abord README, SPEC, AGENTS puis [le guide des services](20-SERVICES-RUNBOOK.md).
 Ce fichier décrit des vérifications réelles, pas des accès garantis dans un nouveau checkout.

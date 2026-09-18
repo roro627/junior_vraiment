@@ -883,6 +883,12 @@ une offre restent inchangés. Ce n'est ni une modification du classificateur ni 
 
 Une anomalie ne prouve pas une panne ; elle bloque ou marque la publication selon sa sévérité.
 
+Depuis `ingestion-quality-1.3.0` (18 septembre 2026), les hausses locales >60 % restent
+signalées dans `volumeWarnings` mais ne bloquent plus seules la publication. Les baisses
+matérielles et le contrôle global ±40 % restent bloquants, ainsi que toutes les portes
+d'intégrité. Voir l'[ADR 0015](adr/0015-partition-growth-warnings.md) pour le diagnostic,
+les limites et la reprise conservant les anciens runs.
+
 ---
 
 ## 20. Jeu de vérité et revue
