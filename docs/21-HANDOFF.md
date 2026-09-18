@@ -28,8 +28,16 @@ de santé sont la conséquence du même incident, pas une panne GitHub. Voir ADR
   de cette intervention injectée dans la production.
 - Vercel Ready, aucun log 5xx retourné sur 24 h ; audit des dépendances production sans
   vulnérabilité connue. Rétention Trigger du 13 terminée avec succès.
-- Sentry non vérifié : navigateur intégré sur écran de connexion, aucun Chrome connecté
-  au navigateur d'agent et aucun jeton API de lecture disponible. Ne pas confondre DSN et jeton.
+- Sentry vérifié ensuite le 18 via la session Chrome du propriétaire : projet
+  `junior-vraiment`, tous environnements, aucun incident trouvé sur les sept derniers jours
+  sans filtre de résolution. Les six tickets historiques `JUNIOR-VRAIMENT-1` à `-6`
+  remontaient aux 5–6 septembre : tests de raccordement et erreurs locales de développement
+  (`NoPublishedDatasetError` et rendu React, environnement development). Résolus dans
+  l'interface après examen et contrôle de santé public réussi ; événements conservés,
+  alertes et filtres inchangés. Aucun nouveau correctif applicatif nécessaire pour ce triage.
+- L'accès Chrome est une session réelle mais non garanti dans un autre chat. Utiliser le
+  skill Chrome, revérifier la connexion ; ne jamais extraire cookies ou jetons du profil.
+  Le DSN ne fournit toujours pas d'accès API de lecture. Aucun blocage Sentry restant établi.
 
 La section ci-dessous décrit les contrôles historiques du **10 septembre**, pas l'état actuel.
 
