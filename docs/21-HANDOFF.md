@@ -1,18 +1,29 @@
 # Reprise — 18 septembre 2026
 
-## Intervention du 18 septembre — vérification en cours
+## Intervention du 18 septembre — collecte rétablie
 
 Les collectes du 12 au 18 ont été bloquées par des hausses de volume locales, sans
 perte de pagination ni quarantaine. La fraîcheur restait au 11 ; les échecs GitHub
 de santé sont la conséquence du même incident, pas une panne GitHub. Voir ADR 0015.
 
 - Worker `20260918.1` réellement déployé ; qualité `ingestion-quality-1.3.0`.
-- Recollecte du 18, tentative 2 : `run_06gb6h443hlp71ja5p1uastl01`, lancée à
-  06:46:47 UTC. Encore en cours au moment de cette note : ne pas annoncer la résolution.
+- Recollecte du 18, tentative 2 : `run_06gb6h443hlp71ja5p1uastl01`, réussie à
+  07:07:39 UTC après 20,8 minutes. 566/566 requêtes, 696 pages, 30 176 résultats
+  tous valides, zéro quarantaine ; 2 386 offres distinctes observées.
+- Dataset `4238b7e6-ba2a-4313-96c1-5ba3f4f733bd` publié à 07:07:37.305 UTC,
+  cutoff réel 07:07:32.961 UTC ; 3 008 membres (inclut les offres conservées selon
+  les règles d'absence). Aucun ancien run réécrit, aucune clôture lors de cette reprise.
+- Santé Trigger `run_06gb6lstc3eao4c5ps08d3qm01` réussie ; contrôle public réussi ;
+  GitHub Scheduled production health `35318017486` réussi après publication.
 - Les protections globales ±40 %, pertes locales, pagination, validation et preuves restent
   actives. Classificateur `1.3.7` et méthodologie KPI inchangés. Alertes non désactivées.
 - Validation locale : format, lint, typecheck, 343 tests unitaires (25 live ignorés),
-  rapports figés et build Next réussis ; deux tests d'ingestion PostgreSQL réussis sur QA.
+  rapports figés et build Next réussis ; suite DB sur QA : 52 réussis, 3 ignorés,
+  incluant les deux tests d'ingestion. 113 E2E publics réussis avant puis après la nouvelle
+  publication (3 répétitions responsive ignorées dans chaque campagne).
+- Commit correctif `fa118cb`. CI Quality `35316580947`, Security `35316580921`,
+  E2E et budgets Lighthouse `35316826409` réussis. Déploiement Vercel
+  `dpl_37owVwFW3nijSiCGXdC1ZKGMfr7w` prêt et réellement aliasé au domaine public.
 - QA dédiée `br-rough-queen-b2q3jba3`, expiration 19 septembre 06:00 UTC ; aucune fixture
   de cette intervention injectée dans la production.
 - Vercel Ready, aucun log 5xx retourné sur 24 h ; audit des dépendances production sans
