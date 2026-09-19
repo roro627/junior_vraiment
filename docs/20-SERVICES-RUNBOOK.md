@@ -302,6 +302,11 @@ Les six campagnes antérieures ont servi à trouver des défauts et restent arch
 
 `pnpm exec vitest run --maxWorkers=4` exécute toute la suite avec une concurrence bornée si
 le lancement par défaut mobilise trop de processus Windows. Ce n'est pas une sélection de tests.
+Réduire à `--maxWorkers=1` si le poste manque de ressources. Pour la suite PostgreSQL
+sur une branche QA vérifiée, avec `RUN_LIVE_DATABASE=1` et les deux connexions QA dans
+le processus, utiliser `pnpm exec vitest run src/db --environment=node --maxWorkers=1 --testTimeout=30000`.
+Ce délai couvre les scénarios fonctionnels multi-étapes distants ; il ne change aucun
+budget p95, assertion ou contrôle de production. Ne jamais lancer ces fixtures sur la production.
 Pour Lighthouse, `node scripts/lighthouse-local.mjs` utilise les mêmes trois audits par page
 et les budgets de `lighthouserc.json`, avec un profil Chrome jetable dans `.local/`.
 Il ne touche ni au Chrome connecté du propriétaire ni à ses cookies. Les profils sont conservés

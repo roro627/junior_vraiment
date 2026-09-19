@@ -22,12 +22,35 @@ le filtre actif, sans autre page ni quarantaine. ADR 0017 documente le correctif
 `ingestion-quality-1.4.0` : perte locale rapprochée des observations de tout le run,
 seuils inchangés et avertissement conservé. L'évaluation en lecture seule du run 2 avec
 ce candidat passe, sans modifier sa décision historique.
-Worker `20260919.2` réellement déployé ; tentative 3 lancée :
-`run_06gbmglkvhgjo6e9ojfoj6u801`. **Publication et santé restent à vérifier ; la
-production ne doit pas être déclarée rétablie à ce stade.**
+Worker `20260919.2` réellement déployé ; tentative 3
+`run_06gbmglkvhgjo6e9ojfoj6u801` réussie à **20:22:33 UTC (22:22 Paris)**,
+en 20,7 minutes : 566/566 requêtes, 698 pages, 31 061 résultats tous valides,
+zéro quarantaine, 2 461 offres distinctes observées. Toutes les portes qualité passent ;
+les avertissements de volume restent audités, dont la partition 8 → 3 / quatre absentes.
+Dataset `eb35bb51-5592-4916-a534-9059fb5bf683` réellement publié, 3 221 membres
+(incluant la conservation selon les règles d'absence), cutoff `2026-09-19T20:22:28.559Z`.
+Classificateur `1.3.7` et méthode KPI inchangés. Aucun ancien run effacé ou réécrit.
+Santé enfant `run_06gbmldsr5upm0c5vl9l8irj01` réussie : `healthy: true`, aucune raison
+d'échec. Contrôle public réussi et GitHub Scheduled production health `35467241348`
+réussi après publication. **Production rétablie après reprise manuelle du 19**, ce qui
+ne doit pas être présenté comme le succès de la collecte automatique initiale du 19.
+La prochaine collecte planifiée reste à 03:30 Europe/Paris le 20 septembre.
+E2E et Lighthouse production `35466730952` réussis sur le correctif : 113 parcours
+réussis, trois répétitions responsive ignorées, budgets inchangés (avant la nouvelle publication).
+Après publication : 19 E2E Chromium accueil/Explorer/pages de confiance réussis, dont
+accessibilité, preuves, responsive et reduced motion. API `data-status` vérifiée :
+`operational`, `fresh`, aucune alerte courante ; incidents historiques tous `resolved`
+et conservés. Les alertes n'ont pas été désactivées.
 Les trois tests PostgreSQL d'ingestion passent sur QA, dont le nouveau cas de chevauchement.
-Un test d'interface a expiré durant une suite locale concurrente après interruption du poste ;
-il passe isolément sans modifier son assertion. La suite complète est relancée à un worker.
+Une suite locale concurrente a été interrompue après un timeout du test d'interface ;
+ce test passe isolément sans modifier son assertion. La suite complète à un worker passe :
+378 tests réussis, 26 live ignorés. Suite PostgreSQL finale sur QA : 61 tests réussis,
+trois opt-in ignorés, y compris les budgets de performance inchangés.
+CI du correctif `57aa585` : Quality `35466164737`, Security `35466164726`,
+migration check `35466164613` réussis. Déploiement Vercel
+`dpl_HGZQx7zF3MwEqxhXuiCfY5p7KBva` Ready et aliasé au site public.
+Des modifications locales distinctes sont apparues ensuite ; elles sont préservées,
+non incluses dans ce correctif ni dans son déploiement.
 
 Validations à ce stade : 369 tests unitaires réussis, 25 live ignorés ; format,
 lint, typecheck et build Next réussis. Tests fonctionnels PostgreSQL réussis sur
@@ -44,8 +67,12 @@ Correctif collecte `b4d93d1`, optimisation web `329f93d`.
 Déploiement Vercel `dpl_DmDWeNFCeWi2R5y8mkATzsU3qL8j` Ready et aliasé au domaine public.
 CI Quality `35453960071` (inclut Storybook), Security `35453960062`, migration check
 `35453960105`, E2E et Lighthouse production `35454066883` réussis.
-Sentry revérifié via Chrome : projet junior-vraiment, tous environnements, 24 heures,
-aucun filtre de résolution, aucun incident trouvé. Vercel ne retourne aucun log 5xx sur 24 h.
+Sentry vérifié vers 18:10 heure de Paris via Chrome : projet junior-vraiment,
+tous environnements, 24 heures, aucun filtre de résolution, aucun incident trouvé.
+Nouvelle vérification Sentry vers 22:13 impossible : Chrome fermé et clé de registre
+du native host absente selon le diagnostic du plugin. Réinstaller le plugin navigateur
+depuis Codex pour rétablir cet accès ; ne pas réparer manuellement le profil ou extraire ses jetons.
+Vercel revérifié vers 22:12 : aucun log 5xx retourné sur 24 h.
 
 La section suivante est historique et ne prouve pas la santé du 19 septembre.
 
