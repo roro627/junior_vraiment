@@ -9,20 +9,23 @@ import {
 
 describe("completeFullQuery", () => {
   it("keeps source-total, count and chain checks and fails with a safe typed error", async () => {
-    const query = vi.fn(async (parts: TemplateStringsArray) => {
-      const statement = parts.join("?");
-      expect(statement).toContain(
-        "page_state.minimum_source_total = page_state.maximum_source_total",
-      );
-      expect(statement).toContain(
-        "page_state.received_count = page_state.maximum_source_total",
-      );
-      expect(statement).toContain(
-        "next_page.range_start = page.next_range_start",
-      );
-      expect(statement).not.toMatch(/delete\s+from/iu);
-      return [];
-    });
+    const query = vi
+      .fn()
+      .mockImplementationOnce(async (parts: TemplateStringsArray) => {
+        const statement = parts.join("?");
+        expect(statement).toContain(
+          "page_state.minimum_source_total = page_state.maximum_source_total",
+        );
+        expect(statement).toContain(
+          "page_state.received_count = page_state.maximum_source_total",
+        );
+        expect(statement).toContain(
+          "next_page.range_start = page.next_range_start",
+        );
+        expect(statement).not.toMatch(/delete\s+from/iu);
+        return [];
+      })
+      .mockResolvedValueOnce([{ sourceTotalChanged: false }]);
     await expect(
       completeFullQuery({
         sql: query as unknown as NeonQueryFunction<false, false>,
@@ -30,6 +33,40 @@ describe("completeFullQuery", () => {
         finishedAt: new Date(),
       }),
     ).rejects.toBeInstanceOf(IngestionPaginationIncompleteError);
+  });
+
+  it.each([true, false, null])(
+    "diagnoses observed source-total movement %s without accepting pages",
+    async (sourceTotalChanged) => {
+      const query = vi
+        .fn()
+        .mockResolvedValueOnce([])
+        .mockResolvedValueOnce([{ sourceTotalChanged }]);
+      await expect(
+        completeFullQuery({
+          sql: query as unknown as NeonQueryFunction<false, false>,
+          ingestionRunQueryId: "fixture-query",
+          finishedAt: new Date(),
+        }),
+      ).rejects.toMatchObject({
+        reason:
+          sourceTotalChanged === true ? "source_total_changed" : "incomplete",
+      });
+      expect(query).toHaveBeenCalledTimes(2);
+      expect(query.mock.calls[1]?.[0].join("?")).toContain(
+        "min(source_total) <> max(source_total)",
+      );
+    },
+  );
+
+  it("does not query diagnostics after a successful completeness check", async () => {
+    const query = vi.fn().mockResolvedValueOnce([{ id: "fixture-query" }]);
+    await completeFullQuery({
+      sql: query as unknown as NeonQueryFunction<false, false>,
+      ingestionRunQueryId: "fixture-query",
+      finishedAt: new Date(),
+    });
+    expect(query).toHaveBeenCalledTimes(1);
   });
 });
 

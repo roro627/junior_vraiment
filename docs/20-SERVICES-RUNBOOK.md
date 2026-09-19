@@ -127,6 +127,12 @@ collecte complète en supprimant le contrôle. Examiner `ingestion_query_pages`,
 et checkpoint d'origine et utiliser une nouvelle tentative versionnée pour refaire la collecte.
 Un retry qui relit uniquement le même checkpoint terminal incohérent ne répare rien.
 
+Depuis le correctif du 19 septembre (ADR 0016), le worker programme une recollecte après
+cinq minutes lorsque les totaux persistés ont effectivement changé, jusqu'à la tentative 3
+incluse. Le parent reste échoué ; seule une publication validée rétablit la santé.
+Avant le helper `recover`, vérifier qu'aucune reprise automatique n'est différée, en file
+ou en cours sur la même date. Ne jamais créer une tentative 4 ni effacer les anciennes pages.
+
 ## 6. Trigger.dev : accès, variables, tâches
 
 La référence du projet est dans `trigger.config.ts` : `proj_psqbbfjgsudzjyknrsir`.

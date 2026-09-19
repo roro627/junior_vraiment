@@ -8,7 +8,9 @@ import {
 export class IngestionPaginationIncompleteError extends Error {
   override name = "IngestionPaginationIncompleteError";
 
-  constructor() {
+  constructor(
+    readonly reason: "source_total_changed" | "incomplete" = "incomplete",
+  ) {
     super("La pagination complète de la requête n'est pas prouvée.");
   }
 }
@@ -559,7 +561,18 @@ export async function completeFullQuery(input: {
     returning run_query.id
   `;
   if (rows.length !== 1) {
-    throw new IngestionPaginationIncompleteError();
+    // Diagnose only after the completeness gate has refused the query. A moving
+    // total permits a fresh attempt, never acceptance of the inconsistent pages.
+    const [diagnostic] = await input.sql`
+      select (min(source_total) <> max(source_total)) as "sourceTotalChanged"
+      from ingestion_query_pages
+      where ingestion_run_query_id = ${input.ingestionRunQueryId}
+    `;
+    throw new IngestionPaginationIncompleteError(
+      diagnostic?.["sourceTotalChanged"] === true
+        ? "source_total_changed"
+        : "incomplete",
+    );
   }
 }
 

@@ -10,11 +10,12 @@ import {
   IngestionRecoveryNotAllowedError,
 } from "@/db/full-ingestion-run";
 import { FranceTravailError } from "@/lib/france-travail/errors";
+import { schedulePaginationRecovery } from "@/lib/trigger/schedule-pagination-recovery";
 
 import { datasetPublicationQueue } from "./queues";
 
-// Manual only: diagnose the failed attempt before paying for a fresh collection.
-// A distinct Trigger run and attempt preserve the original pages and sightings.
+// Manual recovery, or bounded automatic recovery for observed moving totals.
+// Distinct runs preserve the original pages and sightings, including failures.
 export const recoverFranceTravailCollectionTask = schemaTask({
   id: "recover-france-travail-collection",
   schema: z.strictObject({
@@ -50,6 +51,11 @@ export const recoverFranceTravailCollectionTask = schemaTask({
         signal,
       });
     } catch (error) {
+      await schedulePaginationRecovery({
+        error,
+        scheduledAt: new Date(payload.timestamp),
+        attempt: payload.attempt,
+      });
       if (
         error instanceof IngestionRecoveryNotAllowedError ||
         error instanceof IngestionPaginationIncompleteError ||

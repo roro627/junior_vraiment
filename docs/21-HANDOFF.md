@@ -1,4 +1,26 @@
-# Reprise — 18 septembre 2026
+# Reprise — 19 septembre 2026
+
+## Intervention du 19 septembre — reprise des totaux mouvants
+
+La collecte planifiée `run_06gbeian682jpjtrk6cjgubg01` a échoué à 01:34:40 UTC :
+37/566 requêtes réussies puis total source passant de 1 720 à 1 721 pendant
+la requête « développeur Python ». Le dataset du 18 est resté public ; les alertes
+Trigger/GitHub et le retard de fraîcheur étaient réels.
+
+Correctif décrit dans ADR 0016 : diagnostic après refus de pagination, recollecte
+automatique après cinq minutes uniquement pour les totaux réellement mouvants,
+trois tentatives au maximum, audits et portes qualité conservés.
+Worker `20260919.1` déployé avec succès. Recollecte du 19 tentative 2 déclenchée :
+`run_06gbkopdrvt71rvso16m29h201`. **Publication et santé encore à vérifier.**
+
+Validations à ce stade : 365 tests unitaires réussis, 25 live ignorés ; format,
+lint, typecheck et build Next réussis. Tests fonctionnels PostgreSQL réussis sur
+QA `br-proud-frog-b2y1eu6n` (expiration 20 septembre 08:00 UTC), dont la
+conservation des pages mouvantes et la création d'une tentative indépendante.
+Le test de performance distant des KPI dépasse encore 100 ms (169,8 ms p95
+en environnement Node isolé). Ce point n'est pas déclaré validé ; aucun seuil assoupli.
+
+La section suivante est historique et ne prouve pas la santé du 19 septembre.
 
 ## Intervention du 18 septembre — collecte rétablie
 

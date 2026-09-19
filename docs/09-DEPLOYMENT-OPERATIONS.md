@@ -521,6 +521,12 @@ les pages originales restent conservées. Une nouvelle tentative bornée (2 ou 3
 via `recover-france-travail-collection`, uniquement après échec/annulation de la précédente.
 Le retry du même run n'efface pas une page incohérente. Voir le helper dans docs/20.
 
+Depuis le 19 septembre, une variation du total **observée dans les pages persistées**
+programme automatiquement la tentative suivante après cinq minutes, jusqu'à trois tentatives
+au total. Les autres erreurs restent bloquantes. Chaque tentative conserve son propre audit
+et repasse toutes les portes de publication ; les échecs et alertes ne sont pas masqués.
+Voir [ADR 0016](adr/0016-bounded-moving-pagination-recovery.md).
+
 Avant publication, le runner prépare les classifications manquantes de tout le périmètre actif,
 y compris les offres absentes une première fois mais pas encore fermées. Il ne réécrit aucune
 ancienne classification. Un changement de version crée un nouveau dataset ; le cutoff reste

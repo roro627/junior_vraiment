@@ -20,7 +20,6 @@ import {
   completeFullRun,
   failFullQuery,
   failFullRun,
-  IngestionPaginationIncompleteError,
   IngestionRecoveryNotAllowedError,
   readFullIngestionQualityFacts,
   storeFullRunQualitySummary,
@@ -136,7 +135,10 @@ describe.runIf(liveTestsEnabled)("durable full ingestion on Neon", () => {
           ingestionRunQueryId: query.ingestionRunQueryId,
           finishedAt: startedAt,
         }),
-      ).rejects.toBeInstanceOf(IngestionPaginationIncompleteError);
+      ).rejects.toMatchObject({
+        name: "IngestionPaginationIncompleteError",
+        reason: "source_total_changed",
+      });
       await failFullQuery({
         sql,
         ingestionRunQueryId: query.ingestionRunQueryId,

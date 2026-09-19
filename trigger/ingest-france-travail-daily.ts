@@ -6,6 +6,7 @@ import {
 } from "@/application/ingestion/run-daily-ingestion";
 import { FranceTravailError } from "@/lib/france-travail/errors";
 import { IngestionPaginationIncompleteError } from "@/db/full-ingestion-run";
+import { schedulePaginationRecovery } from "@/lib/trigger/schedule-pagination-recovery";
 
 import { datasetPublicationQueue } from "./queues";
 
@@ -48,9 +49,10 @@ export const ingestFranceTravailDailyTask = schedules.task({
     });
   },
   run: async (payload, { ctx, signal }) => {
+    const scheduledAt = scheduledDate(payload);
     try {
       const summary = await runDailyFranceTravailIngestion({
-        scheduledAt: scheduledDate(payload),
+        scheduledAt,
         triggerRunId: ctx.run.id,
         signal,
       });
@@ -71,6 +73,7 @@ export const ingestFranceTravailDailyTask = schedules.task({
 
       return summary;
     } catch (error) {
+      await schedulePaginationRecovery({ error, scheduledAt, attempt: 1 });
       if (
         error instanceof IngestionPaginationIncompleteError ||
         error instanceof IngestionQualityBlockedError ||
