@@ -29,10 +29,8 @@ export class NoPublishedDatasetError extends Error {
   override name = "NoPublishedDatasetError";
 }
 
-export async function readCurrentDataset(
-  sql: NeonQueryFunction<false, false>,
-): Promise<CurrentDataset> {
-  const rows = await sql`
+export function queryCurrentDataset(sql: NeonQueryFunction<false, false>) {
+  return sql`
     select
       dataset.id as "datasetId",
       dataset.dataset_version as "datasetVersion",
@@ -59,7 +57,11 @@ export async function readCurrentDataset(
     group by dataset.id, source.id
     limit 2
   `;
+}
 
+export function parseCurrentDataset(
+  rows: Record<string, unknown>[],
+): CurrentDataset {
   if (rows.length !== 1) {
     throw new NoPublishedDatasetError(
       "Aucun dataset public unique n'est disponible.",
@@ -67,4 +69,10 @@ export async function readCurrentDataset(
   }
 
   return currentDatasetRowSchema.parse(rows[0]);
+}
+
+export async function readCurrentDataset(
+  sql: NeonQueryFunction<false, false>,
+): Promise<CurrentDataset> {
+  return parseCurrentDataset(await queryCurrentDataset(sql));
 }

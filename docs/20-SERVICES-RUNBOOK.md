@@ -302,6 +302,13 @@ Il ne touche ni au Chrome connecté du propriétaire ni à ses cookies. Les prof
 après fermeture pour éviter une erreur Windows de suppression de fichiers encore verrouillés.
 Une erreur de trace `NO_NAVSTART` n'est pas un audit réussi : refaire la campagne complète.
 Éviter build, tests lourds et audit de performance simultanés. Ne pas abaisser les budgets.
+Les tests de performance des lectures PostgreSQL utilisent Node, pas le navigateur simulé.
+Sur une branche QA réelle, lancer `pnpm exec vitest run src/db/queries/public-read-models.performance.live.test.ts --maxWorkers=1`
+sans autre charge locale. Le budget KPI reste 100 ms p95, Explorer 250 ms et agrégats
+500 ms ; le délai maximal de la campagne de 40 lectures n'est pas un budget par requête.
+Depuis le correctif du 19 septembre, la lecture KPI regroupe métadonnées et cartes dans
+une seule transaction HTTP, en lecture seule et isolation Repeatable Read : aucune
+méthode, filtre, fraîcheur ni valeur de métrique n'est changée par cette optimisation.
 Sur le poste Windows, les 116 parcours ont été exécutés avec `pnpm exec playwright test --workers=2` :
 113 réussis, trois répétitions responsive volontairement ignorées. Quatre workers ont provoqué
 des timeouts de navigation intermittents. Conserver les contrôles, réduire la concurrence.

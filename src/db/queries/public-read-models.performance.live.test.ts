@@ -1,3 +1,4 @@
+// @vitest-environment node
 import { neon } from "@neondatabase/serverless";
 import { describe, expect, it } from "vitest";
 
@@ -85,5 +86,7 @@ describeLive("public read-model performance (live)", () => {
 
     expect(trendsP95).toBeLessThanOrEqual(500);
     expect(taxonomiesP95).toBeLessThanOrEqual(500);
-  });
+    // Forty measured reads may legitimately exceed Vitest's five-second default.
+    // The per-operation p95 budgets above remain the acceptance criteria.
+  }, 60_000);
 });

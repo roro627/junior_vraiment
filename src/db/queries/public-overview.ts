@@ -11,7 +11,11 @@ import {
 import { rateFromCounts } from "@/domain/metrics/rate";
 import { JUNIOR_OBSERVATION_METRIC_VERSION } from "@/domain/metrics/junior-observation";
 
-import { readCurrentDataset, type CurrentDataset } from "./current-dataset";
+import {
+  parseCurrentDataset,
+  queryCurrentDataset,
+  type CurrentDataset,
+} from "./current-dataset";
 
 const groupedCountSchema = z
   .object({
@@ -146,10 +150,6 @@ export async function getPublicOverview({
   query,
   generatedAt,
 }: PublicOverviewInput): Promise<OverviewResponse> {
-  const dataset = await readCurrentDataset(sql);
-  const observationMetric =
-    dataset.metricVersions["junior_contradiction_rate"] ===
-    JUNIOR_OBSERVATION_METRIC_VERSION;
   const area = parseArea(query.area);
   const technologyJson = JSON.stringify(query.technologies);
   const contractJson = JSON.stringify(query.contracts);
@@ -161,8 +161,18 @@ export async function getPublicOverview({
         : query.period === "90d"
           ? 90
           : null;
-  const rawRows = await sql`
-    with scoped as materialized (
+  // One network round trip; metadata and aggregates share the same snapshot even
+  // if a dataset is published concurrently. No cache can hide a new publication.
+  const [datasetRows, rawRows] = await sql.transaction(
+    [
+      queryCurrentDataset(sql),
+      sql`
+    with current_dataset as materialized (
+      select id, metric_versions, source_cutoff_at
+      from published_datasets
+      where is_current = true and status = 'published' and published_at is not null
+      limit 2
+    ), scoped as materialized (
       select
         membership.offer_id,
         membership.classification_id,
@@ -174,13 +184,15 @@ export async function getPublicOverview({
         classification.beginner_friendly,
         classification.salary_transparent,
         classification.remote_mode,
-        snapshot.contract_kind
+        snapshot.contract_kind,
+        (dataset.metric_versions->>'junior_contradiction_rate' =
+          ${JUNIOR_OBSERVATION_METRIC_VERSION}) as observation_metric
       from published_dataset_offers membership
+      join current_dataset dataset on dataset.id = membership.dataset_id
       join offer_snapshots snapshot on snapshot.id = membership.snapshot_id
       join classifications classification
         on classification.id = membership.classification_id
-      where membership.dataset_id = ${dataset.datasetId}
-        and (
+      where (
           ${query.job}::text is null
           or ${query.job}::text = any(membership.job_families)
         )
@@ -216,22 +228,22 @@ export async function getPublicOverview({
         and (
           ${periodDays}::integer is null
           or snapshot.source_published_at >=
-            ${dataset.sourceCutoffAt}::timestamptz - (${periodDays}::integer * interval '1 day')
+            dataset.source_cutoff_at - (${periodDays}::integer * interval '1 day')
         )
     ), metrics as (
       select
         count(*)::integer as "sampleSize",
         count(*) filter (
-          where claims_junior = true and case when ${observationMetric} then junior_observation_status = 'resolved' and junior_observation_contradictory = true else status = 'classified' and minimum_experience_months >= 24 end
+          where claims_junior = true and case when observation_metric then junior_observation_status = 'resolved' and junior_observation_contradictory = true else status = 'classified' and minimum_experience_months >= 24 end
         )::integer as "contradictionNumerator",
         count(*) filter (
-          where claims_junior = true and case when ${observationMetric} then junior_observation_status = 'resolved' else status = 'classified' and minimum_experience_months is not null end
+          where claims_junior = true and case when observation_metric then junior_observation_status = 'resolved' else status = 'classified' and minimum_experience_months is not null end
         )::integer as "contradictionDenominator",
         count(*) filter (
-          where claims_junior = true and case when ${observationMetric} then junior_observation_status = 'unknown' else status = 'classified' and minimum_experience_months is null end
+          where claims_junior = true and case when observation_metric then junior_observation_status = 'unknown' else status = 'classified' and minimum_experience_months is null end
         )::integer as "contradictionUnknown",
         count(*) filter (
-          where claims_junior = true and case when ${observationMetric} then junior_observation_status = 'ambiguous' else status = 'ambiguous' end
+          where claims_junior = true and case when observation_metric then junior_observation_status = 'ambiguous' else status = 'ambiguous' end
         )::integer as "contradictionAmbiguous",
         count(*) filter (
           where status = 'classified' and beginner_friendly = true
@@ -319,7 +331,13 @@ export async function getPublicOverview({
     cross join technology_counts
     cross join contracts
     cross join remote_modes
-  `;
+  `,
+    ],
+    { isolationLevel: "RepeatableRead", readOnly: true },
+  );
+  if (!datasetRows || !rawRows)
+    throw new Error("Incomplete overview transaction");
+  const dataset = parseCurrentDataset(datasetRows);
   if (rawRows.length !== 1)
     throw new Error("Invalid overview aggregate result");
   const row = aggregateRowSchema.parse(rawRows[0]);

@@ -13,12 +13,18 @@ trois tentatives au maximum, audits et portes qualité conservés.
 Worker `20260919.1` déployé avec succès. Recollecte du 19 tentative 2 déclenchée :
 `run_06gbkopdrvt71rvso16m29h201`. **Publication et santé encore à vérifier.**
 
-Validations à ce stade : 365 tests unitaires réussis, 25 live ignorés ; format,
+Validations à ce stade : 369 tests unitaires réussis, 25 live ignorés ; format,
 lint, typecheck et build Next réussis. Tests fonctionnels PostgreSQL réussis sur
 QA `br-proud-frog-b2y1eu6n` (expiration 20 septembre 08:00 UTC), dont la
 conservation des pages mouvantes et la création d'une tentative indépendante.
-Le test de performance distant des KPI dépasse encore 100 ms (169,8 ms p95
-en environnement Node isolé). Ce point n'est pas déclaré validé ; aucun seuil assoupli.
+Le test de performance distant des KPI dépassait 100 ms (169,8 ms p95
+en environnement Node isolé). Correction complémentaire : métadonnées et cartes lues
+en un seul échange HTTP, dans une transaction en lecture seule Repeatable Read.
+Les seuils restent inchangés ; test de performance exécuté sous Node et délai de campagne
+des 40 lectures agrégées distingué du budget individuel de 500 ms.
+Nouvelle suite QA complète : 60 tests réussis, trois opt-in ignorés, y compris les
+budgets KPI/Explorer/agrégats ; 113 E2E locaux réussis, trois répétitions responsive ignorées.
+Cette optimisation web est validée localement ; déploiement à vérifier après le push.
 
 La section suivante est historique et ne prouve pas la santé du 19 septembre.
 
