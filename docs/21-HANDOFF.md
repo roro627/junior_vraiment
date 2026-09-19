@@ -11,7 +11,23 @@ Correctif décrit dans ADR 0016 : diagnostic après refus de pagination, recolle
 automatique après cinq minutes uniquement pour les totaux réellement mouvants,
 trois tentatives au maximum, audits et portes qualité conservés.
 Worker `20260919.1` déployé avec succès. Recollecte du 19 tentative 2 déclenchée :
-`run_06gbkopdrvt71rvso16m29h201`. **Publication et santé encore à vérifier.**
+`run_06gbkopdrvt71rvso16m29h201`, terminée en échec à 16:18:50 UTC sur le contrôle
+de volume, après 566/566 requêtes complètes, 698 pages, 31 081 résultats valides et
+2 462 offres distinctes. Aucun dataset publié par cette tentative.
+
+Second diagnostic : M1818 + « développeur logiciel » passe de 8 à 3. Deux des six
+offres disparues de cette requête sont observées ailleurs ; quatre seulement manquent
+de l'union. Un nouvel appel officiel confirme neuf résultats bruts et trois admis par
+le filtre actif, sans autre page ni quarantaine. ADR 0017 documente le correctif
+`ingestion-quality-1.4.0` : perte locale rapprochée des observations de tout le run,
+seuils inchangés et avertissement conservé. L'évaluation en lecture seule du run 2 avec
+ce candidat passe, sans modifier sa décision historique.
+Worker `20260919.2` réellement déployé ; tentative 3 lancée :
+`run_06gbmglkvhgjo6e9ojfoj6u801`. **Publication et santé restent à vérifier ; la
+production ne doit pas être déclarée rétablie à ce stade.**
+Les trois tests PostgreSQL d'ingestion passent sur QA, dont le nouveau cas de chevauchement.
+Un test d'interface a expiré durant une suite locale concurrente après interruption du poste ;
+il passe isolément sans modifier son assertion. La suite complète est relancée à un worker.
 
 Validations à ce stade : 369 tests unitaires réussis, 25 live ignorés ; format,
 lint, typecheck et build Next réussis. Tests fonctionnels PostgreSQL réussis sur
@@ -24,7 +40,12 @@ Les seuils restent inchangés ; test de performance exécuté sous Node et déla
 des 40 lectures agrégées distingué du budget individuel de 500 ms.
 Nouvelle suite QA complète : 60 tests réussis, trois opt-in ignorés, y compris les
 budgets KPI/Explorer/agrégats ; 113 E2E locaux réussis, trois répétitions responsive ignorées.
-Cette optimisation web est validée localement ; déploiement à vérifier après le push.
+Correctif collecte `b4d93d1`, optimisation web `329f93d`.
+Déploiement Vercel `dpl_DmDWeNFCeWi2R5y8mkATzsU3qL8j` Ready et aliasé au domaine public.
+CI Quality `35453960071` (inclut Storybook), Security `35453960062`, migration check
+`35453960105`, E2E et Lighthouse production `35454066883` réussis.
+Sentry revérifié via Chrome : projet junior-vraiment, tous environnements, 24 heures,
+aucun filtre de résolution, aucun incident trouvé. Vercel ne retourne aucun log 5xx sur 24 h.
 
 La section suivante est historique et ne prouve pas la santé du 19 septembre.
 

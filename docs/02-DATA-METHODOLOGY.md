@@ -889,6 +889,13 @@ matérielles et le contrôle global ±40 % restent bloquants, ainsi que toutes l
 d'intégrité. Voir l'[ADR 0015](adr/0015-partition-growth-warnings.md) pour le diagnostic,
 les limites et la reprise conservant les anciens runs.
 
+Depuis `ingestion-quality-1.4.0` (19 septembre 2026), une baisse de requête chevauchante
+est également rapprochée de l'union des offres observées : son blocage exige au moins
+cinq identifiants précédents absents de toute la collecte, en plus des seuils locaux
+inchangés. Les baisses redistribuées entre requêtes restent des avertissements audités.
+Sans diagnostic de couverture, la règle précédente reste conservatrice. La garde globale
+et toutes les portes d'intégrité sont inchangées ; voir [ADR 0017](adr/0017-overlapping-query-losses.md).
+
 ---
 
 ## 20. Jeu de vérité et revue

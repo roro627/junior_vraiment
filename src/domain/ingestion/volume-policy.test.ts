@@ -2,6 +2,46 @@ import { describe, expect, it } from "vitest";
 import { assessPartitionVolumes } from "./volume-policy";
 
 describe("partition volume guard", () => {
+  it("keeps the observed 8 to 3 decline as a warning when only four offers are missing from the whole run", () => {
+    const partition = {
+      queryId: "fixture-overlap",
+      previous: 8,
+      current: 3,
+      missingFromRun: 4,
+    };
+    expect(assessPartitionVolumes([partition])).toEqual({
+      blocking: false,
+      warnings: [partition],
+    });
+  });
+  it.each([5, 6, 8])(
+    "still blocks 8 to 3 when %i previous offers are missing from the complete run",
+    (missingFromRun) => {
+      expect(
+        assessPartitionVolumes([
+          { queryId: "fixture", previous: 8, current: 3, missingFromRun },
+        ]).blocking,
+      ).toBe(true);
+    },
+  );
+  it("does not let recovered overlap hide a different material loss", () => {
+    expect(
+      assessPartitionVolumes([
+        { queryId: "recovered", previous: 8, current: 3, missingFromRun: 4 },
+        { queryId: "missing", previous: 10, current: 0, missingFromRun: 5 },
+      ]).blocking,
+    ).toBe(true);
+  });
+  it.each([-1, 1.5, Number.NaN, 9])(
+    "rejects invalid missing coverage %s",
+    (missingFromRun) => {
+      expect(() =>
+        assessPartitionVolumes([
+          { queryId: "fixture", previous: 8, current: 3, missingFromRun },
+        ]),
+      ).toThrow(RangeError);
+    },
+  );
   it.each([
     [1, 2],
     [1, 5],

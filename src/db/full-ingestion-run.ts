@@ -665,7 +665,14 @@ export async function readFullIngestionQualityFacts(input: {
       order by prior.created_at desc, prior.id desc
       limit 1
     ), previous_query_counts as (
-      select query.source_query_id, count(distinct sighting.offer_id)::integer as count
+      select query.source_query_id,
+        count(distinct sighting.offer_id)::integer as count,
+        count(distinct sighting.offer_id) filter (
+          where not exists (
+            select 1 from current_sighting_flags current_sighting
+            where current_sighting.offer_id = sighting.offer_id
+          )
+        )::integer as missing_from_run
       from previous_run run
       join ingestion_run_queries query on query.ingestion_run_id = run.id
       left join ingestion_run_offer_sightings sighting
@@ -687,7 +694,8 @@ export async function readFullIngestionQualityFacts(input: {
         (select count(*)::integer from current_sighting_flags) as current_count,
         (select coalesce(jsonb_agg(jsonb_build_object(
           'queryId', current_count.source_query_id,
-          'previous', previous_count.count, 'current', current_count.count
+          'previous', previous_count.count, 'current', current_count.count,
+          'missingFromRun', previous_count.missing_from_run
         ) order by current_count.source_query_id), '[]'::jsonb)
           from current_query_counts current_count
           join previous_query_counts previous_count
@@ -761,6 +769,7 @@ export async function readFullIngestionQualityFacts(input: {
         queryId: z.string(),
         previous: z.number().int().nonnegative(),
         current: z.number().int().nonnegative(),
+        missingFromRun: z.number().int().nonnegative().optional(),
       }),
     )
     .parse(row["partitionVolumes"]);

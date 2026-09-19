@@ -254,6 +254,12 @@ autres gardes. Après correction validée et déployée, utiliser une nouvelle t
 de recollecte avec le timestamp planifié réellement observé, sans effacer les anciens runs.
 Vérifier ensuite publication, santé enfant, API publique et workflow `scheduled-health.yml`.
 
+Depuis `ingestion-quality-1.4.0` (ADR 0017), les pertes locales sont rapprochées des
+identifiants précédents réellement absents de l'union courante (`missingFromRun`).
+Les requêtes se chevauchent : une offre retrouvée ailleurs n'est pas perdue par la collecte.
+Les seuils locaux et globaux restent inchangés, et un run incomplet ne peut pas publier.
+Ne pas déduire que les offres manquantes sont expirées ; conserver la règle des deux absences.
+
 ## 9. Sentry et PostHog
 
 Sentry : organisation `roro000`, projet `junior-vraiment`, région Allemagne selon docs/18.

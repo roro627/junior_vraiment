@@ -32,7 +32,7 @@ describe("evaluateCompleteIngestionQuality", () => {
     );
     expect(result.decision).toBe("publish");
     expect(result.volumeWarnings).toEqual(volumeWarnings);
-    expect(result.qualityVersion).toBe("ingestion-quality-1.3.0");
+    expect(result.qualityVersion).toBe("ingestion-quality-1.4.0");
     expect(
       evaluateCompleteIngestionQuality(
         qualityInput({ volumeWarnings, volumeAnomalyDetected: true }),
@@ -62,7 +62,7 @@ describe("evaluateCompleteIngestionQuality", () => {
     expect(evaluateCompleteIngestionQuality(input)).toMatchObject({
       decision: "publish",
       volumeWarnings,
-      qualityVersion: "ingestion-quality-1.3.0",
+      qualityVersion: "ingestion-quality-1.4.0",
     });
     for (const blocker of [
       { paginationComplete: false },

@@ -71,6 +71,127 @@ function fixtureOffer(
 }
 
 describe.runIf(liveTestsEnabled)("durable full ingestion on Neon", () => {
+  it("counts loss across overlapping queries without hiding five genuinely missing offers", async () => {
+    const sql = neon(readDatabaseEnvironment().DATABASE_DIRECT_URL);
+    const suffix = randomUUID();
+    const querySetVersion = `overlap-test-${suffix}`;
+    const offerIds = new Set<string>();
+    const begin = (day: number) =>
+      beginFullIngestionRun({
+        sql,
+        businessDate: `2098-03-0${day}`,
+        querySetVersion,
+        triggerRunId: `overlap-${suffix}-${day}`,
+        attempt: 1,
+        startedAt: new Date(`2098-03-0${day}T03:30:00Z`),
+        queries: ["a", "b"].map((queryKey) => ({
+          queryKey,
+          label: "Synthetic overlap",
+          definition: { fixture: true },
+          jobFamilies: ["backend"],
+          territoryScope: "france",
+        })),
+      });
+    const observe = async (
+      run: FullIngestionRun,
+      queryKey: string,
+      indices: number[],
+    ) => {
+      const query = run.queries.find((query) => query.queryKey === queryKey);
+      if (!query) throw new Error("Missing fixture query");
+      for (const index of indices) {
+        const stored = await storeNormalizedOffer({
+          sql,
+          sourceId: run.sourceId,
+          offer: fixtureOffer(
+            `overlap-${suffix}-${index}`,
+            "Fixture de couverture, aucune donnée réelle.",
+          ),
+          observedAt: run.startedAt,
+          ingestionRunId: run.ingestionRunId,
+          ingestionRunQueryId: query.ingestionRunQueryId,
+          rawPayloadRetentionDays: 1,
+        });
+        offerIds.add(stored.offerId);
+      }
+      await commitFullQueryPage({
+        sql,
+        ingestionRunId: run.ingestionRunId,
+        ingestionRunQueryId: query.ingestionRunQueryId,
+        page: {
+          rangeStart: 0,
+          nextRangeStart: null,
+          isTerminal: true,
+          sourceTotal: indices.length,
+          validCount: indices.length,
+          quarantined: [],
+          inPerimeterCount: indices.length,
+          warningCount: 0,
+          committedAt: run.startedAt,
+        },
+      });
+      await completeFullQuery({
+        sql,
+        ingestionRunQueryId: query.ingestionRunQueryId,
+        finishedAt: run.startedAt,
+      });
+    };
+    try {
+      const previous = await begin(1);
+      await observe(previous, "a", [0, 1, 2, 3, 4, 5, 6, 7]);
+      await observe(previous, "b", []);
+      await completeFullRun({
+        sql,
+        ingestionRunId: previous.ingestionRunId,
+        finishedAt: previous.startedAt,
+        partial: false,
+        offersNew: 8,
+        offersUpdated: 0,
+        offersMarkedMissing: 0,
+        offersClosed: 0,
+        qualitySummary: { fixture: true },
+      });
+
+      const recovered = await begin(2);
+      await observe(recovered, "a", [0, 1, 8]);
+      await observe(recovered, "b", [2, 3]);
+      const recoveredFacts = await readFullIngestionQualityFacts({
+        sql,
+        ingestionRunId: recovered.ingestionRunId,
+        classifierVersion: CLASSIFIER_VERSION,
+      });
+      expect(recoveredFacts).toMatchObject({
+        paginationComplete: true,
+        uniqueOffers: 5,
+        volumeAnomalyDetected: false,
+      });
+      expect(recoveredFacts.volumeWarnings).toContainEqual(
+        expect.objectContaining({ previous: 8, current: 3, missingFromRun: 4 }),
+      );
+
+      const missing = await begin(3);
+      await observe(missing, "a", [0, 1, 8]);
+      await observe(missing, "b", [2, 9]);
+      const missingFacts = await readFullIngestionQualityFacts({
+        sql,
+        ingestionRunId: missing.ingestionRunId,
+        classifierVersion: CLASSIFIER_VERSION,
+      });
+      // The global count stays 5 in both cases (less than a 40% decline).
+      // Five absent previous identities must still trigger the local guard.
+      expect(missingFacts).toMatchObject({
+        paginationComplete: true,
+        uniqueOffers: 5,
+        volumeAnomalyDetected: true,
+      });
+    } finally {
+      for (const offerId of offerIds)
+        await sql`delete from offers where id=${offerId}`;
+      await sql`delete from ingestion_runs where query_set_version=${querySetVersion}`;
+      await sql`delete from source_queries where query_set_version=${querySetVersion}`;
+    }
+  }, 30_000);
+
   it("preserves moving-total pages while starting an independent recovery attempt", async () => {
     const sql = neon(readDatabaseEnvironment().DATABASE_DIRECT_URL);
     const suffix = randomUUID();
