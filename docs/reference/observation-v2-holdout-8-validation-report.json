@@ -1,0 +1,110 @@
+{
+  "classifierVersion": "classifier-1.3.7",
+  "implementation": [
+    {
+      "file": "src/domain/classification/classifier.ts",
+      "sha256": "659b23575e24bd6dcf809ead5fff18ddcf2f0136198f0d8abc82499478da3e42"
+    },
+    {
+      "file": "src/domain/classification/experience-context.ts",
+      "sha256": "8aae02be9d965e773c1364bc860de74b670abfd8df3bf625d3a942987d2da66e"
+    },
+    {
+      "file": "src/domain/classification/normalize-text.ts",
+      "sha256": "e0f57c8802e4cd40f6cc46695f16cfe4b4a2c7c21d3b5be240f39348937e0139"
+    },
+    {
+      "file": "src/domain/classification/junior-observation.ts",
+      "sha256": "18bd133fbe844ef7fbb158eb569545c514decbd4034ff0e04882c4484c3a80fe"
+    }
+  ],
+  "protocol": "llm-observation-a-2.0.0",
+  "clarifications": "docs/reference/observation-v2-holdout-clarifications.md",
+  "model": "gpt-5.6-terra",
+  "effort": "medium",
+  "passes": 1,
+  "targetedReview": null,
+  "evaluatedAt": "2026-09-22T17:44:31.744Z",
+  "summary": {
+    "reference": {
+      "tp": 16,
+      "fp": 2,
+      "fn": 3,
+      "tn": 179,
+      "count": 200,
+      "exact": 148,
+      "precision": 0.8888888888888888,
+      "recall": 0.8421052631578947
+    },
+    "challenge": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 0,
+      "count": 0,
+      "exact": 0,
+      "precision": null,
+      "recall": null
+    }
+  },
+  "challengeExactOverlaps": 0,
+  "precision": 0.8888888888888888,
+  "recall": 0.8421052631578947,
+  "denominator": {
+    "tp": 69,
+    "fp": 9,
+    "fn": 1,
+    "tn": 121,
+    "precision": 0.8846153846153846,
+    "recall": 0.9857142857142858
+  },
+  "gateStatus": "failed",
+  "files": [
+    {
+      "file": "input-1.json",
+      "sha256": "e658074fe8f45853ab276a674ab2d391172dc138d190b58e071d1620bdcb56e8"
+    },
+    {
+      "file": "labels-1.json",
+      "sha256": "4b9f187fd3e7ecd9644d3e9af6b095357edecc0c38a01cd79ab22bb3e594d3c9"
+    },
+    {
+      "file": "input-2.json",
+      "sha256": "33a2af2e7fdcffe24e380117a8789148cd143bffff3f9db847412787331f2ca0"
+    },
+    {
+      "file": "labels-2.json",
+      "sha256": "f1319d72ae56251deaee6a0b02bfa00725388b2bba6e19b3587440be4c251ba5"
+    },
+    {
+      "file": "input-3.json",
+      "sha256": "80a41f5d92544cb94d9f78283772f85c38426fcd78fa1ce3b6471fef3298a84a"
+    },
+    {
+      "file": "labels-3.json",
+      "sha256": "833732631488311a4f7b8c9b4157d53fd0356905288c2c567812dc47d7e215d8"
+    },
+    {
+      "file": "input-4.json",
+      "sha256": "14005fff8a32c8021fdf07a6be566ee36548651bbfbb25de590682aa1b893873"
+    },
+    {
+      "file": "labels-4.json",
+      "sha256": "e28d38d39804a8bb831ca8d78ecf17dd2e10ae558ccb531132969a28daae3413"
+    },
+    {
+      "file": "input-5.json",
+      "sha256": "2d44f55e18344e507677e9706771d9ef184a2be2cb717585189c33fa5db97ab7"
+    },
+    {
+      "file": "labels-5.json",
+      "sha256": "fd65b8a66d72c7457f4c235877ac32f0d9be578e1c59a533158a43787c4d664f"
+    }
+  ],
+  "limitations": [
+    "Blind single-pass LLM holdout, not human-certified truth.",
+    "200 distinct current-dataset texts excluded from the development reference; not a nationally representative sample.",
+    "Engine frozen before annotation; no prediction shown to annotators.",
+    "Passing a finite sample does not certify every offer or every axis."
+  ]
+}

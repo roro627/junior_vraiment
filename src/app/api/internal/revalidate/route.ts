@@ -1,5 +1,3 @@
-import { Buffer } from "node:buffer";
-
 import { revalidateTag } from "next/cache";
 
 import {
@@ -11,6 +9,10 @@ import {
 } from "@/application/use-cases/request-revalidation";
 import { readRevalidationEnvironment } from "@/lib/env";
 import { writeOperationalAudit } from "@/lib/operational-audit";
+import {
+  BodyTooLargeError,
+  readBoundedBody,
+} from "@/lib/security/read-bounded-body";
 
 const RESPONSE_HEADERS = {
   "cache-control": "no-store",
@@ -31,10 +33,13 @@ export async function POST(request: Request): Promise<Response> {
     return problem(413, "payload_too_large");
   }
 
-  const rawBody = await request.text();
-
-  if (Buffer.byteLength(rawBody, "utf8") > REVALIDATION_MAX_BODY_BYTES) {
-    return problem(413, "payload_too_large");
+  let rawBody: string;
+  try {
+    rawBody = await readBoundedBody(request, REVALIDATION_MAX_BODY_BYTES);
+  } catch (error) {
+    return error instanceof BodyTooLargeError
+      ? problem(413, "payload_too_large")
+      : problem(400, "invalid_payload");
   }
 
   const { REVALIDATION_SECRET } = readRevalidationEnvironment();

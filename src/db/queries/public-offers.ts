@@ -125,8 +125,9 @@ function mapPublicOffer(
   const publicOffer: PublicOffer = {
     id: publicOfferId(row.offerId),
     title: row.title.slice(0, 250),
-    companyName: clipped(row.companyName, 250),
-    locationLabel: clipped(row.locationLabel, 250),
+    companyName: row.closedAt === null ? clipped(row.companyName, 250) : null,
+    locationLabel:
+      row.closedAt === null ? clipped(row.locationLabel, 250) : null,
     contractLabel: clipped(row.contractLabel, 150),
     publishedAt: row.sourcePublishedAt?.toISOString() ?? null,
     lastSeenAt: row.lastSeenAt.toISOString(),
@@ -169,7 +170,10 @@ function mapPublicOffer(
     remoteMode: row.remoteMode,
     source: {
       label: row.sourceLabel.slice(0, 100),
-      offerUrl: safeUrl(row.applicationUrl) ?? safeUrl(row.sourceUrl),
+      offerUrl:
+        row.closedAt === null
+          ? (safeUrl(row.applicationUrl) ?? safeUrl(row.sourceUrl))
+          : null,
       attributionUrl: requiredSafeUrl(row.attributionUrl),
     },
   };

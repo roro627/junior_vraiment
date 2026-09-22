@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { hasStorageCompatibleText, isStorageText } from "./storage-text";
 
 const sourceString = z.string();
 
@@ -37,51 +38,56 @@ export const franceTravailRequirementSchema = z.looseObject({
   exigence: sourceString.optional(),
 });
 
-export const franceTravailOfferSchema = z.looseObject({
-  id: sourceString.min(1),
-  intitule: sourceString.min(1),
-  description: sourceString.min(1),
-  dateCreation: sourceString.optional(),
-  dateActualisation: sourceString.optional(),
-  lieuTravail: franceTravailLocationSchema.optional(),
-  romeCode: sourceString.optional(),
-  romeLibelle: sourceString.optional(),
-  appellationlibelle: sourceString.optional(),
-  entreprise: franceTravailCompanySchema.optional(),
-  typeContrat: sourceString.optional(),
-  typeContratLibelle: sourceString.optional(),
-  natureContrat: sourceString.optional(),
-  experienceExige: sourceString.optional(),
-  experienceLibelle: sourceString.optional(),
-  experienceCommentaire: sourceString.optional(),
-  complementExercice: sourceString.optional(),
-  formations: z.array(z.unknown()).optional(),
-  competences: z.array(z.unknown()).optional(),
-  langues: z.array(franceTravailRequirementSchema).optional(),
-  permis: z.array(franceTravailRequirementSchema).optional(),
-  salaire: franceTravailSalarySchema.optional(),
-  dureeTravailLibelle: sourceString.optional(),
-  dureeTravailLibelleConverti: sourceString.optional(),
-  alternance: z.boolean().optional(),
-  contact: z.looseObject({}).optional(),
-  agence: z.looseObject({}).optional(),
-  nombrePostes: z.number().int().nonnegative().optional(),
-  deplacementCode: sourceString.optional(),
-  deplacementLibelle: sourceString.optional(),
-  qualificationCode: sourceString.optional(),
-  qualificationLibelle: sourceString.optional(),
-  codeNAF: sourceString.optional(),
-  secteurActivite: sourceString.optional(),
-  secteurActiviteLibelle: sourceString.optional(),
-  qualitesProfessionnelles: z.array(z.unknown()).optional(),
-  trancheEffectifEtab: sourceString.optional(),
-  origineOffre: franceTravailOriginSchema.optional(),
-  offresManqueCandidats: z.boolean().optional(),
-  contexteTravail: franceTravailWorkContextSchema.optional(),
-  entrepriseAdaptee: z.boolean().optional(),
-  employeurHandiEngage: z.boolean().optional(),
-  accessibleTH: z.boolean().optional(),
-});
+export const franceTravailOfferSchema = z
+  .looseObject({
+    id: sourceString.min(1),
+    intitule: sourceString.min(1),
+    description: sourceString.min(1),
+    dateCreation: sourceString.optional(),
+    dateActualisation: sourceString.optional(),
+    lieuTravail: franceTravailLocationSchema.optional(),
+    romeCode: sourceString.optional(),
+    romeLibelle: sourceString.optional(),
+    appellationlibelle: sourceString.optional(),
+    entreprise: franceTravailCompanySchema.optional(),
+    typeContrat: sourceString.optional(),
+    typeContratLibelle: sourceString.optional(),
+    natureContrat: sourceString.optional(),
+    experienceExige: sourceString.optional(),
+    experienceLibelle: sourceString.optional(),
+    experienceCommentaire: sourceString.optional(),
+    complementExercice: sourceString.optional(),
+    formations: z.array(z.unknown()).optional(),
+    competences: z.array(z.unknown()).optional(),
+    langues: z.array(franceTravailRequirementSchema).optional(),
+    permis: z.array(franceTravailRequirementSchema).optional(),
+    salaire: franceTravailSalarySchema.optional(),
+    dureeTravailLibelle: sourceString.optional(),
+    dureeTravailLibelleConverti: sourceString.optional(),
+    alternance: z.boolean().optional(),
+    contact: z.looseObject({}).optional(),
+    agence: z.looseObject({}).optional(),
+    nombrePostes: z.number().int().nonnegative().optional(),
+    deplacementCode: sourceString.optional(),
+    deplacementLibelle: sourceString.optional(),
+    qualificationCode: sourceString.optional(),
+    qualificationLibelle: sourceString.optional(),
+    codeNAF: sourceString.optional(),
+    secteurActivite: sourceString.optional(),
+    secteurActiviteLibelle: sourceString.optional(),
+    qualitesProfessionnelles: z.array(z.unknown()).optional(),
+    trancheEffectifEtab: sourceString.optional(),
+    origineOffre: franceTravailOriginSchema.optional(),
+    offresManqueCandidats: z.boolean().optional(),
+    contexteTravail: franceTravailWorkContextSchema.optional(),
+    entrepriseAdaptee: z.boolean().optional(),
+    employeurHandiEngage: z.boolean().optional(),
+    accessibleTH: z.boolean().optional(),
+  })
+  .refine(hasStorageCompatibleText, {
+    message:
+      "Le texte source contient un caractère incompatible avec le stockage.",
+  });
 
 const franceTravailSearchEnvelopeSchema = z.looseObject({
   resultats: z.array(z.unknown()),
@@ -145,7 +151,7 @@ function findUnknownFields(
     .sort()
     .map((field) => ({
       path,
-      field,
+      field: isStorageText(field) ? field : "[invalid-field-name]",
       observedType:
         value[field] === null
           ? "null"

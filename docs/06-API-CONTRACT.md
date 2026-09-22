@@ -470,6 +470,13 @@ type PublicOffer = {
 
 Ne pas exposer le payload brut.
 
+Après fermeture confirmée, `companyName`, `locationLabel` et `source.offerUrl`
+sont `null`, même si le dataset courant provient d'un rollback. L'appartenance
+historique, les classifications, les preuves et l'attribution restent conservées.
+Une première absence (`not_seen`) ne suffit pas à appliquer ce masquage. Cette
+protection de lecture ne remplace pas l'anonymisation des données historiques
+requise par la politique de retrait.
+
 ---
 
 ## 10. `GET /taxonomies`
@@ -551,7 +558,8 @@ Protection :
 - timestamp ;
 - fenêtre anti-rejeu ;
 - allowlist des tags ;
-- limite de taille ;
+- limite de 16 Kio appliquée aux octets réellement lus, avec annulation du flux
+  dès dépassement, même si `Content-Length` est absent ou mensonger ;
 - log d'audit ;
 - non indexé ;
 - réponse minimale.

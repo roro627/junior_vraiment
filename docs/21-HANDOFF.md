@@ -1,5 +1,19 @@
 # Reprise — 19 septembre 2026
 
+## Candidat de sécurité — 22 septembre 2026
+
+Voir [la livraison séparée](SECURITY-RELEASE-20260922.md) : quatre protections indépendantes
+du moteur sont préparées dans le worktree `security-release-20260922`.
+L'optimisation du classificateur reste locale dans le checkout principal ; sa nouvelle
+qualification de 200 offres échoue. Ne pas la déployer, changer les empreintes du rapport
+historique ou prétendre que les chiffres sont désormais certifiés. Aucun seuil n'est abaissé.
+Le rapport distingue candidat, résultats réellement exécutés et déploiements.
+
+Les collectes automatiques des 20, 21 et 22 septembre ont réussi après la reprise manuelle
+du 19 ; cela ne constitue pas sept succès automatiques consécutifs. Le critère de SPEC §22
+reste au plus tôt atteignable le 26 septembre si les suivantes réussissent. C'est un critère
+opérationnel, pas une preuve de représentativité statistique.
+
 ## Intervention du 19 septembre — reprise des totaux mouvants
 
 La collecte planifiée `run_06gbeian682jpjtrk6cjgubg01` a échoué à 01:34:40 UTC :

@@ -114,3 +114,111 @@ describe("POST /api/internal/revalidate", () => {
     expect(revalidateTag).not.toHaveBeenCalled();
   });
 });
+
+describe("streamed body limits", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    vi.stubEnv("REVALIDATION_SECRET", SECRET);
+    vi.spyOn(process.stdout, "write").mockImplementation(() => true);
+  });
+  afterEach(() => {
+    vi.unstubAllEnvs();
+    vi.restoreAllMocks();
+  });
+
+  function streamRequest(
+    chunks: Uint8Array[],
+    headers: Record<string, string> = {},
+  ) {
+    let consumed = 0;
+    const cancel = vi.fn();
+    const body = new ReadableStream<Uint8Array>(
+      {
+        pull(controller) {
+          if (consumed < chunks.length) controller.enqueue(chunks[consumed++]!);
+          else controller.close();
+        },
+        cancel,
+      },
+      { highWaterMark: 0 },
+    );
+    const request = new Request("http://localhost/api/internal/revalidate", {
+      method: "POST",
+      headers,
+      body,
+      duplex: "half",
+    } as RequestInit & { duplex: "half" });
+    return { request, cancel, consumed: () => consumed };
+  }
+
+  it.each([undefined, "1", "invalid", "-1"])(
+    "cancels overflow with absent or unreliable Content-Length %s",
+    async (length) => {
+      const headers: Record<string, string> = {};
+      if (length !== undefined) headers["content-length"] = length;
+      const stream = streamRequest(
+        [new Uint8Array(16384), new Uint8Array(1), new Uint8Array(100)],
+        headers,
+      );
+      const response = await POST(stream.request);
+      expect(response.status).toBe(413);
+      expect(stream.cancel).toHaveBeenCalledOnce();
+      expect(stream.consumed()).toBe(2);
+      expect(revalidateTag).not.toHaveBeenCalled();
+    },
+  );
+
+  it("accepts exactly the byte limit with split Unicode and valid HMAC", async () => {
+    const json = JSON.stringify({
+      datasetVersion: "dataset-1",
+      tags: ["overview"],
+      timestamp: new Date().toISOString(),
+    });
+    const raw = json + " ".repeat(16384 - Buffer.byteLength(json));
+    const encoded = new TextEncoder().encode(raw);
+    const stream = streamRequest([encoded.slice(0, 11), encoded.slice(11)], {
+      [REVALIDATION_SIGNATURE_HEADER]: createRevalidationSignature(SECRET, raw),
+    });
+    expect((await POST(stream.request)).status).toBe(200);
+    expect(stream.cancel).not.toHaveBeenCalled();
+  });
+
+  it("handles BOM and multi-byte characters split between chunks like Request.text", async () => {
+    const raw =
+      JSON.stringify({
+        datasetVersion: "dataset-1",
+        tags: ["overview"],
+        timestamp: new Date().toISOString(),
+      }) + "\u00a0";
+    const bytes = new TextEncoder().encode("\ufeff" + raw);
+    const stream = streamRequest(
+      [bytes.slice(0, 1), bytes.slice(1, -1), bytes.slice(-1)],
+      {
+        [REVALIDATION_SIGNATURE_HEADER]: createRevalidationSignature(
+          SECRET,
+          raw,
+        ),
+      },
+    );
+    // JSON does not accept NBSP: correct decoding/signature reaches the 400 parser response.
+    expect((await POST(stream.request)).status).toBe(400);
+    expect(revalidateTag).not.toHaveBeenCalled();
+  });
+
+  it("returns a bounded client error when the incoming stream fails", async () => {
+    const body = new ReadableStream({
+      start(controller) {
+        controller.error(new Error("private upstream failure"));
+      },
+    });
+    const request = new Request("http://localhost/api/internal/revalidate", {
+      method: "POST",
+      body,
+      duplex: "half",
+    } as RequestInit & { duplex: "half" });
+    const response = await POST(request);
+    expect(response.status).toBe(400);
+    expect(await response.json()).toEqual({ error: "invalid_payload" });
+    expect(revalidateTag).not.toHaveBeenCalled();
+  });
+});

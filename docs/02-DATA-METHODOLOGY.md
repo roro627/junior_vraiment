@@ -145,6 +145,15 @@ valid_with_warnings
 invalid_quarantined
 ```
 
+### Protection des textes source — 22 septembre 2026
+
+Le schéma d'offre rejette avant stockage les caractères NUL et les substituts Unicode
+isolés dans les valeurs et les noms de propriétés, y compris les champs inconnus retenus
+en JSONB. Une offre rejetée suit la quarantaine existante et conserve son index ; ses
+voisines valides restent traitées. Les seuils de publication et de clôture sont inchangés.
+Les entités numériques nulles, substituts ou hors plage Unicode restent littérales au
+lieu de provoquer une exception ou de produire un texte impossible à stocker.
+
 ### Taux de qualité
 
 - `valid + valid_with_warnings ≥ 98 %` pour publier normalement ;

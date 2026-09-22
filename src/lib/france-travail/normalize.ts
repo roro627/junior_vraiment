@@ -35,11 +35,15 @@ function decodeEntity(entity: string): string {
     return named;
   }
 
-  const numericValue = entity.startsWith("&#x")
+  const numericValue = /^&#x/iu.test(entity)
     ? Number.parseInt(entity.slice(3, -1), 16)
     : Number.parseInt(entity.slice(2, -1), 10);
 
-  return Number.isFinite(numericValue)
+  // Preserve invalid entities literally; never create NUL or isolated surrogates.
+  return Number.isInteger(numericValue) &&
+    numericValue > 0 &&
+    numericValue <= 0x10ffff &&
+    (numericValue < 0xd800 || numericValue > 0xdfff)
     ? String.fromCodePoint(numericValue)
     : entity;
 }
