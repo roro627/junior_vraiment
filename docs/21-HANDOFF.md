@@ -1,13 +1,24 @@
 # Reprise — 19 septembre 2026
 
-## Candidat de sécurité — 22 septembre 2026
+## Livraison partielle de sécurité — 22 septembre 2026
 
 Voir [la livraison séparée](SECURITY-RELEASE-20260922.md) : quatre protections indépendantes
-du moteur sont préparées dans le worktree `security-release-20260922`.
+du moteur sont déployées par le commit `ddf8ce7`, Vercel
+`dpl_FeLadDGpPT2XrVmTq16iZ7patFTv` et worker `20260922.1`.
+Le probe France Travail limité, le runtime, la revalidation signée et la santé publique
+ont réussi. CI Quality, Security et migration réussies ; détails et E2E dans le rapport.
 L'optimisation du classificateur reste locale dans le checkout principal ; sa nouvelle
 qualification de 200 offres échoue. Ne pas la déployer, changer les empreintes du rapport
 historique ou prétendre que les chiffres sont désormais certifiés. Aucun seuil n'est abaissé.
 Le rapport distingue candidat, résultats réellement exécutés et déploiements.
+
+Checkout de livraison : `C:/Users/romai/.codex/worktrees/security-release-20260922/junior_vraiment`,
+branche `work/security-release-20260922`, publication par push fast-forward sur main.
+Le checkout principal `C:/MEGA/dev/junior_vraiment` conserve ses changements locaux de
+classificateur et de qualification, et sa branche locale n'a pas été avancée de force :
+ne pas déployer ce dossier sans réconciliation et qualification. Les annotations privées
+sont dans `.local/observation-v2-holdout-8` du checkout principal ; les deux rapports agrégés
+échoués sont versionnés séparément. Aucun accès externe manquant n'a empêché la livraison.
 
 Les collectes automatiques des 20, 21 et 22 septembre ont réussi après la reprise manuelle
 du 19 ; cela ne constitue pas sept succès automatiques consécutifs. Le critère de SPEC §22

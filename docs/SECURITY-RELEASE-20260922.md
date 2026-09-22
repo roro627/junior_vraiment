@@ -46,8 +46,7 @@ certifié par les contrôles techniques.
 
 ## Vérification et livraison
 
-État avant publication : quatre correctifs validés dans le candidat isolé ; pas encore
-déployés. Les identifiants réels de livraison seront ajoutés après vérification.
+État : quatre correctifs validés et déployés ; le cinquième reste non livré.
 
 | Contrôle exécuté sur le lot isolé | Résultat |
 | --- | --- |
@@ -71,6 +70,37 @@ Les campagnes échouées sont conservées dans
 [le rapport initial](reference/observation-v2-holdout-8-validation-report.json) et
 [la relecture séparée](reference/observation-v2-holdout-8-reviewed-validation-report.json).
 Elles concernent le candidat optimisé non livré et ne sont pas substituées à un test passant.
+
+## Production vérifiée
+
+- Commit applicatif `ddf8ce7f249202c05e454577c76759b0dd5223d8`, poussé sur main.
+- Vercel `dpl_FeLadDGpPT2XrVmTq16iZ7patFTv`, Ready, aliasé au domaine public ;
+  `junior-vraiment-37vu6nfft-roro627s-projects.vercel.app`.
+- Worker `20260922.1`, déploiement `zm84e77p`, external ID
+  `ddf8ce7-security-boundaries`, dix tâches enregistrées. Runtime réel Node 22.16.0.
+- Requête publique non signée : 401. Corps de 18 000 octets envoyé en streaming
+  sans Content-Length : 413 `payload_too_large`.
+- `verify-runtime` `run_06gckiibqqq426fsv13s376501` : completed, healthy.
+- `verify-revalidation` `run_06gckiiv446ccua9n25cpn5m01` : completed,
+  authentification réelle du worker acceptée et tag `data-status` invalidé.
+- Probe limité `run_06gckijf0diipkt5sajvmrdm01` : completed, une requête,
+  une offre réelle valide stockée et classifiée, aucune quarantaine ni warning.
+  `publicationEligible=false`, aucune collecte complète ni nouveau dataset publié.
+  Ce probe manuel ne compte pas comme une journée automatique réussie.
+- Contrôle public de santé : réussi. Dataset conservé
+  `dcc399c7-1c45-49f1-8ad2-01d11b9d010c`, 2 610 membres, cutoff
+  `2026-09-22T01:51:36.634Z`, classificateur 1.3.7, méthode KPI 2.0.0.
+- CI du commit : Quality `35764547397`, Security `35764547405`,
+  Database migration check `35764547457` réussis.
+- Santé GitHub après publication `35764715321` réussie.
+- Vercel : aucun log 5xx retourné pour ce déploiement lors du contrôle post-release.
+- E2E et Lighthouse publics `35764711672` : réussis, budgets inchangés.
+- Sentry non revérifié pendant cette livraison ; aucune garantie d'absence d'incidents.
+
+Conclusion des frontières livrées : les déclencheurs et variantes testés sont rejetés ou
+traités sans exception, et les contrôles légitimes passent. Outcome `fixed` pour ces
+quatre constats sous les limites explicitement décrites ; outcome `blocked` pour
+la qualification du cinquième, sans prétendre que le site est intégralement sécurisé.
 
 La QA Neon dédiée `br-lively-haze-b2swnlxa` expire le 23 septembre à 18:00 UTC.
 Les tests injectent seulement des fixtures explicitement synthétiques puis les nettoient ;
